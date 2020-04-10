@@ -3,12 +3,12 @@
     <ValidationObserver ref="validatorRef">
       <b-form @submit.prevent="onLogin" class="fullmodal-form">
         <div class="login-header">
-          <img v-bind:src="$opensilex.getResourceURI('images/logo-sixtine.png')" />
-          <h2>{{$t('sixtine.title')}}</h2>
+          <img v-bind:src="$opensilex.getResourceURI('images/logo-bigdatagrapes.png')" />
+          <h2>{{$t('bigdatagrapes.title')}}</h2>
         </div>
 
         <div class="login-form-content">
-          <p>{{$t('sixtine.login.info')}}:</p>
+          <p>{{$t('bigdatagrapes.login.info')}}:</p>
           <b-form-group id="login-group" required>
             <ValidationProvider
               :name="$t('component.login.validation.email')"
@@ -58,11 +58,11 @@ import { Component } from "vue-property-decorator";
 import DefaultLoginComponent from "../../../../../opensilex-front/front/src/components/layout/DefaultLoginComponent.vue";
 
 @Component
-export default class SixtineLoginComponent extends DefaultLoginComponent {}
+export default class BigdatagrapesLoginComponent extends DefaultLoginComponent {}
 </script>
 
 <style scoped lang="scss">
-@import "../../../theme/sixtine/variables.scss";
+@import "../../../theme/bigdatagrapes/variables.scss";
 
 .fullmodal {
   display: block;

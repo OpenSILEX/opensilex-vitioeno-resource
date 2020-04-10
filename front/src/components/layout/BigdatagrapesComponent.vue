@@ -2,8 +2,8 @@
   <div id="header">
     <div class="app-logo">
       <router-link to="/">
-        <img v-bind:src="$opensilex.getResourceURI('images/logo-sixtine.png')" />
-        <div class="app-title">Sixtine</div>
+        <img v-bind:src="$opensilex.getResourceURI('images/logo-bigdatagrapes.png')" />
+        <div class="app-title">Bigdatagrapes</div>
       </router-link>
     </div>
 
@@ -39,11 +39,11 @@ import Vue from "vue";
 import DefaultHeaderComponent from "../../../../../opensilex-front/front/src/components/layout/DefaultHeaderComponent.vue";
 
 @Component
-export default class SixtineHeaderComponent extends DefaultHeaderComponent {}
+export default class BigdatagrapesHeaderComponent extends DefaultHeaderComponent {}
 </script>
 
 <style scoped lang="scss">
-@import "../../../theme/sixtine/variables.scss";
+@import "../../../theme/bigdatagrapes/variables.scss";
 
 #header {
   background-color: var(--highlightBackgroundColorLight);

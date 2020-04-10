@@ -44,7 +44,7 @@ import Vue from "vue";
 import DefaultMenuComponent from "../../../../../opensilex-front/front/src/components/layout/DefaultMenuComponent.vue";
 
 @Component
-export default class SixtineMenuComponent extends DefaultMenuComponent {
+export default class BigdatagrapesMenuComponent extends DefaultMenuComponent {
   width;
 
   created() {
@@ -70,7 +70,7 @@ export default class SixtineMenuComponent extends DefaultMenuComponent {
 </script>
 
 <style scoped lang="scss">
-@import "../../../theme/sixtine/variables.scss";
+@import "../../../theme/bigdatagrapes/variables.scss";
 
 .sidebar-content {
   height: 100%;
