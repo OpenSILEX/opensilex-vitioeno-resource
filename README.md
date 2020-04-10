@@ -1,3 +1,0 @@
-# bigdatagrapes
-
-Instance pour BigDatagrapes
