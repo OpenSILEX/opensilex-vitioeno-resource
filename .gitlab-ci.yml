@@ -42,7 +42,7 @@ variables:
 ##  BUILD TEMPLATE
 ########################
 
-.build:instance: &build_instance_with_opensilex_core
+.build:instance: &build_template_with_opensilex
   <<: *cache_dependencies
   before_script:
     # Enable extended pattern for mv command
@@ -72,11 +72,11 @@ variables:
     - schedules
 
 ########################
-##  bigdatagrapes BUILD INSTANCE
+##  SIXTINE BUILD INSTANCE
 ######################## 
 
 bigdatagrapes:build:
-  <<: *build_instance_with_opensilex_core
+  <<: *build_template_with_opensilex
   script:
     # Create module folder if not exists
     - mkdir -p $CI_PROJECT_DIR/opensilex-dev/$MODULE_ID
@@ -99,6 +99,6 @@ trigger:bigdatagrapes:deploy:test:
   stage: deploy
   image: curlimages/curl
   script:
-    - curl --request POST --form "variables[DEPLOY]=bdg-test" --form "token=$CI_JOB_TOKEN" --form "ref=master" --form "variables[COMMIT_SHA_OPENSILEX_DEV]=$COMMIT_SHA_OPENSILEX_DEV" https://forgemia.inra.fr/api/v4/projects/403/trigger/pipeline
+    - curl --request POST --form "variables[DEPLOY]=bigdatagrapes-test" --form "token=$CI_JOB_TOKEN" --form "ref=master" --form "variables[COMMIT_SHA_OPENSILEX_DEV]=$COMMIT_SHA_OPENSILEX_DEV" https://forgemia.inra.fr/api/v4/projects/403/trigger/pipeline
   needs: 
     - job: "bigdatagrapes:build"

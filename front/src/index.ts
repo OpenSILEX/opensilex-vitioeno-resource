@@ -10,10 +10,10 @@ export default {
     },
     components: {
         "inrae-bigdatagrapes-BigdatagrapesHomeComponent": BigdatagrapesHomeComponent,
-        "inrae-bigdatagrapesgrapes-BigdatagrapesLoginComponent": BigdatagrapesLoginComponent,
-        "inrae-bigdatagrapesgrapes-BigdatagrapesFooterComponent": BigdatagrapesFooterComponent,
-        "inrae-bigdatagrapesgrapes-BigdatagrapesMenuComponent": BigdatagrapesMenuComponent,
-        "inrae-bigdatagrapesgrapes-BigdatagrapesHeaderComponent": BigdatagrapesHeaderComponent
+        "inrae-bigdatagrapes-BigdatagrapesLoginComponent": BigdatagrapesLoginComponent,
+        "inrae-bigdatagrapes-BigdatagrapesFooterComponent": BigdatagrapesFooterComponent,
+        "inrae-bigdatagrapes-BigdatagrapesMenuComponent": BigdatagrapesMenuComponent,
+        "inrae-bigdatagrapes-BigdatagrapesHeaderComponent": BigdatagrapesHeaderComponent
     },
     lang: {
         "fr": require("./lang/bigdatagrapes-fr.json"),

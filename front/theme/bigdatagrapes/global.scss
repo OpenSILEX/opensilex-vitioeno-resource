@@ -1,0 +1,120 @@
+body {
+    font-size: 14px!important;
+}
+
+#page-wrapper {
+    min-height: 100vh;
+    flex-direction: column;
+    display: flex;
+    margin: auto;
+}
+
+
+/* Style the header */
+
+header {
+    display: flex;
+}
+
+#header-content {
+    max-width: 1600px;
+    margin: auto;
+    display: flex;
+    width: 100%;
+}
+
+
+/* Container for flexboxes */
+
+#content-wrapper  {
+    display: flex;
+    margin: 0 auto;
+    height: 100%;
+    flex-grow: 1;
+    width: 100%;
+    flex-direction: row;
+}
+
+#menu-container {
+    height: 100%;
+}
+
+#main-content {
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    overflow-x: auto;
+    flex: 1;
+}
+
+.form-group[required="required"] > label:after {
+    color: getVar(--errorColor);
+    content: "*";
+    margin-left: 3px;
+}
+
+a,
+a:visited {
+    color: getVar(--linkColor);
+}
+
+a:hover,
+a:focus,
+a:active {
+    color: getVar(--linkHighlightColor);
+}
+
+@media (max-width: 768px) {
+    #menu-container {
+        height: auto;
+    }
+    section#content-wrapper {
+        flex-direction: column;
+    }
+    #content-wrapper>nav {
+        position: absolute;
+        width: 100%;
+        z-index: 888;
+    }
+}
+
+.page-wrap {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.table thead th {
+    vertical-align: middle;
+}
+
+.dropdown {
+    .btn.btn-lg {
+        height: inherit;
+        font-size: 20px;
+        font-weight: normal;
+        top: -2px;
+    }
+}
+
+.app-header-btn.btn.btn-lg {
+    height: inherit;
+    font-size: 20px;
+    font-weight: normal;
+}
+
+.btn.btn-link {
+    color: #505050;
+}
+
+.btn.btn-link:hover,
+.btn.btn-link:focus {
+    color: black;
+    text-decoration: none;
+}
+
+.btn.btn-link:hover {
+    border: 1px solid black;
+}

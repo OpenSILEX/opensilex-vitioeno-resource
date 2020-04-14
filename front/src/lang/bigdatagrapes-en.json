@@ -1,7 +1,7 @@
 {
     "bigdatagrapes": {
-        "welcome-message": "Welcome to Bigdatagrapes",
-        "title": "Information System for INRAE experimental units",
+        "welcome-message": "Welcome to OpenSILEX BigDatagrapes",
+        "title": "OpenSILEX for BigDatagrapes project",
         "login": {
             "info": "Please enter your identifiers to login"
         }
