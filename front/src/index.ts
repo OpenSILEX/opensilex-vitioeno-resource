@@ -1,4 +1,5 @@
 /// <reference path="../../../opensilex-security/front/types/opensilex-security.d.ts" />
+/// <reference path="../../../opensilex-core/front/types/opensilex-core.d.ts" />
 import BigdatagrapesLoginComponent from "./components/layout/BigdatagrapesLoginComponent.vue";
 import BigdatagrapesFooterComponent from "./components/layout/BigdatagrapesFooterComponent.vue";
 import BigdatagrapesMenuComponent from "./components/layout/BigdatagrapesMenuComponent.vue";

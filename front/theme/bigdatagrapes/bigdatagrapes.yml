@@ -9,7 +9,7 @@ excludes:
     - _auth.scss
     - _main.scss
     - main.css
-
+    
 fonts:
     - family: Eras Light ITC
       style: normal
@@ -23,5 +23,7 @@ fonts:
         woff2: fonts/eras-light/eras-light.woff2
         
 iconClassesRDF:
-    "inrae-bigdatagrapes:ExperimentalUnit": building
-    "inrae-bigdatagrapes:ExperimentalSite": home
+    "inrae-sixtine:ExperimentalUnit": fa#building
+    "inrae-sixtine:ExperimentalSite": fa#home
+    "inrae-sixtine:Greenhouse": fa#solar-panel
+    "inrae-sixtine:Plot": fa#seedling

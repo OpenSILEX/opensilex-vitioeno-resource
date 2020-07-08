@@ -17,18 +17,20 @@
       <nav id="main-menu-navigation" class="navigation-main">
         <div li v-for="item in menu" v-bind:key="item.id" class="nav-item">
           <span v-if="!item.route">
-            <i v-if="item.icon" class="ik" v-bind:class="item.icon"></i>
+            <i class="ik" v-bind:class="getIcon(item)"></i>&nbsp;
             <span>{{ $t(item.label) }}</span>
           </span>
           <router-link v-else :to="item.route.path">
-            <i v-if="item.icon" class="ik" v-bind:class="item.icon"></i>
+            <i class="ik" v-bind:class="getIcon(item)"></i>&nbsp;
             <span>{{ $t(item.label) }}</span>
           </router-link>
           <div v-for="itemChild in item.children" v-bind:key="itemChild.id" class="submenu-content">
             <span v-if="!itemChild.route">
+              <i class="ik" v-bind:class="getIcon(itemChild)"></i>&nbsp;
               <span>{{ $t(itemChild.label) }}</span>
             </span>
             <router-link v-else :to="itemChild.route.path">
+              <i class="ik" v-bind:class="getIcon(itemChild)"></i>&nbsp;
               <span>{{ $t(itemChild.label) }}</span>
             </router-link>
           </div>
@@ -41,10 +43,12 @@
 <script lang="ts">
 import { Component } from "vue-property-decorator";
 import Vue from "vue";
-import DefaultMenuComponent from "../../../../../opensilex-front/front/src/components/layout/DefaultMenuComponent.vue";
 
 @Component
-export default class BigdatagrapesMenuComponent extends DefaultMenuComponent {
+export default class BigdatagrapesMenuComponent extends Vue {
+  $store: any;
+  $t: any;
+
   width;
 
   created() {
@@ -57,14 +61,58 @@ export default class BigdatagrapesMenuComponent extends DefaultMenuComponent {
   }
 
   handleResize() {
-    const minSize = 480;
-    if (document.body.clientWidth <= minSize && (this.width == null || this.width > minSize)) {
+    const minSize = 768;
+    if (
+      document.body.clientWidth <= minSize &&
+      (this.width == null || this.width > minSize)
+    ) {
       this.width = document.body.clientWidth;
       this.$store.commit("hideMenu");
-    } else if (document.body.clientWidth > minSize && (this.width == null || this.width <= minSize)) {
+    } else if (
+      document.body.clientWidth > minSize &&
+      (this.width == null || this.width <= minSize)
+    ) {
       this.width = document.body.clientWidth;
       this.$store.commit("showMenu");
     }
+  }
+
+  $route: any;
+
+  get menu(): Array<any> {
+    return this.$store.state.menu;
+  }
+
+  get user() {
+    return this.$store.state.user;
+  }
+
+  get menuVisible(): boolean {
+    return this.$store.state.menuVisible;
+  }
+
+  toggleMenu(): void {
+    this.$store.commit("toggleMenu");
+  }
+
+  toogle(item: any, event: MouseEvent): void {
+    if (item.hasChildren()) {
+      console.info("toogle menu, old value = " + item.showChildren);
+      item.showChildren = !item.showChildren;
+    }
+  }
+
+  getIcon(item: any): string {
+    var code = "icon." + item.label;
+    var result = this.$t(code);
+    if (code != result) {
+      return result.toString();
+    }
+    return "ik-folder";
+  }
+
+  isActive(item: any): boolean {
+    return item.route && this.$route.path.indexOf(item.route.path) === 0;
   }
 }
 </script>

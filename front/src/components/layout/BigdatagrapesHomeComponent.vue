@@ -2,8 +2,16 @@
   <div class="main-content">
     <div class="container-fluid">
       <div class="center">
-        <img v-bind:src="$opensilex.getResourceURI('images/logo-bigdatagrapes.png')" />
-        <h2>{{$t('bigdatagrapes.welcome-message')}} <br/><br/> {{$t('bigdatagrapes.title')}}</h2>
+        <img
+          v-bind:src="$opensilex.getResourceURI('images/logo-bigdatagrapes.png')"
+          alt="logo-sixtine"
+        />
+        <h2>
+          {{$t('bigdatagrapes.welcome-message')}}
+          <br />
+          <br />
+          {{$t('bigdatagrapes.title')}}
+        </h2>
       </div>
     </div>
   </div>
@@ -19,6 +27,6 @@ export default class DefaultHomeComponent extends Vue {}
 
 <style scoped lang="scss">
 .center {
-    text-align: center;
+  text-align: center;
 }
 </style>
