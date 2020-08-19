@@ -5,13 +5,16 @@
         "login": {
             "info": "Please enter your identifiers to login",
             "infoGuest": "You can connect as guest"
-        },
-        "component": {
-            "login": {
-                "button": {
-                    "loginAsGuest": "Connect as guest"
-                }
+        }
+    },
+    "component": {
+        "login": {
+            "button": {
+                "loginAsGuest": "Connect as guest"
             }
+        },
+        "home": {
+            "wineNews": "Few tweets about wine and vine"
         }
     }
 }

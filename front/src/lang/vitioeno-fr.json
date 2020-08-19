@@ -5,13 +5,16 @@
         "login": {
             "info": "Merci de saisir vos identifiants pour vous connecter à l'application",
             "infoGuest": "Vous pouvez vous connecter en tant qu'invité"
-        },
-        "component": {
-            "login": {
-                "button": {
-                    "loginAsGuest": "Connexion en tant qu'invité"
-                }
+        }
+    },
+    "component": {
+        "login": {
+            "button": {
+                "loginAsGuest": "Connexion en tant qu'invité"
             }
+        },
+        "home": {
+            "wineNews": "Quelques tweets sur l'actualité de la vine et du vin"
         }
     }
 }

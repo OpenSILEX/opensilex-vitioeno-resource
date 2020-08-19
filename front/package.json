@@ -18,6 +18,9 @@
         "@vue/cli-service": "4.3.1",
         "@vue/eslint-config-typescript": "5.0.2"
     },
+    "dependencies": {
+        "vuejs-twitter-feed": "1.0.1"
+    },
     "eslintConfig": {
         "root": true,
         "env": {

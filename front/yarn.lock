@@ -7779,6 +7779,11 @@ vue-template-es2015-compiler@^1.9.0:
   resolved "https://registry.yarnpkg.com/vue-template-es2015-compiler/-/vue-template-es2015-compiler-1.9.1.tgz#1ee3bc9a16ecbf5118be334bb15f9c46f82f5825"
   integrity sha512-4gDntzrifFnCEvyoO8PqyJDmguXgVPxKiIxrBKjIowvL9l+N66196+72XVYR8BBf1Uv1Fgt3bGevJ+sEmxfZzw==
 
+vuejs-twitter-feed@1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/vuejs-twitter-feed/-/vuejs-twitter-feed-1.0.1.tgz#c409631b6ffa78251941511a26131e31d44fbaf9"
+  integrity sha512-YfTx4DR/kfIQdo5SU3IQX8rr0GnIHerK7/F+C1GiTVDSeB8425PAGeIu5FDT607Q7/Kw5JOZmaVTJ3RF3PK7nw==
+
 watchpack-chokidar2@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/watchpack-chokidar2/-/watchpack-chokidar2-2.0.0.tgz#9948a1866cbbd6cb824dea13a7ed691f6c8ddff0"
