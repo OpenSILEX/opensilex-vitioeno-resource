@@ -1,0 +1,17 @@
+{
+    "vitioeno": {
+        "welcome-message": "Welcome to OpenSILEX Vitioeno",
+        "title": "OpenSILEX ressource instance for wine and wine",
+        "login": {
+            "info": "Please enter your identifiers to login",
+            "infoGuest": "You can connect as guest"
+        },
+        "component": {
+            "login": {
+                "button": {
+                    "loginAsGuest": "Connect as guest"
+                }
+            }
+        }
+    }
+}

@@ -1,6 +1,6 @@
 <template>
   <div id="footer">
-    <span class="text-center">© OpenSILEX - Bigdatagrapes v.1.0.0</span>
+    <span class="text-center">© OpenSILEX - Vitioeno v.1.0.0</span>
   </div>
 </template>
 
@@ -9,11 +9,11 @@ import { Component } from "vue-property-decorator";
 import Vue from "vue";
 
 @Component
-export default class BigdatagrapesFooterComponent extends Vue {}
+export default class VitioenoFooterComponent extends Vue {}
 </script>
 
 <style scoped lang="scss">
-@import "../../../theme/bigdatagrapes/variables.scss";
+@import "../../../theme/vitioeno/variables.scss";
 
 #footer {
   background-color: var(--highlightBackgroundColorLight);

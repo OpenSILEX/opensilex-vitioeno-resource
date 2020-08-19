@@ -45,7 +45,7 @@ import { Component } from "vue-property-decorator";
 import Vue from "vue";
 
 @Component
-export default class BigdatagrapesMenuComponent extends Vue {
+export default class VitioenoMenuComponent extends Vue {
   $store: any;
   $t: any;
 
@@ -118,7 +118,7 @@ export default class BigdatagrapesMenuComponent extends Vue {
 </script>
 
 <style scoped lang="scss">
-@import "../../../theme/bigdatagrapes/variables.scss";
+@import "../../../theme/vitioeno/variables.scss";
 
 .sidebar-content {
   height: 100%;

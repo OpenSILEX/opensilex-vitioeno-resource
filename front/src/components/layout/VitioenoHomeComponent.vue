@@ -2,15 +2,12 @@
   <div class="main-content">
     <div class="container-fluid">
       <div class="center">
-        <img
-          v-bind:src="$opensilex.getResourceURI('images/logo-bigdatagrapes.png')"
-          alt="logo-sixtine"
-        />
+        <img v-bind:src="$opensilex.getResourceURI('images/logo-vitioeno.png')" alt="logo-sixtine" />
         <h2>
-          {{$t('bigdatagrapes.welcome-message')}}
+          {{$t('vitioeno.welcome-message')}}
           <br />
           <br />
-          {{$t('bigdatagrapes.title')}}
+          {{$t('vitioeno.title')}}
         </h2>
       </div>
     </div>

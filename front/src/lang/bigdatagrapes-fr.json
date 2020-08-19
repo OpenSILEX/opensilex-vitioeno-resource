@@ -1,9 +1,0 @@
-{
-    "bigdatagrapes": {
-        "welcome-message": "Bienvenue dans OpenSILEX BigDatagrapes",
-        "title": "OpenSILEX pour le projet BigDatagrapes",
-        "login": {
-            "info": "Merci de saisir vos identifiants pour vous connecter à l'application"
-        }
-    }
-}

@@ -1,0 +1,17 @@
+{
+    "vitioeno": {
+        "welcome-message": "Bienvenue dans OpenSILEX Vitioeno",
+        "title": "L'instance ressource pour la vigne et le vin",
+        "login": {
+            "info": "Merci de saisir vos identifiants pour vous connecter à l'application",
+            "infoGuest": "Vous pouvez vous connecter en tant qu'invité"
+        },
+        "component": {
+            "login": {
+                "button": {
+                    "loginAsGuest": "Connexion en tant qu'invité"
+                }
+            }
+        }
+    }
+}

@@ -2,8 +2,8 @@
   <div id="header">
     <div class="app-logo">
       <router-link to="/">
-        <img v-bind:src="$opensilex.getResourceURI('images/logo-bigdatagrapes.png')" />
-        <div class="app-title">Bigdatagrapes</div>
+        <img v-bind:src="$opensilex.getResourceURI('images/logo-vitioeno.png')" />
+        <div class="app-title">OpenSILEX Vitioeno</div>
       </router-link>
     </div>
 
@@ -38,7 +38,7 @@ import { Component } from "vue-property-decorator";
 import Vue from "vue";
 
 @Component
-export default class BigdatagrapesHeaderComponent extends Vue {
+export default class VitioenoHeaderComponent extends Vue {
   $i18n: any;
   $store: any;
 
@@ -74,7 +74,7 @@ export default class BigdatagrapesHeaderComponent extends Vue {
 </script>
 
 <style scoped lang="scss">
-@import "../../../theme/bigdatagrapes/variables.scss";
+@import "../../../theme/vitioeno/variables.scss";
 
 #header {
   background-color: var(--highlightBackgroundColorLight);
@@ -115,6 +115,7 @@ export default class BigdatagrapesHeaderComponent extends Vue {
   margin-left: 10px;
   height: 50px;
   display: inline-block;
+  color: getVar(--highlightColorLight);
 }
 
 .language-selector {

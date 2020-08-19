@@ -1,27 +1,26 @@
- 
 ########################
-##  GLOBAL VARIABLES 
+##  GLOBAL VARIABLES
 ########################
 variables:
- GIT_DEPTH: 5
- GIT_OPTIONS: "--allow-unrelated-histories"
- # GLOBAL
- # As of Maven 3.3.0 instead of this you may define these options in `.mvn/maven.config` so the same config is used
- # when running from the command line.
- MAVEN_CLI_OPTS: "--batch-mode --show-version "
- # DEFAULT SERVER MAVEN VERSION
- MVN_VERSION: 3.6.3
- # DEFAULT SERVER JAVA VERSION
- JAVA_VERSION: 11
- REVISION: 'INSTANCE-SNAPSHOT'
- # This will supress any download for dependencies and plugins or upload messages which would clutter the console log.
- # `showDateTime` will show the passed time in milliseconds. You need to specify `--batch-mode` to make this work.
- MAVEN_CACHE_FOLDER: "$CI_PROJECT_DIR/.m2/repository"
- MAVEN_OPTS: "-Dhttps.protocols=TLSv1.2 -Dmaven.repo.local=$CI_PROJECT_DIR/.m2/repository -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=WARN -Dorg.slf4j.simpleLogger.showDateTime=true -Djava.awt.headless=true"
- YARN_CACHE_FOLDER: "$CI_PROJECT_DIR/cache_yarn"
- NODE_CACHE: "$CI_PROJECT_DIR/opensilex-dev/.node"
- EMBDED_MONGO_CACHE: "/root/.embedmongo/"
- MODULE_ID: "inrae-bigdatagrapes"
+  GIT_DEPTH: 5
+  GIT_OPTIONS: "--allow-unrelated-histories"
+  # GLOBAL
+  # As of Maven 3.3.0 instead of this you may define these options in `.mvn/maven.config` so the same config is used
+  # when running from the command line.
+  MAVEN_CLI_OPTS: "--batch-mode --show-version "
+  # DEFAULT SERVER MAVEN VERSION
+  MVN_VERSION: 3.6.3
+  # DEFAULT SERVER JAVA VERSION
+  JAVA_VERSION: 11
+  REVISION: "INSTANCE-SNAPSHOT"
+  # This will supress any download for dependencies and plugins or upload messages which would clutter the console log.
+  # `showDateTime` will show the passed time in milliseconds. You need to specify `--batch-mode` to make this work.
+  MAVEN_CACHE_FOLDER: "$CI_PROJECT_DIR/.m2/repository"
+  MAVEN_OPTS: "-Dhttps.protocols=TLSv1.2 -Dmaven.repo.local=$CI_PROJECT_DIR/.m2/repository -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=WARN -Dorg.slf4j.simpleLogger.showDateTime=true -Djava.awt.headless=true"
+  YARN_CACHE_FOLDER: "$CI_PROJECT_DIR/cache_yarn"
+  NODE_CACHE: "$CI_PROJECT_DIR/opensilex-dev/.node"
+  EMBDED_MONGO_CACHE: "/root/.embedmongo/"
+  MODULE_ID: "inrae-vitioeno"
 
 ########################
 ##  CACHE TEMPLATE
@@ -73,9 +72,9 @@ variables:
 
 ########################
 ##  SIXTINE BUILD INSTANCE
-######################## 
+########################
 
-bigdatagrapes:build:
+vitioeno:build:
   <<: *build_template_with_opensilex
   script:
     # Create module folder if not exists
@@ -94,11 +93,11 @@ bigdatagrapes:build:
   artifacts:
     paths:
       - $CI_PROJECT_DIR/$REVISION
-      
-trigger:bigdatagrapes:deploy:test:
+
+trigger:vitioeno:deploy:test:
   stage: deploy
   image: curlimages/curl
   script:
-    - curl --request POST --form "variables[DEPLOY]=bigdatagrapes-test" --form "token=$CI_JOB_TOKEN" --form "ref=master" --form "variables[COMMIT_SHA_OPENSILEX_DEV]=$COMMIT_SHA_OPENSILEX_DEV" https://forgemia.inra.fr/api/v4/projects/403/trigger/pipeline
-  needs: 
-    - job: "bigdatagrapes:build"
+    - curl --request POST --form "variables[DEPLOY]=vitioeno-test" --form "token=$CI_JOB_TOKEN" --form "ref=master" --form "variables[COMMIT_SHA_OPENSILEX_DEV]=$COMMIT_SHA_OPENSILEX_DEV" https://forgemia.inra.fr/api/v4/projects/403/trigger/pipeline
+  needs:
+    - job: "vitioeno:build"

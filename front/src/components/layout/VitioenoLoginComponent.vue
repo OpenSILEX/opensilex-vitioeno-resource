@@ -3,12 +3,23 @@
     <ValidationObserver ref="validatorRef">
       <b-form @submit.prevent="onLogin" class="fullmodal-form">
         <div class="login-header">
-          <img v-bind:src="$opensilex.getResourceURI('images/logo-bigdatagrapes.png')" />
-          <h2>{{$t('bigdatagrapes.title')}}</h2>
+          <img v-bind:src="$opensilex.getResourceURI('images/logo-vitioeno.png')" />
+          <h2>{{$t('vitioeno.title')}}</h2>
         </div>
 
         <div class="login-form-content">
-          <p>{{$t('bigdatagrapes.login.info')}}:</p>
+          <p>{{$t('vitioeno.login.infoGuest')}}:</p>
+          <div class="sign-btn text-center">
+            <b-button
+              variant="primary"
+              @click="onLoginAsGuest"
+              v-text="$t('component.login.button.loginAsGuest')"
+            ></b-button>
+          </div>
+          <br />
+          <p>ou</p>
+          <br />
+          <p>{{$t('vitioeno.login.info')}}:</p>
           <b-form-group id="login-group" required>
             <ValidationProvider
               :name="$t('component.login.validation.email')"
@@ -57,16 +68,16 @@
 import { Component, Ref } from "vue-property-decorator";
 import { TokenGetDTO } from "opensilex-security/index";
 import HttpResponse, {
-  OpenSilexResponse
+  OpenSilexResponse,
 } from "opensilex-security/HttpResponse";
 import Vue from "vue";
 
 @Component
-export default class BigdatagrapesLoginComponent extends Vue {
+export default class VitioenoLoginComponent extends Vue {
   get form() {
     return {
       email: "",
-      password: ""
+      password: "",
     };
   }
 
@@ -89,42 +100,54 @@ export default class BigdatagrapesLoginComponent extends Vue {
   forceRefresh = false;
   onLogin() {
     let validatorRef: any = this.validatorRef;
-    validatorRef.validate().then(isValid => {
+    validatorRef.validate().then((isValid) => {
       if (isValid) {
-        this.$opensilex.showLoader();
-        this.$opensilex
-          .getService("opensilex-security.AuthenticationService")
-          .authenticate({
-            identifier: this.form.email,
-            password: this.form.password
-          })
-          .then((http: HttpResponse<OpenSilexResponse<TokenGetDTO>>) => {
-            let user = this.$opensilex.fromToken(http.response.result.token);
-            this.$opensilex.setCookieValue(user);
-            this.forceRefresh = true;
-            this.$store.commit("login", user);
-            this.$store.commit("refresh");
-          })
-          .catch(error => {
-            if (error.status == 403) {
-              console.error("Invalid credentials", error);
-              this.$opensilex.errorHandler(
-                error,
-                this.$t("component.login.errors.invalid-credentials")
-              );
-            } else {
-              this.$opensilex.errorHandler(error);
-            }
-            this.$opensilex.hideLoader();
-          });
+        this.login();
       }
     });
+  }
+  onLoginAsGuest() {
+    this.form.email = "guest@opensilex.org";
+    this.form.password = "guest";
+    this.login().then(() => {
+      this.form.email = "";
+      this.form.password = "";
+    });
+  }
+
+  login() {
+    this.$opensilex.showLoader();
+    return this.$opensilex
+      .getService("opensilex-security.AuthenticationService")
+      .authenticate({
+        identifier: this.form.email,
+        password: this.form.password,
+      })
+      .then((http: HttpResponse<OpenSilexResponse<TokenGetDTO>>) => {
+        let user = this.$opensilex.fromToken(http.response.result.token);
+        this.$opensilex.setCookieValue(user);
+        this.forceRefresh = true;
+        this.$store.commit("login", user);
+        this.$store.commit("refresh");
+      })
+      .catch((error) => {
+        if (error.status == 403) {
+          console.error("Invalid credentials", error);
+          this.$opensilex.errorHandler(
+            error,
+            this.$t("component.login.errors.invalid-credentials")
+          );
+        } else {
+          this.$opensilex.errorHandler(error);
+        }
+        this.$opensilex.hideLoader();
+      });
   }
 }
 </script>
 
 <style scoped lang="scss">
-@import "../../../theme/bigdatagrapes/variables.scss";
+@import "../../../theme/vitioeno/variables.scss";
 
 .fullmodal {
   display: block;
@@ -136,7 +159,7 @@ export default class BigdatagrapesLoginComponent extends Vue {
   height: 100%;
   width: 100%;
   z-index: 9999;
-  background-color: getVar("--backgroundColor");
+  background-color: getVar(--highlightBackgroundColorLight);
 }
 
 .fullmodal-form {
@@ -458,4 +481,4 @@ input[type="text"]:placeholder {
 #icon {
   width: 60%;
 }
-</style>
+</style> 
