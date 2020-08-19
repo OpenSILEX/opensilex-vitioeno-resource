@@ -15,6 +15,11 @@
         },
         "home": {
             "wineNews": "Quelques tweets sur l'actualité de la vine et du vin"
+        },
+        "menu": {
+            "shared": {
+                "label": "Ressources partagées"
+            }
         }
     }
 }
