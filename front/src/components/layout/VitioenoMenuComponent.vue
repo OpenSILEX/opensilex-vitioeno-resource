@@ -51,6 +51,10 @@ export default class VitioenoMenuComponent extends Vue {
 
   width;
 
+  static async asyncInit($opensilex) {
+    await $opensilex.loadModule("opensilex-data-analysis");
+  }
+
   created() {
     window.addEventListener("resize", this.handleResize);
     this.handleResize();

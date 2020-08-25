@@ -49,7 +49,8 @@ variables:
     # Download and unzip latest artifact from opensilex-dev
     - cd $CI_PROJECT_DIR
     - rm -rf $REVISION
-    - 'curl --location --output artifacts.zip --header "JOB-TOKEN: $CI_JOB_TOKEN" "https://forgemia.inra.fr/api/v4/projects/1675/jobs/artifacts/master/download?job=opensilex:build"'
+    # Retreive data analysis
+    - 'curl --location --output artifacts.zip --header "JOB-TOKEN: $CI_JOB_TOKEN" "https://forgemia.inra.fr/api/v4/projects/2076/jobs/artifacts/master/download?job=dataanalysis:build"'
     - unzip -o artifacts.zip
     # Clone original opensilex-dev sources
     - cd $CI_PROJECT_DIR
