@@ -1,7 +1,19 @@
 menu:
+  - id: news
+    label: component.menu.news.label
+    route:
+      component: inrae-vitioeno-VitioenoHomeComponent
+      path: /news
   - id: shared
     label: component.menu.shared.label
     children:
+      - id: sharedInfrastructures
+        label: component.menu.infrastructure
+        route:
+          path: /infrastructures
+          component: opensilex-InfrastructureView
+          credentials:
+            - infrastructure-read
       - id: variables
         label: component.menu.variables
         route:
@@ -22,3 +34,10 @@ menu:
           component: opensilex-GermplasmView
           credentials:
             - germplasm-read
+  - id: applications
+    label: component.menu.applications.label
+    route:
+      path: /dataAnalysis/apps
+      component: opensilex-data-analysis-ApplicationView
+      credentials:
+        - dataAnalysis-read

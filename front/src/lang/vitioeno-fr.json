@@ -19,7 +19,13 @@
         "menu": {
             "shared": {
                 "label": "Ressources partagées"
+            },
+            "applications": {
+                "label": "Applications"
             }
+        },
+        "news": {
+            "label": "News"
         }
     }
 }

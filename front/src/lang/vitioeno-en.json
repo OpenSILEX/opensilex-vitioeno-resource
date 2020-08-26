@@ -19,6 +19,12 @@
         "menu": {
             "shared": {
                 "label": "Shared ressources"
+            },
+            "applications": {
+                "label": "Applications"
+            },
+            "news": {
+                "label": "News"
             }
         }
     }

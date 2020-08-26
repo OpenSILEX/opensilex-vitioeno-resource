@@ -130,6 +130,10 @@
           ></opensilex-DeleteButton>
         </b-button-group>
       </template>
+      <p>
+        Attribution - Pas d’Utilisation Commerciale - Pas de Modification
+        CC BY-NC-ND
+      </p>
     </opensilex-TableAsyncView>
   </div>
 </template>
