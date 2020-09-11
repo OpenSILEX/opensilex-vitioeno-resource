@@ -19,13 +19,6 @@ menu:
         route:
           path: /variables
           component: opensilex-VariableView
-      - id: factors
-        label: component.menu.experimentalDesign.factors
-        route:
-          path: /factors
-          component: opensilex-FactorsView
-          credentials:
-            - factor-read
       - id: germplasm
         label: component.menu.experimentalDesign.germplasm
         icon: ik-cloud-rain
