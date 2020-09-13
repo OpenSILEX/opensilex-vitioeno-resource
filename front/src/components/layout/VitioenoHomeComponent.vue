@@ -3,7 +3,7 @@
     <div class="container-fluid">
       <b-row class="justify-content-md-center">
         <b-col></b-col>
-        <b-col cols="5">
+        <b-col cols="10">
           <b-img
             left
             v-bind:src="$opensilex.getResourceURI('images/logo-vitioeno.png')"
@@ -22,7 +22,7 @@
       <br />
       <b-row>
         <b-col></b-col>
-        <b-col sm="8">
+        <b-col sm="10">
           <b-card no-body>
             <b-tabs pills card vertical>
               <!-- Render Tabs, supply a unique `key` to each tab -->
