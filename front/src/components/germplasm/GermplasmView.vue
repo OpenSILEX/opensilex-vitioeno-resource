@@ -64,6 +64,7 @@ import Oeso from "../../ontologies/Oeso";
 export default class GermplasmView extends Vue {
   $opensilex: any;
   $store: any;
+  $i18n : any;
   service: GermplasmService;
 
   get user() {
