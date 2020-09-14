@@ -47,7 +47,7 @@
 <script lang="ts">
 import { Component, Ref } from "vue-property-decorator";
 import Vue from "vue";
-import HttpResponse, { OpenSilexResponse } from "../../lib/HttpResponse";
+import HttpResponse, { OpenSilexResponse } from "../../../../../opensilex-front/front/src/lib/HttpResponse";
 
 import { 
   GermplasmService, 
@@ -57,8 +57,8 @@ import {
   OntologyService, 
   ResourceTreeDTO 
   } from "opensilex-core/index"
-import GermplasmCreate from "./GermplasmCreate.vue";
-import Oeso from "../../ontologies/Oeso";
+import GermplasmCreate from "../../../../../opensilex-front/front/src/components/germplasm/GermplasmCreate.vue";
+import Oeso from"../../../../../opensilex-front/front/src/ontologies/Oeso";
 
 @Component
 export default class GermplasmView extends Vue {
