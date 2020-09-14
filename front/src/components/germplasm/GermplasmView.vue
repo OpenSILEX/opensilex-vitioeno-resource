@@ -57,7 +57,7 @@ import {
   OntologyService, 
   ResourceTreeDTO 
   } from "opensilex-core/index"
-import GermplasmCreate from "../../../../../opensilex-front/front/src/components/germplasm/GermplasmCreate.vue";
+import GermplasmCreate from "./GermplasmCreate.vue";
 import Oeso from"../../../../../opensilex-front/front/src/ontologies/Oeso";
 
 @Component
