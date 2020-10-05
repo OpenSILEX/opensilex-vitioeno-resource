@@ -27,3 +27,10 @@ menu:
           component: opensilex-GermplasmView
           credentials:
             - germplasm-read
+  - id: scientific-apps
+    label: component.menu.applications.label
+    route:
+      path: /dataAnalysis/apps
+      component: opensilex-data-analysis-ApplicationView
+      credentials:
+        - dataAnalysis-read
