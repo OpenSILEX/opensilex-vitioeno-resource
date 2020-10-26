@@ -5,7 +5,8 @@
         "login": {
             "info": "Merci de saisir vos identifiants pour vous connecter à l'application",
             "infoGuest": "Vous pouvez vous connecter en tant qu'invité"
-        }
+        },
+        "license" : "Attribution - Pas d’Utilisation Commerciale - Pas de Modification CC BY-NC-ND"
     },
     "component": {
         "login": {

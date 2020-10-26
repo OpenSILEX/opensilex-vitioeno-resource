@@ -5,7 +5,8 @@
         "login": {
             "info": "Please enter your identifiers to login",
             "infoGuest": "You can connect as guest"
-        }
+        },
+        "license" : "Attribution - No Commercial Use - No Modification CC BY-NC-ND"
     },
     "component": {
         "login": {

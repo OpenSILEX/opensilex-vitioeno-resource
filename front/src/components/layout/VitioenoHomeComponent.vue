@@ -22,7 +22,7 @@
       <br />
       <b-row>
         <b-col></b-col>
-        <b-col sm="10">
+        <b-col sm="9">
           <b-card no-body>
             <b-tabs pills card vertical>
               <!-- Render Tabs, supply a unique `key` to each tab -->
