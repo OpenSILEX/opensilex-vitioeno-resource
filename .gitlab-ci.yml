@@ -94,11 +94,3 @@ vitioeno:build:
   artifacts:
     paths:
       - $CI_PROJECT_DIR/$REVISION
-
-trigger:vitioeno:deploy:test:
-  stage: deploy
-  image: curlimages/curl
-  script:
-    - curl --request POST --form "variables[DEPLOY]=vitioeno-test" --form "token=$CI_JOB_TOKEN" --form "ref=master" --form "variables[COMMIT_SHA_OPENSILEX_DEV]=$COMMIT_SHA_OPENSILEX_DEV" https://forgemia.inra.fr/api/v4/projects/403/trigger/pipeline
-  needs:
-    - job: "vitioeno:build"
