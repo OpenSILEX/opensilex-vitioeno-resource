@@ -12,8 +12,6 @@ menu:
         route:
           path: /infrastructures
           component: opensilex-InfrastructureView
-          credentials:
-            - infrastructure-read
       - id: variables
         label: component.menu.variables
         route:
@@ -25,12 +23,8 @@ menu:
         route:
           path: /germplasm
           component: opensilex-GermplasmView
-          credentials:
-            - germplasm-read
   - id: apps
     label: component.menu.applications.label
     route:
       path: /dataAnalysis/apps
       component: opensilex-data-analysis-ApplicationView
-      credentials:
-        - dataAnalysis-read
