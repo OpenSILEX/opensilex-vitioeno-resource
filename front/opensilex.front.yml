@@ -78,13 +78,13 @@ menu:
         route:
           path: /users
           component: opensilex-UserView
-        credentials:
-          - user-modification
+          credentials:
+            - user-modification
       - id: groups
         label: component.menu.security.groups
         route:
           path: /groups
           component: opensilex-GroupView
-        credentials:
-          - group-modification
+          credentials:
+            - group-modification
       
