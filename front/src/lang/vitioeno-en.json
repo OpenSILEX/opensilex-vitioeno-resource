@@ -1,7 +1,7 @@
 {
     "vitioeno": {
-        "welcome-message": "Welcome to OpenSILEX Vitioeno",
-        "title": "An instance of shared resources for vine and wine",
+        "welcome-message": "Welcome to Vitioeno",
+        "title": "A information system of shared resources for vine and wine",
         "login": {
             "info": "Please enter your identifiers to login",
             "infoGuest": "You can connect as guest"

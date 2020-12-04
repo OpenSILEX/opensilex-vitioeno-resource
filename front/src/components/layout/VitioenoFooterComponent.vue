@@ -1,6 +1,6 @@
 <template>
   <div id="footer">
-    <span class="text-center">© OpenSILEX - Vitioeno v.1.0.0</span>
+    <span class="text-center">© Vitioeno v.1.0.0</span>
   </div>
 </template>
 

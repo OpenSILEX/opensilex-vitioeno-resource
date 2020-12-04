@@ -3,7 +3,7 @@
     <div class="app-logo">
       <router-link to="/">
         <img v-bind:src="$opensilex.getResourceURI('images/logo-vitioeno.png')" />
-        <div class="app-title">OpenSILEX Vitioeno</div>
+        <div class="app-title">Vitioeno</div>
       </router-link>
     </div>
 
