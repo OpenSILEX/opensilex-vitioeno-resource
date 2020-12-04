@@ -23,21 +23,24 @@
             },
             "applications": {
                 "label": "Applications"
-            }
-        },
-        "news": {
-            "label": "News"
-        },
-        "references": {
-            "label": "Réferences",
-            "ontologies": {
-                "label": "Ontologies"
             },
-            "documents": {
-                "label": "Documents"
+            "news": {
+                "label": "News"
             },
-            "links": {
-                "label": "Links"
+            "references": {
+                "label": "Réferences",
+                "ontologies": {
+                    "label": "Ontologies"
+                },
+                "documents": {
+                    "label": "Documents"
+                },
+                "links": {
+                    "label": "Links"
+                }
+            },
+            "users-groups": {
+                "label": "Users-Groups"
             }
         },
         "twitter": {

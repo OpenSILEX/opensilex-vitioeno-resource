@@ -46,3 +46,45 @@ menu:
     route:
       path: /dataAnalysis/apps
       component: opensilex-data-analysis-ApplicationView
+  - id: configuration_vitioeno
+    label: component.menu.configuration
+    children: 
+      - id: profiles
+        label: component.menu.security.profiles
+        route:
+          path: /profiles
+          component: opensilex-ProfileView
+          credentials:
+            - is-admin
+      # - id: scientificObjectTypes
+      #   label: component.menu.scientificObjectTypes
+      #   route:
+      #     path: /scientific-object-types
+      #     component: opensilex-ScientificObjectTypes
+      #     credentials:
+      #     - is-admin
+      - id: facilitiesTypes
+        label: component.menu.facilitiesTypes
+        route:
+          path: /facilities-types
+          component: opensilex-InfrastructureFacilitiesTypes
+          credentials:
+            - is-admin
+  - id: user_groups_vitioeno
+    label: component.menu.users-groups.label
+    children:
+      - id: users
+        label: component.menu.security.users
+        route:
+          path: /users
+          component: opensilex-UserView
+        credentials:
+          - user-modification
+      - id: groups
+        label: component.menu.security.groups
+        route:
+          path: /groups
+          component: opensilex-GroupView
+        credentials:
+          - group-modification
+      

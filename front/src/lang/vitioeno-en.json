@@ -38,6 +38,9 @@
                 "links": {
                     "label": "Links"
                 }
+            },
+            "users-groups": {
+                "label": "Users-Groups"
             }
         },
         "twitter": {
