@@ -6,7 +6,7 @@
             "info": "Please enter your identifiers to login",
             "infoGuest": "You can connect as guest"
         },
-        "license" : "Attribution - No Commercial Use - No Modification CC BY-NC-ND"
+        "license": "Attribution - No Commercial Use - No Modification CC BY-NC-ND"
     },
     "component": {
         "login": {
@@ -26,7 +26,23 @@
             },
             "news": {
                 "label": "News"
+            },
+            "references": {
+                "label": "References",
+                "ontologies": {
+                    "label": "Ontologies"
+                },
+                "documents": {
+                    "label": "Documents"
+                },
+                "links": {
+                    "label": "Links"
+                }
             }
+        },
+        "twitter": {
+            "national": "National",
+            "international": "International"
         }
     }
 }

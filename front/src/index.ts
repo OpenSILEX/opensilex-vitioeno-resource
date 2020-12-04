@@ -6,6 +6,8 @@ import VitioenoMenuComponent from "./components/layout/VitioenoMenuComponent.vue
 import VitioenoHeaderComponent from "./components/layout/VitioenoHeaderComponent.vue";
 import VitioenoHomeComponent from "./components/layout/VitioenoHomeComponent.vue";
 import GermplasmList from './components/germplasm/GermplasmList.vue';
+import LinksView from './components/references/links/LinksView.vue';
+import OntologiesView from './components/references/ontologies/OntologiesView.vue';
 
 export default {
     install(Vue, options) {
@@ -16,7 +18,9 @@ export default {
         "inrae-vitioeno-VitioenoFooterComponent": VitioenoFooterComponent,
         "inrae-vitioeno-VitioenoMenuComponent": VitioenoMenuComponent,
         "inrae-vitioeno-VitioenoHeaderComponent": VitioenoHeaderComponent,
-        "opensilex-GermplasmList": GermplasmList
+        "opensilex-GermplasmList": GermplasmList,
+        "inrae-vitioeno-LinksView": LinksView,
+        "inrae-vitioeno-OntologiesView": OntologiesView
 
     },
     lang: {

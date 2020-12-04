@@ -23,6 +23,24 @@ menu:
         route:
           path: /germplasm
           component: opensilex-GermplasmView
+  - id: references
+    label: component.menu.references.label
+    children:
+      - id: ontologies
+        label: component.menu.references.ontologies.label
+        route:
+          path: /ontologies
+          component: inrae-vitioeno-OntologiesView
+      - id: documents
+        label: Documents
+        route:
+          path: /documents
+          component: opensilex-DocumentView
+      - id: links
+        label: component.menu.references.links.label
+        route:
+          component: inrae-vitioeno-LinksView
+          path: /links
   - id: apps
     label: component.menu.applications.label
     route:
