@@ -2,108 +2,123 @@
   <div>
 
     <opensilex-SearchFilterField
-      @search="updateFilters()"
+      @search="refresh()"
       @clear="resetSearch()"
       label="GermplasmList.filter.description"
+      :showAdvancedSearch="true"
     >
       <template v-slot:filters>
-        <div class="col col-xl-4 col-sm-6 col-12">
+        <!-- Type -->
+        <opensilex-FilterField>
           <opensilex-TypeForm
-            :type.sync="filter.type"
+            :type.sync="filter.rdf_type"
             :baseType="$opensilex.Oeso.GERMPLASM_TYPE_URI"
             placeholder="GermplasmList.filter.rdfType-placeholder"
           ></opensilex-TypeForm>
-        </div>
-        <div class="col col-xl-4 col-sm-6 col-12">
-          <opensilex-SpeciesSelector
-            ref="speciesSelector"
+        </opensilex-FilterField>
+        
+        <!-- Species -->
+        <opensilex-FilterField>
+          <opensilex-SelectForm
             label="GermplasmList.filter.species"
             placeholder="GermplasmList.filter.species-placeholder"
             :multiple="false"
-            :species.sync="filter.fromSpecies"
-          ></opensilex-SpeciesSelector>
-        </div>
-        <!-- <div class="col col-xl-4 col-sm-6 col-12">
-          <b-form-group>
-            <label>{{$t('GermplasmList.filter.year')}}</label>
-            <b-input-group>
-              <opensilex-StringFilter
-                :filter.sync="filter.productionYear"
-                placeholder="GermplasmList.filter.year-placeholder"
-                type="number"
-              ></opensilex-StringFilter>
-            </b-input-group>
-          </b-form-group>
-        </div> -->
-        <div class="col col-xl-4 col-sm-6 col-12">
-          <b-form-group>
-            <label>{{$t('GermplasmList.filter.institute')}}</label>
-            <b-input-group>
-              <opensilex-StringFilter
-                :filter.sync="filter.institute"
-                placeholder="GermplasmList.filter.institute-placeholder"
-              ></opensilex-StringFilter>
-            </b-input-group>
-          </b-form-group>
-        </div>
-        <div class="col col-xl-4 col-sm-6 col-12">
-          <b-form-group>
-            <label>{{$t('GermplasmList.filter.label')}}</label>
-            <b-input-group>
-              <opensilex-StringFilter
-                :filter.sync="filter.name"
-                placeholder="GermplasmList.filter.label-placeholder"
-              ></opensilex-StringFilter>
-            </b-input-group>
-          </b-form-group>
-        </div>
-        <!-- <div class="col col-xl-4 col-sm-6 col-12">
-          <b-form-group>
-            <b-input-group>
-                Experiments 
-              <opensilex-ExperimentSelector
-                label="GermplasmList.filter.experiment"
-                :multiple="false"
-                :experiments.sync="filter.experiment"
-              ></opensilex-ExperimentSelector>
-            </b-input-group>
-          </b-form-group>
-        </div>            -->
-      </template>       
+            :selected.sync="filter.species"
+            :options="species"
+          ></opensilex-SelectForm>
+        </opensilex-FilterField>
+
+        <!-- Year -->
+        <opensilex-FilterField>
+          <label>{{$t('GermplasmList.filter.year')}}</label>
+          <opensilex-StringFilter
+            :filter.sync="filter.production_year"
+            placeholder="GermplasmList.filter.year-placeholder"
+            type="number"
+          ></opensilex-StringFilter>
+        </opensilex-FilterField>
+
+        <!-- Institute -->
+        <opensilex-FilterField>
+          <label>{{$t('GermplasmList.filter.institute')}}</label>
+          <opensilex-StringFilter
+            :filter.sync="filter.institute"
+            placeholder="GermplasmList.filter.institute-placeholder"
+          ></opensilex-StringFilter>
+        </opensilex-FilterField>
+
+        <!-- Name -->
+        <opensilex-FilterField>
+          <label>{{$t('GermplasmList.filter.label')}}</label>
+          <opensilex-StringFilter
+            :filter.sync="filter.name"
+            placeholder="GermplasmList.filter.label-placeholder"
+          ></opensilex-StringFilter>
+        </opensilex-FilterField>
+
+        <!-- Experiments -->
+        <opensilex-FilterField>
+          <opensilex-ExperimentSelector
+            label="GermplasmList.filter.experiment"
+            :multiple="false"
+            :experiments.sync="filter.experiment"
+          ></opensilex-ExperimentSelector>
+        </opensilex-FilterField> 
+
+        <!-- URI -->
+        <opensilex-FilterField>
+          <label>{{$t('GermplasmList.filter.uri')}}</label>
+          <opensilex-StringFilter
+            :filter.sync="filter.uri"
+            placeholder="GermplasmList.filter.uri-placeholder"
+          ></opensilex-StringFilter>
+        </opensilex-FilterField>        
+      </template>  
+
+      <template v-slot:advancedSearch>
+        <opensilex-FilterField>
+          <opensilex-StringFilter
+            :filter.sync="filter.metadataKey"
+            label="attribute key"
+          ></opensilex-StringFilter>
+        </opensilex-FilterField>
+        <opensilex-FilterField>
+          <opensilex-StringFilter
+            :filter.sync="filter.metadataValue"
+            label="attribute value"
+          ></opensilex-StringFilter>
+        </opensilex-FilterField>
+      </template>     
+      
     </opensilex-SearchFilterField>
 
-    <b-button class="mb-2 mr-2" @click="exportGermplasm()" >{{$t('GermplasmList.export')}}</b-button> 
-      <p class="alert alert-secondary">
-        {{this.$i18n.t('vitioeno.license')}}
-      </p>
     <opensilex-TableAsyncView
       ref="tableRef"
       :searchMethod="searchGermplasm"
       :fields="fields"
       :isSelectable="isSelectable"
-      defaultSortBy="label"
+      defaultSortBy="name"
       labelNumberOfSelectedRow="GermplasmList.selected"
       iconNumberOfSelectedRow="ik#ik-feather"
-    >
+    > 
+      <p class="alert alert-secondary">
+        {{this.$i18n.t('vitioeno.license')}}
+      </p>
+      <template v-slot:export>
+        <b-button class="mb-2 mr-2" @click="exportGermplasm()" >{{$t('GermplasmList.export')}}</b-button> 
+      </template>  
       <template v-slot:cell(name)="{data}">
         <opensilex-UriLink
           :uri="data.item.uri"
           :value="data.item.name"
-          :to="{path: '/germplasm/'+ encodeURIComponent(data.item.uri)}"
+          :to="{path: '/germplasm/details/'+ encodeURIComponent(data.item.uri)}"
         ></opensilex-UriLink>
       </template>
-
-      <template v-slot:row-details></template>
-
-      <!-- <template v-slot:cell(uri)="{data}">
-         <a  href="#" class="uri-info primary" @click="$emit('onDetails', data.item.uri)">{{ data.item.uri}}</a> 
-        <opensilex-UriLink :uri="data.item.uri"></opensilex-UriLink>
-      </template>-->
 
       <template v-slot:cell(actions)="{data}">
         <b-button-group size="sm">
           <opensilex-EditButton
-            v-if="user.hasCredential(credentials.CREDENTIAL_GERMPLASM_MODIFICATION_ID) && !data.item.type.endsWith('Species')"
+            v-if="user.hasCredential(credentials.CREDENTIAL_GERMPLASM_MODIFICATION_ID) && !data.item.rdf_type.endsWith('Species')"
             @click="$emit('onEdit', data.item.uri)"
             label="GermplasmList.update"
             :small="true"
@@ -131,12 +146,13 @@ import {
   OntologyService,
   ResourceTreeDTO,
   ExperimentGetListDTO,
-  ExperimentsService
+  ExperimentsService,
+  SpeciesService,
+  SpeciesDTO
 } from "opensilex-core/index";
 
 import Oeso from "../../../../../opensilex-front/front/src/ontologies/Oeso";
-import HttpResponse, { OpenSilexResponse } from "opensilex-core/HttpResponse";
-import { GermplasmSearchDTO } from "opensilex-core/index";
+import HttpResponse, { OpenSilexResponse } from "../../lib/HttpResponse";
 
 @Component
 export default class GermplasmList extends Vue {
@@ -169,34 +185,64 @@ export default class GermplasmList extends Vue {
   }
 
   germplasmTypes = [];
-  speciesList = [];
+  species = [];
+  speciesByUri: Map<String, SpeciesDTO> = new Map<String, SpeciesDTO>();
   experimentsList = [];
 
-  filter: GermplasmSearchDTO = {
-    type: null,
-    name: null,
-    fromSpecies: null,
-    productionYear: null,
-    institute: null,
-    experiment: null
+  exportPath = "/core/germplasm/export";
+
+  filter = {
+    rdf_type: undefined,
+    name: undefined,
+    species: undefined,
+    production_year: undefined,
+    institute: undefined,
+    experiment: undefined,
+    uri: undefined,
+    metadataKey: undefined,
+    metadataValue: undefined
+  };
+
+  exportFilter = {
+    rdf_type: undefined,
+    name: undefined,
+    species: undefined,
+    production_year: undefined,
+    institute: undefined,
+    experiment: undefined,
+    uri: undefined,
+    metadata: undefined
   };
 
   resetSearch() {
     this.resetFilters();
-    this.updateFilters();
-    this.refresh();
+    //this.updateFilters();
+    this.refresh()
   }
 
   resetFilters() {
     this.filter = {
-      type: null,
-      name: null,
-      fromSpecies: null,
-      productionYear: null,
-      institute: null,
-      experiment: null
+      rdf_type: undefined,
+      name: undefined,
+      species: undefined,
+      production_year: undefined,
+      institute: undefined,
+      experiment: undefined,
+      uri: undefined,
+      metadataKey: undefined,
+      metadataValue: undefined
     };
-    // Only if search and reset button are use in list
+    
+    this.exportFilter = {
+      rdf_type: undefined,
+      name: undefined,
+      species: undefined,
+      production_year: undefined,
+      institute: undefined,
+      experiment: undefined,
+      uri: undefined,
+      metadata: undefined
+    };
   }
 
   getSelected() {
@@ -220,6 +266,7 @@ export default class GermplasmList extends Vue {
   created() {
     this.service = this.$opensilex.getService("opensilex.GermplasmService");
     let query: any = this.$route.query;
+    this.loadSpecies();
 
     this.resetFilters();
     for (let [key, value] of Object.entries(this.filter)) {
@@ -233,40 +280,7 @@ export default class GermplasmList extends Vue {
     for (let [key, value] of Object.entries(this.filter)) {
       this.$opensilex.updateURLParameter(key, value, "");
     }
-    this.refresh();
-  }
-
-  updateTypeFilter() {
-    this.$opensilex.updateURLParameter("type", this.filter.type);
-    this.refresh();
-  }
-
-  updateSpeciesFilter() {
-    this.$opensilex.updateURLParameter("species", this.filter.fromSpecies);
-    this.refresh();
-  }
-
-  updateYearFilter() {
-    let year = null;
-    if (this.filter.productionYear != null) {
-      year = Number(this.filter.productionYear);
-    }
-    this.$opensilex.updateURLParameter("year", year);
-  }
-
-  updateInstituteFilter() {
-    this.$opensilex.updateURLParameter("institute", this.filter.institute);
-    this.refresh();
-  }
-
-  updateNameFilter() {
-    this.$opensilex.updateURLParameter("name", this.filter.name);
-    this.refresh();
-  }
-
-  updateExperimentFilter() {
-    this.$opensilex.updateURLParameter("experiment", this.filter.experiment);
-    this.refresh();
+    
   }
 
   get fields() {
@@ -274,15 +288,15 @@ export default class GermplasmList extends Vue {
       {
         key: "name",
         label: "GermplasmList.name",
-        sortable: true
+        sortable: false
       },
       {
-        key: "typeLabel",
+        key: "rdf_type_name",
         label: "GermplasmList.rdfType",
         sortable: true
       },
       {
-        key: "speciesLabel",
+        key: "species_name",
         label: "GermplasmList.speciesLabel"
       }
     ];
@@ -296,26 +310,39 @@ export default class GermplasmList extends Vue {
   }
 
   @Ref("tableRef") readonly tableRef!: any;
+  @Ref("speciesSelector") readonly speciesSelector!: any;
 
   refresh() {
+    this.updateFilters();
     this.tableRef.refresh();
   }
 
   searchGermplasm(options) {
+    this.updateExportFilters();
     return this.service.searchGermplasm(
+      this.filter.uri,
+      this.filter.rdf_type,
+      this.filter.name,
+      undefined,
+      this.filter.production_year,
+      this.filter.species,
+      undefined,
+      undefined,
+      this.filter.institute,
+      this.filter.experiment,
+      this.addMetadataFilter(),
       options.orderBy,
       options.currentPage,
-      options.pageSize,
-      this.filter
+      20
     );
   }
 
   exportGermplasm() {
-    let path = "/core/germplasm/exportCSV";
+    let path = "/core/germplasm/export";
     let today = new Date();
     let filename = "export_germplasm_" + today.getFullYear() + String(today.getMonth() + 1).padStart(2, '0') + String(today.getDate()).padStart(2, '0');
     this.$opensilex
-     .downloadFilefromPostService(path, filename, "csv", this.filter, this.lang);
+     .downloadFilefromService(path, filename, "csv", this.exportFilter);
   }
 
 
@@ -336,7 +363,7 @@ export default class GermplasmList extends Vue {
             let expDTO = http.response.result[i];
             this.experimentsList.push({
               value: expDTO.uri,
-              text: expDTO.label
+              text: expDTO.name
             });
           }
         }
@@ -344,14 +371,58 @@ export default class GermplasmList extends Vue {
       .catch(this.$opensilex.errorHandler);
   }
 
+  loadSpecies() {
+    let service: SpeciesService = this.$opensilex.getService(
+      "opensilex.SpeciesService"
+    );
+    service
+      .getAllSpecies()
+      .then((http: HttpResponse<OpenSilexResponse<Array<SpeciesDTO>>>) => {
+        this.species = [];
+        for (let i = 0; i < http.response.result.length; i++) {
+          this.speciesByUri.set(
+            http.response.result[i].uri,
+            http.response.result[i]
+          );
+          this.species.push({
+            id: http.response.result[i].uri,
+            label: http.response.result[i].name
+          });
+        }
+      })
+      .catch(this.$opensilex.errorHandler);
+  }
+
   updateLang() {
     this.loadExperiments();
+    this.loadSpecies();
     this.refresh();
   }
 
   loadGermplasmDetails(data) {
     data.toggleDetails();
   }
+
+  addMetadataFilter() {
+    let metadata = undefined;
+    if (this.filter.metadataKey != undefined && this.filter.metadataKey != ""
+    && this.filter.metadataValue != undefined && this.filter.metadataValue != "") {
+      metadata = '{"' + this.filter.metadataKey + '":"' + this.filter.metadataValue + '"}'
+      return metadata;
+    }
+  }
+
+  updateExportFilters() {
+    this.exportFilter.rdf_type = this.filter.rdf_type;
+    this.exportFilter.name = this.filter.name;
+    this.exportFilter.species = this.filter.species;
+    this.exportFilter.production_year = this.filter.production_year;
+    this.exportFilter.institute = this.filter.institute;
+    this.exportFilter.experiment = this.filter.experiment;
+    this.exportFilter.uri = this.filter.uri;
+    this.exportFilter.metadata = this.addMetadataFilter();
+  }
+
 }
 </script>
 
@@ -377,6 +448,7 @@ en:
     selectLabel: Select Germplasm
     selected: Selected Germplasm
     export: Export Germplasm list
+
     filter:
       description: Germplasm Search
       species: Species
@@ -391,6 +463,8 @@ en:
       rdfType-placeholder: Select a germplasm type
       experiment: Experiment
       experiment-placeholder: Select an experiment
+      uri: URI
+      uri-placeholder: Enter a part of an uri
       search: Search
       reset: Reset
 
@@ -406,6 +480,7 @@ fr:
     selectLabel: Sélection de Matériel Génétiques
     selected: Matériel Génétique(s) Sélectionné(s)
     export: Exporter la liste
+
     filter:
       description: Recherche de Ressources Génétiques
       species: Espèce
@@ -420,7 +495,9 @@ fr:
       rdfType-placeholder: Sélectionner un type de germplasm
       experiment: Expérimentation
       experiment-placeholder: Sélectionner une expérimentation
+      uri: URI
+      uri-placeholder: Entrer une partie d'une uri
       search: Rechercher
-      reset: Réinitialiser
+      reset: Réinitialiser      
   
 </i18n>
