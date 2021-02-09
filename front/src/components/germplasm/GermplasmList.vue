@@ -141,17 +141,13 @@ import { Component, Ref, Prop } from "vue-property-decorator";
 import Vue from "vue";
 import VueRouter from "vue-router";
 import {
-  GermplasmService,
-  GermplasmGetAllDTO,
-  OntologyService,
-  ResourceTreeDTO,
+  GermplasmService, 
   ExperimentGetListDTO,
   ExperimentsService,
   SpeciesService,
   SpeciesDTO
 } from "opensilex-core/index";
 
-import Oeso from "../../../../../opensilex-front/front/src/ontologies/Oeso";
 import HttpResponse, { OpenSilexResponse } from "../../../../../opensilex-front/front/src/lib/HttpResponse";
 
 @Component
