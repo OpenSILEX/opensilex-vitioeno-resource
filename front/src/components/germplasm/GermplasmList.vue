@@ -152,7 +152,7 @@ import {
 } from "opensilex-core/index";
 
 import Oeso from "../../../../../opensilex-front/front/src/ontologies/Oeso";
-import HttpResponse, { OpenSilexResponse } from "../../lib/HttpResponse";
+import HttpResponse, { OpenSilexResponse } from "../../../../../opensilex-front/front/src/lib/HttpResponse";
 
 @Component
 export default class GermplasmList extends Vue {
