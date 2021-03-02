@@ -7,11 +7,6 @@ menu:
   - id: shared
     label: component.menu.shared.label
     children:
-      - id: infrastructures_vitioeno
-        label: component.menu.infrastructure
-        route:
-          path: /infrastructures
-          component: opensilex-InfrastructureView
       - id: variables_vitioeno
         label: component.menu.variables
         route:
