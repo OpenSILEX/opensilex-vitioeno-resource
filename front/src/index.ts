@@ -18,7 +18,7 @@ export default {
         "inrae-vitioeno-VitioenoFooterComponent": VitioenoFooterComponent,
         "inrae-vitioeno-VitioenoMenuComponent": VitioenoMenuComponent,
         "inrae-vitioeno-VitioenoHeaderComponent": VitioenoHeaderComponent,
-        "opensilex-GermplasmList": GermplasmList,
+        "inrae-vitioeno-GermplasmList": GermplasmList,
         "inrae-vitioeno-LinksView": LinksView,
         "inrae-vitioeno-OntologiesView": OntologiesView
 

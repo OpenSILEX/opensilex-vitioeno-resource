@@ -22,7 +22,7 @@ menu:
         icon: ik-cloud-rain
         route:
           path: /germplasm
-          component: opensilex-GermplasmView
+          component: inrae-vitioeno-GermplasmList
   - id: references
     label: component.menu.references.label
     children:

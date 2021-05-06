@@ -3,7 +3,7 @@
 
     <opensilex-SearchFilterField
       @search="refresh()"
-      @clear="resetSearch()"
+      @clear="reset()"
       label="GermplasmList.filter.description"
       :showAdvancedSearch="true"
     >
@@ -55,15 +55,7 @@
             placeholder="GermplasmList.filter.label-placeholder"
           ></opensilex-StringFilter>
         </opensilex-FilterField>
-
-        <!-- Experiments -->
-        <opensilex-FilterField>
-          <opensilex-ExperimentSelector
-            label="GermplasmList.filter.experiment"
-            :multiple="false"
-            :experiments.sync="filter.experiment"
-          ></opensilex-ExperimentSelector>
-        </opensilex-FilterField> 
+ 
 
         <!-- URI -->
         <opensilex-FilterField>
@@ -79,34 +71,45 @@
         <opensilex-FilterField>
           <opensilex-StringFilter
             :filter.sync="filter.metadataKey"
-            label="attribute key"
+            label="GermplasmList.filter.metadataKey"
           ></opensilex-StringFilter>
         </opensilex-FilterField>
         <opensilex-FilterField>
           <opensilex-StringFilter
             :filter.sync="filter.metadataValue"
-            label="attribute value"
+            label="GermplasmList.filter.metadataValue"
           ></opensilex-StringFilter>
         </opensilex-FilterField>
       </template>     
       
     </opensilex-SearchFilterField>
-
+    <p class="alert alert-secondary">
+        {{this.$i18n.t('vitioeno.license')}}
+    </p>
     <opensilex-TableAsyncView
       ref="tableRef"
       :searchMethod="searchGermplasm"
       :fields="fields"
-      :isSelectable="isSelectable"
+      :isSelectable="true"
       defaultSortBy="name"
       labelNumberOfSelectedRow="GermplasmList.selected"
-      iconNumberOfSelectedRow="ik#ik-feather"
-    > 
-      <p class="alert alert-secondary">
-        {{this.$i18n.t('vitioeno.license')}}
-      </p>
-      <template v-slot:export>
-        <b-button class="mb-2 mr-2" @click="exportGermplasm()" >{{$t('GermplasmList.export')}}</b-button> 
-      </template>  
+      iconNumberOfSelectedRow="fa#seedling"
+    >
+      <template v-slot:selectableTableButtons="{ numberOfSelectedRows }">
+        <b-dropdown
+          dropright
+          class="mb-2 mr-2"
+          :small="true"
+          :disabled="numberOfSelectedRows == 0"
+          text=actions>
+            <b-dropdown-item-button    
+              @click="createDocument()"
+            >{{$t('component.common.addDocument')}}</b-dropdown-item-button>
+            <b-dropdown-item-button
+              @click="exportGermplasm()"
+          >{{$t('GermplasmList.export')}}</b-dropdown-item-button>
+        </b-dropdown>
+      </template>
       <template v-slot:cell(name)="{data}">
         <opensilex-UriLink
           :uri="data.item.uri"
@@ -133,6 +136,15 @@
         </b-button-group>
       </template>
     </opensilex-TableAsyncView>
+    <opensilex-ModalForm
+      v-if="user.hasCredential(credentials.CREDENTIAL_GERMPLASM_MODIFICATION_ID)"
+      ref="documentForm"
+      component="opensilex-DocumentForm"
+      createTitle="component.common.addDocument"
+      modalSize="lg"
+      :initForm="initForm"
+      icon="ik#ik-file-text"
+    ></opensilex-ModalForm>
   </div>
 </template>
 
@@ -141,9 +153,7 @@ import { Component, Ref, Prop } from "vue-property-decorator";
 import Vue from "vue";
 import VueRouter from "vue-router";
 import {
-  GermplasmService, 
-  ExperimentGetListDTO,
-  ExperimentsService,
+  GermplasmService,
   SpeciesService,
   SpeciesDTO
 } from "opensilex-core/index";
@@ -157,6 +167,9 @@ export default class GermplasmList extends Vue {
   $route: any;
   $router: VueRouter;
   service: GermplasmService;
+
+  @Ref("documentForm") readonly documentForm!: any;
+  @Ref("tableRef") readonly tableRef!: any;
 
   @Prop({
     default: false
@@ -199,24 +212,18 @@ export default class GermplasmList extends Vue {
     metadataValue: undefined
   };
 
-  exportFilter = {
-    rdf_type: undefined,
-    name: undefined,
-    species: undefined,
-    production_year: undefined,
-    institute: undefined,
-    experiment: undefined,
-    uri: undefined,
-    metadata: undefined
-  };
+  // exportFilter = {
+  //   rdf_type: undefined,
+  //   name: undefined,
+  //   species: undefined,
+  //   production_year: undefined,
+  //   institute: undefined,
+  //   experiment: undefined,
+  //   uri: undefined,
+  //   metadata: undefined
+  // };
 
-  resetSearch() {
-    this.resetFilters();
-    //this.updateFilters();
-    this.refresh()
-  }
-
-  resetFilters() {
+  reset() {
     this.filter = {
       rdf_type: undefined,
       name: undefined,
@@ -228,17 +235,17 @@ export default class GermplasmList extends Vue {
       metadataKey: undefined,
       metadataValue: undefined
     };
-    
-    this.exportFilter = {
-      rdf_type: undefined,
-      name: undefined,
-      species: undefined,
-      production_year: undefined,
-      institute: undefined,
-      experiment: undefined,
-      uri: undefined,
-      metadata: undefined
-    };
+    // this.exportFilter = {
+    //   rdf_type: undefined,
+    //   name: undefined,
+    //   species: undefined,
+    //   production_year: undefined,
+    //   institute: undefined,
+    //   experiment: undefined,
+    //   uri: undefined,
+    //   metadata: undefined
+    // };
+    this.refresh();
   }
 
   getSelected() {
@@ -260,23 +267,28 @@ export default class GermplasmList extends Vue {
   }
 
   created() {
-    this.service = this.$opensilex.getService("opensilex.GermplasmService");
-    let query: any = this.$route.query;
+    this.service = this.$opensilex.getService("opensilex.GermplasmService")    
     this.loadSpecies();
-
-    this.resetFilters();
+    this.updateFiltersFromURL();
+  }
+  
+  updateFiltersFromURL() {
+    let query: any = this.$route.query;
     for (let [key, value] of Object.entries(this.filter)) {
       if (query[key]) {
-        this.filter[key] = decodeURIComponent(query[key]);
+        if (Array.isArray(this.filter[key])){
+          this.filter[key] = decodeURIComponent(query[key]).split(",");
+        } else {
+          this.filter[key] = decodeURIComponent(query[key]);
+        }        
       }
     }
-  }
+  }  
 
-  updateFilters() {
+  updateURLFilters() {
     for (let [key, value] of Object.entries(this.filter)) {
       this.$opensilex.updateURLParameter(key, value, "");
-    }
-    
+    }    
   }
 
   get fields() {
@@ -305,16 +317,17 @@ export default class GermplasmList extends Vue {
     return tableFields;
   }
 
-  @Ref("tableRef") readonly tableRef!: any;
   @Ref("speciesSelector") readonly speciesSelector!: any;
 
   refresh() {
-    this.updateFilters();
+    this.tableRef.selectAll = false;
+    this.tableRef.onSelectAll();
+    this.updateURLFilters();
     this.tableRef.refresh();
   }
 
   searchGermplasm(options) {
-    this.updateExportFilters();
+    // this.updateExportFilters();
     return this.service.searchGermplasm(
       this.filter.uri,
       this.filter.rdf_type,
@@ -329,44 +342,24 @@ export default class GermplasmList extends Vue {
       this.addMetadataFilter(),
       options.orderBy,
       options.currentPage,
-      20
+      options.pageSize
     );
   }
 
   exportGermplasm() {
-    let path = "/core/germplasm/export";
+    let path = "/core/germplasm/export_by_uris";
     let today = new Date();
     let filename = "export_germplasm_" + today.getFullYear() + String(today.getMonth() + 1).padStart(2, '0') + String(today.getDate()).padStart(2, '0');
+    var exportList = []
+    for (let select of this.tableRef.getSelected()) {
+      exportList.push(select.uri);
+    }
     this.$opensilex
-     .downloadFilefromService(path, filename, "csv", this.exportFilter);
+     .downloadFilefromPostService(path, filename, "csv", {uris: exportList}, this.lang);
   }
 
 
-  loadExperiments() {
-    let expService: ExperimentsService = this.$opensilex.getService(
-      "opensilex.ExperimentsService"
-    );
-
-    this.experimentsList = [];
-    expService
-      .searchExperiments()
-      .then(
-        (
-          http: HttpResponse<OpenSilexResponse<Array<ExperimentGetListDTO>>>
-        ) => {
-          //console.log(http.response.result)
-          for (let i = 0; i < http.response.result.length; i++) {
-            let expDTO = http.response.result[i];
-            this.experimentsList.push({
-              value: expDTO.uri,
-              text: expDTO.name
-            });
-          }
-        }
-      )
-      .catch(this.$opensilex.errorHandler);
-  }
-
+  
   loadSpecies() {
     let service: SpeciesService = this.$opensilex.getService(
       "opensilex.SpeciesService"
@@ -390,7 +383,6 @@ export default class GermplasmList extends Vue {
   }
 
   updateLang() {
-    this.loadExperiments();
     this.loadSpecies();
     this.refresh();
   }
@@ -408,15 +400,43 @@ export default class GermplasmList extends Vue {
     }
   }
 
-  updateExportFilters() {
-    this.exportFilter.rdf_type = this.filter.rdf_type;
-    this.exportFilter.name = this.filter.name;
-    this.exportFilter.species = this.filter.species;
-    this.exportFilter.production_year = this.filter.production_year;
-    this.exportFilter.institute = this.filter.institute;
-    this.exportFilter.experiment = this.filter.experiment;
-    this.exportFilter.uri = this.filter.uri;
-    this.exportFilter.metadata = this.addMetadataFilter();
+  // INFO: function used for web service exporting from search filters
+  // updateExportFilters() {
+  //   this.exportFilter.rdf_type = this.filter.rdf_type;
+  //   this.exportFilter.name = this.filter.name;
+  //   this.exportFilter.species = this.filter.species;
+  //   this.exportFilter.production_year = this.filter.production_year;
+  //   this.exportFilter.institute = this.filter.institute;
+  //   this.exportFilter.experiment = this.filter.experiment;
+  //   this.exportFilter.uri = this.filter.uri;
+  //   this.exportFilter.metadata = this.addMetadataFilter();
+  // }
+    createDocument() {
+    this.documentForm.showCreateForm();
+  }
+
+  initForm() {
+    let targetURI = [];
+    for (let select of this.tableRef.getSelected()) {
+      targetURI.push(select.uri);
+    }
+
+    return {
+      description: {
+        uri: undefined,
+        identifier: undefined,
+        rdf_type: undefined,
+        title: undefined,
+        date: undefined,
+        description: undefined,
+        targets: targetURI,
+        authors: undefined,
+        language: undefined,
+        deprecated: undefined,
+        keywords: undefined
+      },
+      file: undefined
+    }
   }
 
 }
@@ -463,6 +483,8 @@ en:
       uri-placeholder: Enter a part of an uri
       search: Search
       reset: Reset
+      metadataKey: Attribute name
+      metadataValue: Attribute value
 
 fr:
   GermplasmList:
@@ -473,8 +495,8 @@ fr:
     speciesLabel: Espèce
     update: Editer le germplasm
     delete: Supprimer le germplasm
-    selectLabel: Sélection de Matériel Génétiques
-    selected: Matériel Génétique(s) Sélectionné(s)
+    selectLabel: Sélection de Ressources Génétiques
+    selected: Ressource(s) Génétique(s) Sélectionnée(s)
     export: Exporter la liste
 
     filter:
@@ -494,6 +516,8 @@ fr:
       uri: URI
       uri-placeholder: Entrer une partie d'une uri
       search: Rechercher
-      reset: Réinitialiser      
+      reset: Réinitialiser
+      metadataKey: Nom de l'attribut
+      metadataValue: Valeur de l'attribut
   
 </i18n>
