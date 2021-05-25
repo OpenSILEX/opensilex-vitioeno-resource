@@ -1,6 +1,7 @@
 menu:
   - id: news
     label: component.menu.news.label
+    icon: ik-twitter
     route:
       component: inrae-vitioeno-VitioenoHomeComponent
       path: /news
@@ -17,12 +18,13 @@ menu:
         icon: ik-cloud-rain
         route:
           path: /germplasm
-          component: inrae-vitioeno-GermplasmList
+          component: inrae-vitioeno-GermplasmView
   - id: references
     label: component.menu.references.label
     children:
       - id: ontologies
         label: component.menu.references.ontologies.label
+        icon: ik-dribbble
         route:
           path: /ontologies
           component: inrae-vitioeno-OntologiesView
@@ -82,4 +84,8 @@ menu:
           component: opensilex-GroupView
           credentials:
             - group-modification
-      
+
+routes:      
+  - path: /germplasm/details/:uri
+    component: opensilex-GermplasmDetails
+    credentials: []

@@ -10,9 +10,9 @@ body {
     margin: auto;
 }
 
-#main-content {
-    background-color: rgb(249, 249, 250);
-}
+// #main-content {
+//     background-color: rgb(249, 249, 250);
+// }
 
 /* Style the header */
 
@@ -28,7 +28,7 @@ header {
 }
 
 
-/* Container for flexboxes */
+// /* Container for flexboxes */
 
 #content-wrapper  {
     display: flex;
@@ -39,9 +39,9 @@ header {
     flex-direction: row;
 }
 
-#menu-container {
-    height: 100%;
-}
+// #menu-container {
+//     height: 100%;
+// }
 
 #main-content {
     display: flex;
@@ -122,9 +122,9 @@ a:active {
     border: 1px solid black;
 }
 
-/*************************************
-* CARDS
-*************************************/
+// /*************************************
+// * CARDS
+// *************************************/
 .card .card-body .static-field {
     margin-bottom: 0.8em;
     font-size: 1.1em;
@@ -139,6 +139,8 @@ a:active {
 .card .card-body .static-field .static-field-text {
     text-align: justify;
     line-height: 1.7em;
+    white-space: pre-wrap;
+    display: inline-block;
 }
 
 .card .card-body .static-field .static-field-list {
@@ -187,9 +189,9 @@ a:active {
     border-radius: 10px;
 }
 
-/*************************************
-* LINKS
-*************************************/
+// /*************************************
+// * LINKS
+// *************************************/
 
 .main-content .table a.row-link, .card .card-body .static-field a:not(.inline-action-btn) {
     color: #3C76F4;

@@ -56,7 +56,6 @@
           ></opensilex-StringFilter>
         </opensilex-FilterField>
  
-
         <!-- URI -->
         <opensilex-FilterField>
           <label>{{$t('GermplasmList.filter.uri')}}</label>
@@ -83,9 +82,7 @@
       </template>     
       
     </opensilex-SearchFilterField>
-    <p class="alert alert-secondary">
-        {{this.$i18n.t('vitioeno.license')}}
-    </p>
+
     <opensilex-TableAsyncView
       ref="tableRef"
       :searchMethod="searchGermplasm"
@@ -152,13 +149,10 @@
 import { Component, Ref, Prop } from "vue-property-decorator";
 import Vue from "vue";
 import VueRouter from "vue-router";
-import {
-  GermplasmService,
-  SpeciesService,
-  SpeciesDTO
-} from "opensilex-core/index";
+// @ts-ignore
+import { GermplasmService, ExperimentGetListDTO, ExperimentsService, SpeciesService, SpeciesDTO } from "opensilex-core/index";
 
-import HttpResponse, { OpenSilexResponse } from "../../../../../opensilex-front/front/src/lib/HttpResponse";
+import HttpResponse, { OpenSilexResponse } from "opensilex-core/HttpResponse"
 
 @Component
 export default class GermplasmList extends Vue {
@@ -359,7 +353,31 @@ export default class GermplasmList extends Vue {
   }
 
 
-  
+  loadExperiments() {
+    let expService: ExperimentsService = this.$opensilex.getService(
+      "opensilex.ExperimentsService"
+    );
+
+    this.experimentsList = [];
+    expService
+      .searchExperiments()
+      .then(
+        (
+          http: HttpResponse<OpenSilexResponse<Array<ExperimentGetListDTO>>>
+        ) => {
+          //console.log(http.response.result)
+          for (let i = 0; i < http.response.result.length; i++) {
+            let expDTO = http.response.result[i];
+            this.experimentsList.push({
+              value: expDTO.uri,
+              text: expDTO.name
+            });
+          }
+        }
+      )
+      .catch(this.$opensilex.errorHandler);
+  }
+
   loadSpecies() {
     let service: SpeciesService = this.$opensilex.getService(
       "opensilex.SpeciesService"
@@ -383,6 +401,7 @@ export default class GermplasmList extends Vue {
   }
 
   updateLang() {
+    this.loadExperiments();
     this.loadSpecies();
     this.refresh();
   }

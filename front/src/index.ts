@@ -5,7 +5,11 @@ import VitioenoFooterComponent from "./components/layout/VitioenoFooterComponent
 import VitioenoMenuComponent from "./components/layout/VitioenoMenuComponent.vue";
 import VitioenoHeaderComponent from "./components/layout/VitioenoHeaderComponent.vue";
 import VitioenoHomeComponent from "./components/layout/VitioenoHomeComponent.vue";
+
+// import GermplasmDetails from './components/germplasm/GermplasmDetails.vue';
+import GermplasmView from './components/germplasm/GermplasmView.vue';
 import GermplasmList from './components/germplasm/GermplasmList.vue';
+
 import LinksView from './components/references/links/LinksView.vue';
 import OntologiesView from './components/references/ontologies/OntologiesView.vue';
 
@@ -18,10 +22,11 @@ export default {
         "inrae-vitioeno-VitioenoFooterComponent": VitioenoFooterComponent,
         "inrae-vitioeno-VitioenoMenuComponent": VitioenoMenuComponent,
         "inrae-vitioeno-VitioenoHeaderComponent": VitioenoHeaderComponent,
+        "inrae-vitioeno-GermplasmView": GermplasmView,
         "inrae-vitioeno-GermplasmList": GermplasmList,
+        // "inrae-vitioeno-GermplasmDetails": GermplasmDetails,
         "inrae-vitioeno-LinksView": LinksView,
         "inrae-vitioeno-OntologiesView": OntologiesView
-
     },
     lang: {
         "fr": require("./lang/vitioeno-fr.json"),
