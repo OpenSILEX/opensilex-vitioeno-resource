@@ -6,7 +6,7 @@ import VitioenoMenuComponent from "./components/layout/VitioenoMenuComponent.vue
 import VitioenoHeaderComponent from "./components/layout/VitioenoHeaderComponent.vue";
 import VitioenoHomeComponent from "./components/layout/VitioenoHomeComponent.vue";
 
-// import GermplasmDetails from './components/germplasm/GermplasmDetails.vue';
+import GermplasmDetails from './components/germplasm/GermplasmDetails.vue';
 import GermplasmView from './components/germplasm/GermplasmView.vue';
 import GermplasmList from './components/germplasm/GermplasmList.vue';
 
@@ -24,7 +24,7 @@ export default {
         "inrae-vitioeno-VitioenoHeaderComponent": VitioenoHeaderComponent,
         "inrae-vitioeno-GermplasmView": GermplasmView,
         "inrae-vitioeno-GermplasmList": GermplasmList,
-        // "inrae-vitioeno-GermplasmDetails": GermplasmDetails,
+        "opensilex-GermplasmDetails": GermplasmDetails,
         "inrae-vitioeno-LinksView": LinksView,
         "inrae-vitioeno-OntologiesView": OntologiesView
     },
