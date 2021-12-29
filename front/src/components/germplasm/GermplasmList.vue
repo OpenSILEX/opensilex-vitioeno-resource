@@ -82,6 +82,10 @@
       </template>     
       
     </opensilex-SearchFilterField>
+    <b-alert show variant="info"> 
+      {{$t('vitioeno.license-germplasm')}}  - <b-link target="_blank" href="https://bioweb.supagro.inra.fr/collections_vigne/">Base de données des collections
+ RFCV</b-link>
+    </b-alert>
 
     <opensilex-TableAsyncView
       ref="tableRef"

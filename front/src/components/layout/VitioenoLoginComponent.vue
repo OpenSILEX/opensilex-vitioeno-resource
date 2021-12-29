@@ -1,98 +1,268 @@
 <template>
-  <div class="fadeInDown fullmodal" v-if="!user.isLoggedIn() || forceRefresh">
-    <ValidationObserver ref="validatorRef">
-      <b-form @submit.prevent="onLogin" class="fullmodal-form">
-        <div class="login-header">
-          <img v-bind:src="$opensilex.getResourceURI('images/logo-vitioeno.png')" />
-          <h2>{{$t('vitioeno.title')}}</h2>
+  <div class="fullmodal auth-wrapper" v-if="!user.isLoggedIn() || forceRefresh">
+    <div class="container-fluid h-100">
+      <div class="row flex-row h-100 bg-white">
+        <div
+          class="
+            col-xl-8 col-lg-6 col-md-5
+            p-0
+            d-md-block d-lg-block d-sm-none d-none
+          "
+        >
+          <div
+            class="lavalite-bg"
+            v-bind:style="{
+              'background-image':
+                'url(' +
+                $opensilex.getResourceURI('images/background-vitioeno.jpg') +
+                ')',
+            }"
+          >
+            <div class="lavalite-overlay-vitioeno"></div>
+          </div>
         </div>
+        <div class="col-xl-4 col-lg-6 col-md-7 my-auto p-0">
+          <b-dropdown
+            id="langDropdown"
+            :title="user.getEmail()"
+            variant="link"
+            right
+          >
+            <template v-slot:button-content>
+              <i class="icon ik ik-globe"></i>
+              <span class="hidden-phone">{{
+                $t("component.header.language." + language)
+              }}</span>
+              <span class="show-phone">{{
+                $t("component.header.language." + language).substring(0, 2)
+              }}</span>
+              <i class="ik ik-chevron-down"></i>
+            </template>
 
-        <div class="login-form-content">
-          <p>{{$t('vitioeno.login.infoGuest')}}:</p>
-          <div class="sign-btn text-center">
+            <b-dropdown-item
+              v-for="item in languages"
+              :key="`language-${item}`"
+              href="#"
+              @click.prevent="setLanguage(item)"
+              >{{ $t("component.header.language." + item) }}</b-dropdown-item
+            >
+          </b-dropdown>
+          <div class="authentication-form mx-auto">
+            <div class="logo-centered">
+              <b-img
+                :src="$opensilex.getResourceURI('images/logo-vitioeno.png')"
+                fluid
+                alt="Responsive image"
+              ></b-img>
+            </div>
+
+
+            <opensilex-SelectForm
+              v-if="connectionOptions.length > 1"
+              :label="$t('LoginComponent.selectLoginMethod')"
+              :options="connectionOptions"
+              :selected.sync="loginMethod"
+              @select="loginMethodChange"
+            ></opensilex-SelectForm>
+            <ValidationObserver
+              v-if="loginMethod == 'password'"
+              ref="validatorRef"
+            >
+
+          <div >
+          <p>{{$t('vitioeno.login.infoGuest')}}</p>
+          
+          <div class="text-center">
             <b-button
               variant="primary"
               @click="onLoginAsGuest"
-              v-text="$t('component.login.button.loginAsGuest')"
+              v-text="$t('vitioeno.component.login.button.loginAsGuest')"
             ></b-button>
           </div>
-          <br />
-          <p>ou</p>
-          <br />
-          <p>{{$t('vitioeno.login.info')}}:</p>
-          <b-form-group id="login-group" required>
-            <ValidationProvider
-              :name="$t('component.login.validation.email')"
-              rules="required|emailOrUrl"
-              v-slot="{ errors }"
-            >
-              <b-form-input
-                id="email"
-                type="email"
-                v-model="form.email"
-                required
-                :placeholder="$t('component.login.input.email')"
-              ></b-form-input>
-              <i class="ik ik-user"></i>
-              <div class="error-message alert alert-danger">{{ errors[0] }}</div>
-            </ValidationProvider>
-          </b-form-group>
+          <br>
+          <p>{{$t('vitioeno.login.orInfo')}}</p>
+          </div>
+              <b-form @submit.prevent="onLogin" class="fullmodal-form">
+                <b-form-group id="login-group" required>
+                  <ValidationProvider
+                    :name="$t('component.login.validation.email')"
+                    rules="required|emailOrUrl"
+                    v-slot="{ errors }"
+                  >
+                    <b-form-input
+                      id="email"
+                      v-model="form.email"
+                      required
+                      :placeholder="$t('component.login.input.email')"
+                    ></b-form-input>
+                    <i class="ik ik-user"></i>
+                    <div
+                      v-if="errors.length > 0"
+                      class="error-message alert alert-danger"
+                    >
+                      {{ errors[0] }}
+                    </div>
+                  </ValidationProvider>
+                </b-form-group>
 
-          <b-form-group id="password-group" required>
-            <ValidationProvider
-              :name="$t('component.login.validation.password')"
-              rules="required"
-              v-slot="{ errors }"
-            >
-              <b-form-input
-                id="password"
-                type="password"
-                v-model="form.password"
-                required
-                :placeholder="$t('component.login.input.password')"
-              ></b-form-input>
-              <i class="ik ik-lock"></i>
-              <div class="error-message alert alert-danger">{{ errors[0] }}</div>
-            </ValidationProvider>
-          </b-form-group>
-          <div class="sign-btn text-center">
-            <b-button type="submit" variant="primary" v-text="$t('component.login.button.login')"></b-button>
+                <b-form-group id="password-group" required>
+                  <ValidationProvider
+                    :name="$t('component.login.validation.password')"
+                    rules="required"
+                    v-slot="{ errors }"
+                  >
+                    <b-form-input
+                      id="password"
+                      type="password"
+                      v-model="form.password"
+                      required
+                      :placeholder="$t('component.login.input.password')"
+                    ></b-form-input>
+                    <i class="ik ik-lock"></i>
+                    <div
+                      v-if="errors.length > 0"
+                      class="error-message alert alert-danger"
+                    >
+                      {{ errors[0] }}
+                    </div>
+                  </ValidationProvider>
+                </b-form-group>
+                <a href="forgot-password" v-if="isResetPassword()"
+                  ><span>{{ $t("LoginComponent.forgotPassword") }}</span></a
+                >
+                <div class="sign-btn text-center">
+                  <b-button
+                    type="submit"
+                    variant="primary"
+                    v-text="$t('component.login.button.login')"
+                  ></b-button>
+                </div>
+              </b-form>
+            </ValidationObserver>
+             
+            <div class="trademark">
+              <p>
+                {{ $t("vitioeno.component.login.copyright.1") }}
+                <br />
+                {{ $t("vitioeno.component.login.copyright.2") }}
+                <br />
+                
+              </p>
+            </div>
+            <div class="logo-centered-inrae">
+              <b-img
+                center
+                :src="$opensilex.getResourceURI('images/inrae-vector-logo.png')"
+                alt="Responsive image"
+              ></b-img>
+            </div>
           </div>
         </div>
-      </b-form>
-    </ValidationObserver>
+      </div>
+    </div>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Ref } from "vue-property-decorator";
+import Vue from "vue";
+
+import { User } from "../../../../../opensilex-front/front/src//models/User";
 import { TokenGetDTO } from "opensilex-security/index";
 import HttpResponse, {
   OpenSilexResponse,
 } from "opensilex-security/HttpResponse";
-import Vue from "vue";
+import { FrontConfigDTO } from "../../../../../opensilex-front/front/src/lib";
 
 @Component
-export default class VitioenoLoginComponent extends Vue {
+export default class SunagriLoginComponent extends Vue {
   get form() {
     return {
       email: "",
       password: "",
     };
   }
-
-  $store: any;
   $t: any;
+  $store: any;
   $router: any;
+  $i18n: any;
+
+  /**
+   * Return the current i18n language
+   */
+  get language() {
+    return this.$i18n.locale;
+  }
+
+  /**
+   * Return all available languages
+   */
+  get languages() {
+    return Object.keys(this.$i18n.messages);
+  }
+
+  /**
+   * Set the current i18n language
+   */
+  setLanguage(lang: string) {
+    this.$i18n.locale = lang;
+    this.$store.commit("lang", lang);
+  }
 
   get user() {
     return this.$store.state.user;
   }
 
+  get release() {
+    return this.$store.state.release;
+  }
+
+  loginMethod = "password";
+
+  get connectionOptions() {
+    let options = [
+      {
+        id: "password",
+        label: this.$t("LoginComponent.passwordConnectionTitle"),
+      },
+    ];
+
+    let opensilexConfig: FrontConfigDTO = this.$opensilex.getConfig();
+
+    if (opensilexConfig.openIDAuthenticationURI) {
+      options.push({
+        id: "openid",
+        label: opensilexConfig.openIDConnectionTitle,
+      });
+    }
+
+    return options;
+  }
+
+  loginMethodChange(loginMethod) {
+    console.error(loginMethod);
+    if (loginMethod.id == "openid") {
+      let opensilexConfig: FrontConfigDTO = this.$opensilex.getConfig();
+      window.location.href = opensilexConfig.openIDAuthenticationURI;
+    } else if (loginMethod.id == "password") {
+      this.validatorRef.reset();
+    }
+  }
+
+  isResetPassword() {
+    let opensilexConfig: FrontConfigDTO = this.$opensilex.getConfig();
+    return opensilexConfig.activateResetPassword;
+  }
+
   $opensilex: any;
 
-  static async asyncInit($opensilex) {
+  static async asyncInit($opensilex: any) {
     await $opensilex.loadService("opensilex-security.AuthenticationService");
+  }
+
+  logout() {
+    this.$store.commit("logout");
+    this.$router.push("/");
   }
 
   @Ref("validatorRef") readonly validatorRef!: any;
@@ -102,10 +272,36 @@ export default class VitioenoLoginComponent extends Vue {
     let validatorRef: any = this.validatorRef;
     validatorRef.validate().then((isValid) => {
       if (isValid) {
-        this.login();
+        this.$opensilex.showLoader();
+        this.$opensilex
+          .getService("opensilex-security.AuthenticationService")
+          .authenticate({
+            identifier: this.form.email,
+            password: this.form.password,
+          })
+          .then((http: HttpResponse<OpenSilexResponse<TokenGetDTO>>) => {
+            let user = User.fromToken(http.response.result.token);
+            this.$opensilex.setCookieValue(user);
+            this.forceRefresh = true;
+            this.$store.commit("login", user);
+            this.$store.commit("refresh");
+          })
+          .catch((error) => {
+            if (error.status == 403) {
+              console.error("Invalid credentials", error);
+              this.$opensilex.errorHandler(
+                error,
+                this.$t("component.login.errors.invalid-credentials")
+              );
+            } else {
+              this.$opensilex.errorHandler(error);
+            }
+            this.$opensilex.hideLoader();
+          });
       }
     });
   }
+
   onLoginAsGuest() {
     this.form.email = "guest@opensilex.org";
     this.form.password = "guest";
@@ -147,8 +343,6 @@ export default class VitioenoLoginComponent extends Vue {
 </script>
 
 <style scoped lang="scss">
-@import "../../../theme/vitioeno/variables.scss";
-
 .fullmodal {
   display: block;
   position: absolute;
@@ -159,326 +353,58 @@ export default class VitioenoLoginComponent extends Vue {
   height: 100%;
   width: 100%;
   z-index: 9999;
-  background-color: getVar(--highlightBackgroundColorLight);
 }
 
-.fullmodal-form {
-  position: relative;
-  margin: auto;
-  padding: 15px;
+.logo-centered > img {
+  display: inline-block;
+  width: 80%;
 }
 
-h2 {
-  font-family: "Eras Light ITC", Arial, Helvetica, sans-serif;
-  font-size: 40px;
-  font-weight: bold;
+.logo-centered-inrae > img {
+  display: inline-block;
+  width: 50%;
 }
 
-.login-form-content {
-  max-width: 500px;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 20px;
+.authentication-form .error-message {
+  top: 37px;
 }
 
-i {
+.authentication-form fieldset {
+  margin-bottom: 25px;
+}
+
+/*********************************
+* LOGIN PAGE
+*********************************/
+.auth-wrapper .lavalite-bg .lavalite-overlay {
   position: absolute;
-  top: 11px;
-  left: 11px;
-}
-
-input {
-  padding-left: 35px;
-}
-
-fieldset {
-  position: relative;
-}
-
-.login-header {
-  text-align: center;
-}
-
-.login-header > img {
-  height: 140px;
-}
-
-/* BASIC */
-
-html {
-  background-color: #56baed;
-}
-
-body {
-  font-family: "Poppins", sans-serif;
-  height: 100vh;
-}
-
-a {
-  color: #92badd;
-  display: inline-block;
-  text-decoration: none;
-  font-weight: 400;
-}
-
-h2 {
-  text-align: center;
-  font-size: 16px;
-  font-weight: 600;
-  text-transform: uppercase;
-  display: inline-block;
-  margin: 40px 8px 10px 8px;
-  color: #cccccc;
-}
-
-/* STRUCTURE */
-
-.wrapper {
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  justify-content: center;
   width: 100%;
-  min-height: 100%;
-  padding: 20px;
-}
-
-#formContent {
-  -webkit-border-radius: 10px 10px 10px 10px;
-  border-radius: 10px 10px 10px 10px;
-  background: #fff;
-  padding: 30px;
-  width: 90%;
-  max-width: 30%;
-  position: relative;
-  padding: 0px;
-  -webkit-box-shadow: 0 30px 60px 0 rgba(0, 0, 0, 0.3);
-  box-shadow: 0 30px 60px 0 rgba(0, 0, 0, 0.3);
-  text-align: center;
-}
-
-#formFooter {
-  background-color: #f6f6f6;
-  border-top: 1px solid #dce8f1;
-  padding: 25px;
-  text-align: center;
-  -webkit-border-radius: 0 0 10px 10px;
-  border-radius: 0 0 10px 10px;
-}
-
-/* TABS */
-
-h2.inactive {
-  color: #cccccc;
-}
-
-h2.active {
-  color: #0d0d0d;
-  border-bottom: 2px solid #5fbae9;
-}
-
-/* FORM TYPOGRAPHY*/
-
-input[type="button"],
-input[type="submit"],
-input[type="reset"] {
-  background-color: #56baed;
-  border: none;
-  color: white;
-  padding: 15px 80px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  text-transform: uppercase;
-  font-size: 13px;
-  -webkit-box-shadow: 0 10px 30px 0 rgba(95, 186, 233, 0.4);
-  box-shadow: 0 10px 30px 0 rgba(95, 186, 233, 0.4);
-  -webkit-border-radius: 5px 5px 5px 5px;
-  border-radius: 5px 5px 5px 5px;
-  margin: 5px 20px 40px 20px;
-  -webkit-transition: all 0.3s ease-in-out;
-  -moz-transition: all 0.3s ease-in-out;
-  -ms-transition: all 0.3s ease-in-out;
-  -o-transition: all 0.3s ease-in-out;
-  transition: all 0.3s ease-in-out;
-}
-
-input[type="button"]:hover,
-input[type="submit"]:hover,
-input[type="reset"]:hover {
-  background-color: #39ace7;
-}
-
-input[type="button"]:active,
-input[type="submit"]:active,
-input[type="reset"]:active {
-  -moz-transform: scale(0.95);
-  -webkit-transform: scale(0.95);
-  -o-transform: scale(0.95);
-  -ms-transform: scale(0.95);
-  transform: scale(0.95);
-}
-
-input[type="text"] {
-  background-color: #f6f6f6;
-  border: none;
-  color: #0d0d0d;
-  padding: 15px 32px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  margin: 5px;
-  width: 85%;
-  border: 2px solid #f6f6f6;
-  -webkit-transition: all 0.5s ease-in-out;
-  -moz-transition: all 0.5s ease-in-out;
-  -ms-transition: all 0.5s ease-in-out;
-  -o-transition: all 0.5s ease-in-out;
-  transition: all 0.5s ease-in-out;
-  -webkit-border-radius: 5px 5px 5px 5px;
-  border-radius: 5px 5px 5px 5px;
-}
-
-input[type="text"]:focus {
-  background-color: #fff;
-  border-bottom: 2px solid #5fbae9;
-}
-
-input[type="text"]:placeholder {
-  color: #cccccc;
-}
-
-/* ANIMATIONS */
-
-/* Simple CSS3 Fade-in-down Animation */
-.fadeInDown {
-  -webkit-animation-name: fadeInDown;
-  animation-name: fadeInDown;
-  -webkit-animation-duration: 1s;
-  animation-duration: 1s;
-  -webkit-animation-fill-mode: both;
-  animation-fill-mode: both;
-}
-
-@-webkit-keyframes fadeInDown {
-  0% {
-    opacity: 0;
-    -webkit-transform: translate3d(0, -100%, 0);
-    transform: translate3d(0, -100%, 0);
-  }
-  100% {
-    opacity: 1;
-    -webkit-transform: none;
-    transform: none;
-  }
-}
-
-@keyframes fadeInDown {
-  0% {
-    opacity: 0;
-    -webkit-transform: translate3d(0, -100%, 0);
-    transform: translate3d(0, -100%, 0);
-  }
-  100% {
-    opacity: 1;
-    -webkit-transform: none;
-    transform: none;
-  }
-}
-
-/* Simple CSS3 Fade-in Animation */
-@-webkit-keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-@-moz-keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-.fadeIn {
-  opacity: 0;
-  -webkit-animation: fadeIn ease-in 1;
-  -moz-animation: fadeIn ease-in 1;
-  animation: fadeIn ease-in 1;
-
-  -webkit-animation-fill-mode: forwards;
-  -moz-animation-fill-mode: forwards;
-  animation-fill-mode: forwards;
-
-  -webkit-animation-duration: 1s;
-  -moz-animation-duration: 1s;
-  animation-duration: 1s;
-}
-
-.fadeIn.first {
-  -webkit-animation-delay: 0.4s;
-  -moz-animation-delay: 0.4s;
-  animation-delay: 0.4s;
-}
-
-.fadeIn.second {
-  -webkit-animation-delay: 0.6s;
-  -moz-animation-delay: 0.6s;
-  animation-delay: 0.6s;
-}
-
-.fadeIn.third {
-  -webkit-animation-delay: 0.8s;
-  -moz-animation-delay: 0.8s;
-  animation-delay: 0.8s;
-}
-
-.fadeIn.fourth {
-  -webkit-animation-delay: 1s;
-  -moz-animation-delay: 1s;
-  animation-delay: 1s;
-}
-
-/* Simple CSS3 Fade-in Animation */
-.underlineHover:after {
-  display: block;
+  height: 100%;
+  top: 0;
   left: 0;
-  bottom: -10px;
-  width: 0;
-  height: 2px;
-  background-color: #56baed;
-  content: "";
-  transition: width 0.2s;
+  background: linear-gradient(
+    135deg,
+    rgba(0, 163, 141, 0.2) 0%,
+    rgba(121, 107, 33, 0.4) 100%
+  );
 }
 
-.underlineHover:hover {
-  color: #0d0d0d;
+#langDropdown {
+  top: 0px;
+  position: fixed;
 }
 
-.underlineHover:hover:after {
-  width: 100%;
-}
+</style>
 
-/* OTHERS */
-
-*:focus {
-  outline: none;
-}
-
-#icon {
-  width: 60%;
-}
-</style> 
+<i18n>
+en:
+  LoginComponent:
+    selectLoginMethod: Select login method
+    passwordConnectionTitle: Connect with password
+    forgotPassword: Forgot password ?
+fr:
+  LoginComponent:
+    selectLoginMethod: Choisir la méthode de connexion
+    passwordConnectionTitle: Connexion par mot de passe
+    forgotPassword: Mot de passe oublié ?
+</i18n>

@@ -1,27 +1,32 @@
 <template>
-  <div id="footer">
-    <span class="text-center">© Vitioeno v.1.0.0</span>
+  <div class="footer ">
+    <div class="w-100 clearfix">
+      <span
+        class="text-center text-sm-left d-md-inline-block"
+      >{{ $t('component.footer.copyright', { version: $opensilex.version}) }}</span>
+    </div>
   </div>
 </template>
 
 <script lang="ts">
 import { Component } from "vue-property-decorator";
 import Vue from "vue";
+// @ts-ignore
+import { versionInfoDTO } from "opensilex-core/index";
 
 @Component
-export default class VitioenoFooterComponent extends Vue {}
+export default class DefaultFooterComponent extends Vue {
+  $opensilex: any;
+  $store: any;
+
+  versionInfo: versionInfoDTO;
+
+  created() {
+    this.versionInfo = this.$opensilex.versionInfo;
+  }
+
+}
 </script>
 
 <style scoped lang="scss">
-@import "../../../theme/vitioeno/variables.scss";
-
-#footer {
-  background-color: var(--highlightBackgroundColorLight);
-  color: var(--defaultColorDark);
-}
-
-#footer {
-  padding: 15px;
-  text-align: center;
-}
 </style>

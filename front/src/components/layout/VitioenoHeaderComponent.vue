@@ -1,34 +1,66 @@
 <template>
-  <div id="header">
+  <div class="header-top" header-theme="light">
     <div class="app-logo">
       <router-link to="/">
-        <img v-bind:src="$opensilex.getResourceURI('images/logo-vitioeno.png')" />
-        <div class="app-title">Vitioeno</div>
+      <img
+            v-bind:src="$opensilex.getResourceURI('images/logo-vitioeno-text.png')"
+            class="header-brand-img"
+            alt="lavalite"
+            fluid
+            width="80%"
+          /> 
       </router-link>
     </div>
 
-    <div class="app-actions">
-      <div class="language-selector">
-        <b-dropdown variant="link" size="lg" right>
-          <template v-slot:button-content>
-            <div class="language-selector-button">
-              <span class="action-label">{{ $t('component.header.language.' + language) }}</span>&nbsp;
+    <div class="container-fluid boxed-layout">
+      <div class="d-flex justify-content-end">
+        <div class="top-menu d-flex align-items-center">
+          <b-dropdown
+            id="langDropdown"
+            :title="user.getEmail()"
+            variant="link"
+            right
+          >
+            <template v-slot:button-content>
               <i class="icon ik ik-globe"></i>
-            </div>
-          </template>
+              <span class="hidden-phone">{{ $t("component.header.language." + language) }}</span>
+              <span class="show-phone">{{ $t("component.header.language." + language).substring(0,2) }}</span>
+              <i class="ik ik-chevron-down"></i>
+            </template>
 
-          <b-dropdown-item
-            v-for="item in languages"
-            :key="`language-${item}`"
-            href="#"
-            @click.prevent="setLanguage(item)"
-          >{{ $t('component.header.language.' + item) }}</b-dropdown-item>
-        </b-dropdown>
+            <b-dropdown-item
+              v-for="item in languages"
+              :key="`language-${item}`"
+              href="#"
+              @click.prevent="setLanguage(item)"
+              >{{ $t("component.header.language." + item) }}</b-dropdown-item
+            >
+          </b-dropdown>
+
+          <b-dropdown
+            v-if="user.isLoggedIn()"
+            id="userDropdown"
+            :title="user.getEmail()"
+            variant="link"
+            right
+          >
+            <template v-slot:button-content>
+              <i class="icon ik ik-user"></i>
+              <span class="hidden-phone">
+              {{ user.getFirstName() }} {{ user.getLastName() }}
+              <strong v-if="user.isAdmin()"
+                >({{ $t("component.header.user.admin") }})</strong
+              >
+              </span>
+              <i class="ik ik-chevron-down"></i>
+            </template>
+            <b-dropdown-item href="#" @click.prevent="logout">
+              <i class="ik ik-log-out dropdown-icon"></i>
+              {{ $t("component.header.user.logout") }}
+            </b-dropdown-item>
+          </b-dropdown>
+        </div>
       </div>
-      <b-button class="app-header-btn" variant="link" size="lg" @click.prevent="logout()">
-        <span class="action-label">{{$t('component.common.logout')}}</span>&nbsp;
-        <font-awesome-icon icon="power-off" />
-      </b-button>
     </div>
   </div>
 </template>
@@ -38,9 +70,16 @@ import { Component } from "vue-property-decorator";
 import Vue from "vue";
 
 @Component
-export default class VitioenoHeaderComponent extends Vue {
+export default class SunagriHeaderComponent extends Vue {
   $i18n: any;
   $store: any;
+
+  /**
+   * Return the current connected user
+   */
+  get user() {
+    return this.$store.state.user;
+  }
 
   /**
    * Return the current i18n language
@@ -70,42 +109,47 @@ export default class VitioenoHeaderComponent extends Vue {
   logout() {
     this.$store.commit("logout");
   }
+
+  width;
+  created() {
+    window.addEventListener("resize", this.handleResize);
+    this.handleResize();
+  }
+
+  beforeDestroy() {
+    window.removeEventListener("resize", this.handleResize);
+  }
+
+  handleResize() {
+    const minSize = 768;
+    if (
+      document.body.clientWidth <= minSize &&
+      (this.width == null || this.width > minSize)
+    ) {
+      this.width = document.body.clientWidth;
+      this.$store.commit("hideMenu");
+    } else if (
+      document.body.clientWidth > minSize &&
+      (this.width == null || this.width <= minSize)
+    ) {
+      this.width = document.body.clientWidth;
+      this.$store.commit("showMenu");
+    }
+  }
 }
 </script>
 
 <style scoped lang="scss">
-@import "../../../theme/vitioeno/variables.scss";
-
-#header {
-  background-color: var(--highlightBackgroundColorLight);
-  color: var(--defaultColorDark);
-  padding: 0px 70px;
-  padding-right: 30px;
-  text-align: center;
-  font-size: 35px;
-  display: flex;
-  width: 100%;
-}
-
-#header > div {
-  flex: auto;
-  align-items: center;
-}
-
 .app-logo {
   text-align: left;
+  position: absolute;
+  width: 180px;
+  top: 0;
+  background-color: rgb(0, 163, 141);
+  padding-top: 6px;
+  padding-bottom: 6px;
+  padding-left: 15px;
 }
-
-.app-actions {
-  text-align: right;
-  display: flex;
-  flex: 1;
-}
-
-.action-label {
-  font-size: 20x;
-}
-
 .app-logo > a > img {
   height: 50px;
 }
@@ -115,34 +159,20 @@ export default class VitioenoHeaderComponent extends Vue {
   margin-left: 10px;
   height: 50px;
   display: inline-block;
-  color: getVar(--highlightColorLight);
 }
 
-.language-selector {
-  flex: 1;
-  margin-right: 10px;
+.header-brand .text {
+    margin-left: 16px;
+    color: #fff;
 }
 
-.language-selector-button {
-  display: inline;
+
+
+#menu-container {
+  top: 60px!important;
 }
 
-.logout {
-  font-size: 20px;
-}
-
-.action-logout-icon,
-.action-logout-label {
-  vertical-align: middle;
-}
-
-.action-logout-icon {
-  height: 21px;
-}
-
-@media (max-width: 768px) {
-  .app-actions span.action-label {
-    display: none;
-  }
+.app-logo{
+  background-color: #fff;
 }
 </style>

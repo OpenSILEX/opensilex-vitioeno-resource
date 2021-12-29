@@ -1,11 +1,11 @@
 menu:
-  - id: news
+  - id: vitioeno-news
     label: component.menu.news.label
     icon: ik-twitter
     route:
       component: inrae-vitioeno-VitioenoHomeComponent
       path: /news
-  - id: shared
+  - id: vitioeno-shared
     label: component.menu.shared.label
     children:
       - id: variables_vitioeno
@@ -19,7 +19,7 @@ menu:
         route:
           path: /germplasm
           component: inrae-vitioeno-GermplasmView
-  - id: references
+  - id: vitioeno-references
     label: component.menu.references.label
     children:
       - id: ontologies
@@ -38,12 +38,12 @@ menu:
         route:
           component: inrae-vitioeno-LinksView
           path: /links
-  - id: apps
+  - id: vitioeno-apps
     label: component.menu.applications.label
     route:
       path: /dataAnalysis/apps
       component: opensilex-data-analysis-ApplicationView
-  - id: configuration_vitioeno
+  - id: vitioeno-configuration
     label: component.menu.configuration
     children: 
       - id: profiles
@@ -60,13 +60,18 @@ menu:
       #     component: opensilex-ScientificObjectTypes
       #     credentials:
       #     - is-admin
-      - id: facilitiesTypes
-        label: component.menu.facilitiesTypes
+      # - id: facilitiesTypes
+      #   label: component.menu.facilitiesTypes
+      #   route:
+      #     path: /facilities-types
+      #     component: opensilex-InfrastructureFacilitiesTypes
+      #     credentials:
+      #       - is-admin
+      - id: system
+        label: component.menu.tools.system
         route:
-          path: /facilities-types
-          component: opensilex-InfrastructureFacilitiesTypes
-          credentials:
-            - is-admin
+          path: /system
+          component: opensilex-SystemView 
   - id: user_groups_vitioeno
     label: component.menu.users-groups.label
     children:

@@ -1,5 +1,4 @@
-<template>
-  <div class="main-content">
+<template> 
     <div class="container-fluid">
       <b-row class="justify-content-md-center">
         <b-col></b-col>
@@ -85,8 +84,7 @@
         </b-col>
         <b-col></b-col>
       </b-row>
-    </div>
-  </div>
+    </div> 
 </template>
 
 <script lang="ts">
@@ -172,6 +170,7 @@ export default class DefaultHomeComponent extends Vue {
 </script>
 
 <style scoped lang="scss">
+
 vitioeno-image-logo {
   max-width: 50%;
 }

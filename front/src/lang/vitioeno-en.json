@@ -4,19 +4,28 @@
         "title": "A information system of shared resources for vine and wine",
         "login": {
             "info": "Please enter your identifiers to login",
-            "infoGuest": "You can connect as guest"
+            "infoGuest": "You can connect as guest",
+            "orInfo": "or enter your identifiers"
         },
-        "license": "Attribution - No Commercial Use - No Modification CC BY-NC-ND"
+        "license": "Attribution - No Commercial Use - No Modification CC BY-NC-ND",
+        "license-germplasm": "Attribution - No Commercial Use - No Modification CC BY-NC-ND",
+        "component": {
+            "login": {
+                "button": {
+                    "loginAsGuest": "Connect as guest"
+                },
+                "copyright": {
+                    "1": "",
+                    "2": "Vitioeno - Information System for vine and wine ressources",
+                    "3": "Release 1 from 2022/01/01"
+                }
+            },
+            "footer": {
+                "copyright": "Copyright © 2020 - 2022 INRAE All Rights Reserved. Vitioeno {version} released on {date}"
+            }
+        }
     },
     "component": {
-        "login": {
-            "button": {
-                "loginAsGuest": "Connect as guest"
-            }
-        },
-        "home": {
-            "wineNews": "Few tweets about wine and vine"
-        },
         "menu": {
             "shared": {
                 "label": "Shared ressources"
@@ -48,4 +57,5 @@
             "international": "International"
         }
     }
+  
 }

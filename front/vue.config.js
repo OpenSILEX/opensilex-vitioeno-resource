@@ -5,7 +5,6 @@ module.exports = {
     configureWebpack: {
         externals: {
             'vue': 'Vue',
-            'core-js': 'core-js',
             'vue-router': 'vue-router',
             'vuex': 'vuex',
             'node-fetch': 'node-fetch',
