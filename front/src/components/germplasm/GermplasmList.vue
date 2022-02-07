@@ -180,7 +180,7 @@ import {
   SpeciesDTO,
 } from "opensilex-core/index";
 
-import HttpResponse, { OpenSilexResponse } from "../../lib/HttpResponse";
+import HttpResponse, { OpenSilexResponse } from "opensilex-core/HttpResponse";
 
 @Component
 export default class GermplasmList extends Vue {
