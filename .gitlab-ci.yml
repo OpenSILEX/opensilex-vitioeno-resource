@@ -21,6 +21,7 @@ variables:
   NODE_CACHE: "$CI_PROJECT_DIR/opensilex-dev/.node"
   EMBDED_MONGO_CACHE: "/root/.embedmongo/"
   MODULE_ID: "inrae-vitioeno"
+  MODULE_REVISION : "1.0.0"
 
 ########################
 ##  CACHE TEMPLATE
@@ -90,7 +91,7 @@ vitioeno:build:
     - cd $CI_PROJECT_DIR/opensilex-dev/$MODULE_ID
     - mvn install $MAVEN_CLI_OPTS -Drevision=$REVISION
     # Copy generated JAR module into opensilex-dev artifact "modules" folder
-    - mv $CI_PROJECT_DIR/opensilex-dev/$MODULE_ID/target/$MODULE_ID-$REVISION.jar $CI_PROJECT_DIR/$REVISION/modules/$MODULE_ID.jar
+    - mv $CI_PROJECT_DIR/opensilex-dev/$MODULE_ID/target/$MODULE_ID-$MODULE_REVISION.jar $CI_PROJECT_DIR/$REVISION/modules/$MODULE_ID.jar
   artifacts:
     paths:
       - $CI_PROJECT_DIR/$REVISION
