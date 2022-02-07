@@ -1,6 +1,5 @@
 <template>
   <div>
-
     <opensilex-SearchFilterField
       @search="refresh()"
       @clear="reset()"
@@ -16,7 +15,7 @@
             placeholder="GermplasmList.filter.rdfType-placeholder"
           ></opensilex-TypeForm>
         </opensilex-FilterField>
-        
+
         <!-- Species -->
         <opensilex-FilterField>
           <opensilex-SelectForm
@@ -30,7 +29,7 @@
 
         <!-- Year -->
         <opensilex-FilterField>
-          <label>{{$t('GermplasmList.filter.year')}}</label>
+          <label>{{ $t("GermplasmList.filter.year") }}</label>
           <opensilex-StringFilter
             :filter.sync="filter.production_year"
             placeholder="GermplasmList.filter.year-placeholder"
@@ -40,7 +39,7 @@
 
         <!-- Institute -->
         <opensilex-FilterField>
-          <label>{{$t('GermplasmList.filter.institute')}}</label>
+          <label>{{ $t("GermplasmList.filter.institute") }}</label>
           <opensilex-StringFilter
             :filter.sync="filter.institute"
             placeholder="GermplasmList.filter.institute-placeholder"
@@ -49,42 +48,45 @@
 
         <!-- Name -->
         <opensilex-FilterField>
-          <label>{{$t('GermplasmList.filter.label')}}</label>
+          <label>{{ $t("GermplasmList.filter.label") }}</label>
           <opensilex-StringFilter
             :filter.sync="filter.name"
             placeholder="GermplasmList.filter.label-placeholder"
           ></opensilex-StringFilter>
         </opensilex-FilterField>
- 
         <!-- URI -->
         <opensilex-FilterField>
-          <label>{{$t('GermplasmList.filter.uri')}}</label>
+          <label>{{ $t("GermplasmList.filter.uri") }}</label>
           <opensilex-StringFilter
             :filter.sync="filter.uri"
             placeholder="GermplasmList.filter.uri-placeholder"
           ></opensilex-StringFilter>
-        </opensilex-FilterField>        
-      </template>  
+        </opensilex-FilterField>
+      </template>
 
       <template v-slot:advancedSearch>
         <opensilex-FilterField>
-          <opensilex-StringFilter
-            :filter.sync="filter.metadataKey"
+          <opensilex-GermplasmAttributesSelector
+            :germplasmAttribute.sync="filter.metadataKey"
             label="GermplasmList.filter.metadataKey"
-          ></opensilex-StringFilter>
+          ></opensilex-GermplasmAttributesSelector>
         </opensilex-FilterField>
         <opensilex-FilterField>
+          <span>{{ $t("GermplasmList.filter.metadataValue") }}</span>
           <opensilex-StringFilter
+            class="mt-1"
             :filter.sync="filter.metadataValue"
-            label="GermplasmList.filter.metadataValue"
           ></opensilex-StringFilter>
         </opensilex-FilterField>
-      </template>     
-      
+      </template>
     </opensilex-SearchFilterField>
-    <b-alert show variant="info"> 
-      {{$t('vitioeno.license-germplasm')}}  - <b-link target="_blank" href="https://bioweb.supagro.inra.fr/collections_vigne/">Base de données des collections
- RFCV</b-link>
+    <b-alert show variant="info">
+      {{ $t("vitioeno.license-germplasm") }} -
+      <b-link
+        target="_blank"
+        href="https://bioweb.supagro.inra.fr/collections_vigne/"
+        >{{ $t("vitioeno.rfcv-db") }}</b-link
+      >
     </b-alert>
 
     <opensilex-TableAsyncView
@@ -102,34 +104,48 @@
           class="mb-2 mr-2"
           :small="true"
           :disabled="numberOfSelectedRows == 0"
-          text=actions>
-            <b-dropdown-item-button    
-              @click="createDocument()"
-            >{{$t('component.common.addDocument')}}</b-dropdown-item-button>
-            <b-dropdown-item-button
-              @click="exportGermplasm()"
-          >{{$t('GermplasmList.export')}}</b-dropdown-item-button>
+          text="actions"
+        >
+          <b-dropdown-item-button
+            v-if="
+              user.hasCredential(
+                credentials.CREDENTIAL_DOCUMENT_MODIFICATION_ID
+              )
+            "
+            @click="createDocument()"
+            >{{ $t("component.common.addDocument") }}</b-dropdown-item-button
+          >
+          <b-dropdown-item-button @click="exportGermplasm()">{{
+            $t("GermplasmList.export")
+          }}</b-dropdown-item-button>
         </b-dropdown>
       </template>
-      <template v-slot:cell(name)="{data}">
+      <template v-slot:cell(name)="{ data }">
         <opensilex-UriLink
           :uri="data.item.uri"
           :value="data.item.name"
-          :to="{path: '/germplasm/details/'+ encodeURIComponent(data.item.uri)}"
+          :to="{
+            path: '/germplasm/details/' + encodeURIComponent(data.item.uri),
+          }"
         ></opensilex-UriLink>
       </template>
 
-      <template v-slot:cell(actions)="{data}">
+      <template v-slot:cell(actions)="{ data }">
         <b-button-group size="sm">
           <opensilex-EditButton
-            v-if="user.hasCredential(credentials.CREDENTIAL_GERMPLASM_MODIFICATION_ID) && !data.item.rdf_type.endsWith('Species')"
+            v-if="
+              user.hasCredential(
+                credentials.CREDENTIAL_GERMPLASM_MODIFICATION_ID
+              ) && !data.item.rdf_type.endsWith('Species')
+            "
             @click="$emit('onEdit', data.item.uri)"
             label="GermplasmList.update"
             :small="true"
-            
           ></opensilex-EditButton>
           <opensilex-DeleteButton
-            v-if="user.hasCredential(credentials.CREDENTIAL_GERMPLASM_DELETE_ID)"
+            v-if="
+              user.hasCredential(credentials.CREDENTIAL_GERMPLASM_DELETE_ID)
+            "
             @click="$emit('onDelete', data.item.uri)"
             label="GermplasmList.delete"
             :small="true"
@@ -138,7 +154,9 @@
       </template>
     </opensilex-TableAsyncView>
     <opensilex-ModalForm
-      v-if="user.hasCredential(credentials.CREDENTIAL_GERMPLASM_MODIFICATION_ID)"
+      v-if="
+        user.hasCredential(credentials.CREDENTIAL_GERMPLASM_MODIFICATION_ID)
+      "
       ref="documentForm"
       component="opensilex-DocumentForm"
       createTitle="component.common.addDocument"
@@ -154,9 +172,15 @@ import { Component, Ref, Prop } from "vue-property-decorator";
 import Vue from "vue";
 import VueRouter from "vue-router";
 // @ts-ignore
-import { GermplasmService, ExperimentGetListDTO, ExperimentsService, SpeciesService, SpeciesDTO } from "opensilex-core/index";
+import {
+  GermplasmService,
+  ExperimentGetListDTO,
+  ExperimentsService,
+  SpeciesService,
+  SpeciesDTO,
+} from "opensilex-core/index";
 
-import HttpResponse, { OpenSilexResponse } from "opensilex-core/HttpResponse"
+import HttpResponse, { OpenSilexResponse } from "../../lib/HttpResponse";
 
 @Component
 export default class GermplasmList extends Vue {
@@ -170,12 +194,12 @@ export default class GermplasmList extends Vue {
   @Ref("tableRef") readonly tableRef!: any;
 
   @Prop({
-    default: false
+    default: false,
   })
   isSelectable;
 
   @Prop({
-    default: false
+    default: false,
   })
   noActions;
 
@@ -207,7 +231,7 @@ export default class GermplasmList extends Vue {
     experiment: undefined,
     uri: undefined,
     metadataKey: undefined,
-    metadataValue: undefined
+    metadataValue: undefined,
   };
 
   // exportFilter = {
@@ -231,7 +255,7 @@ export default class GermplasmList extends Vue {
       experiment: undefined,
       uri: undefined,
       metadataKey: undefined,
-      metadataValue: undefined
+      metadataValue: undefined,
     };
     // this.exportFilter = {
     //   rdf_type: undefined,
@@ -254,7 +278,7 @@ export default class GermplasmList extends Vue {
   mounted() {
     this.langUnwatcher = this.$store.watch(
       () => this.$store.getters.language,
-      lang => {
+      (lang) => {
         this.updateLang();
       }
     );
@@ -265,28 +289,9 @@ export default class GermplasmList extends Vue {
   }
 
   created() {
-    this.service = this.$opensilex.getService("opensilex.GermplasmService")    
+    this.service = this.$opensilex.getService("opensilex.GermplasmService");
     this.loadSpecies();
-    this.updateFiltersFromURL();
-  }
-  
-  updateFiltersFromURL() {
-    let query: any = this.$route.query;
-    for (let [key, value] of Object.entries(this.filter)) {
-      if (query[key]) {
-        if (Array.isArray(this.filter[key])){
-          this.filter[key] = decodeURIComponent(query[key]).split(",");
-        } else {
-          this.filter[key] = decodeURIComponent(query[key]);
-        }        
-      }
-    }
-  }  
-
-  updateURLFilters() {
-    for (let [key, value] of Object.entries(this.filter)) {
-      this.$opensilex.updateURLParameter(key, value, "");
-    }    
+    this.$opensilex.updateFiltersFromURL(this.$route.query, this.filter);
   }
 
   get fields() {
@@ -294,22 +299,22 @@ export default class GermplasmList extends Vue {
       {
         key: "name",
         label: "GermplasmList.name",
-        sortable: false
+        sortable: false,
       },
       {
         key: "rdf_type_name",
         label: "GermplasmList.rdfType",
-        sortable: true
+        sortable: true,
       },
       {
         key: "species_name",
-        label: "GermplasmList.speciesLabel"
-      }
+        label: "GermplasmList.speciesLabel",
+      },
     ];
     if (!this.noActions) {
       tableFields.push({
         key: "actions",
-        label: "component.common.actions"
+        label: "component.common.actions",
       });
     }
     return tableFields;
@@ -320,7 +325,7 @@ export default class GermplasmList extends Vue {
   refresh() {
     this.tableRef.selectAll = false;
     this.tableRef.onSelectAll();
-    this.updateURLFilters();
+    this.$opensilex.updateURLParameters(this.filter);
     this.tableRef.refresh();
   }
 
@@ -347,15 +352,23 @@ export default class GermplasmList extends Vue {
   exportGermplasm() {
     let path = "/core/germplasm/export_by_uris";
     let today = new Date();
-    let filename = "export_germplasm_" + today.getFullYear() + String(today.getMonth() + 1).padStart(2, '0') + String(today.getDate()).padStart(2, '0');
-    var exportList = []
+    let filename =
+      "export_germplasm_" +
+      today.getFullYear() +
+      String(today.getMonth() + 1).padStart(2, "0") +
+      String(today.getDate()).padStart(2, "0");
+    var exportList = [];
     for (let select of this.tableRef.getSelected()) {
       exportList.push(select.uri);
     }
-    this.$opensilex
-     .downloadFilefromPostService(path, filename, "csv", {uris: exportList}, this.lang);
+    this.$opensilex.downloadFilefromPostService(
+      path,
+      filename,
+      "csv",
+      { uris: exportList },
+      this.lang
+    );
   }
-
 
   loadExperiments() {
     let expService: ExperimentsService = this.$opensilex.getService(
@@ -374,7 +387,7 @@ export default class GermplasmList extends Vue {
             let expDTO = http.response.result[i];
             this.experimentsList.push({
               value: expDTO.uri,
-              text: expDTO.name
+              text: expDTO.name,
             });
           }
         }
@@ -397,7 +410,7 @@ export default class GermplasmList extends Vue {
           );
           this.species.push({
             id: http.response.result[i].uri,
-            label: http.response.result[i].name
+            label: http.response.result[i].name,
           });
         }
       })
@@ -416,9 +429,18 @@ export default class GermplasmList extends Vue {
 
   addMetadataFilter() {
     let metadata = undefined;
-    if (this.filter.metadataKey != undefined && this.filter.metadataKey != ""
-    && this.filter.metadataValue != undefined && this.filter.metadataValue != "") {
-      metadata = '{"' + this.filter.metadataKey + '":"' + this.filter.metadataValue + '"}'
+    if (
+      this.filter.metadataKey != undefined &&
+      this.filter.metadataKey != "" &&
+      this.filter.metadataValue != undefined &&
+      this.filter.metadataValue != ""
+    ) {
+      metadata =
+        '{"' +
+        this.filter.metadataKey +
+        '":"' +
+        this.filter.metadataValue +
+        '"}';
       return metadata;
     }
   }
@@ -434,7 +456,7 @@ export default class GermplasmList extends Vue {
   //   this.exportFilter.uri = this.filter.uri;
   //   this.exportFilter.metadata = this.addMetadataFilter();
   // }
-    createDocument() {
+  createDocument() {
     this.documentForm.showCreateForm();
   }
 
@@ -456,12 +478,11 @@ export default class GermplasmList extends Vue {
         authors: undefined,
         language: undefined,
         deprecated: undefined,
-        keywords: undefined
+        keywords: undefined,
       },
-      file: undefined
-    }
+      file: undefined,
+    };
   }
-
 }
 </script>
 

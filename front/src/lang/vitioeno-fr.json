@@ -1,5 +1,6 @@
 {
     "vitioeno": {
+        "rfcv-db": "Base de données des collections RFCV",
         "welcome-message": "Bienvenue dans Vitioeno",
         "title": "Un système d'information de ressources partagées pour la vigne et le vin",
         "login": {
@@ -25,7 +26,7 @@
             }
         }
     },
-    "component": { 
+    "component": {
         "home": {
             "wineNews": "Quelques tweets sur l'actualité de la vine et du vin"
         },

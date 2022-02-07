@@ -1,5 +1,6 @@
 {
     "vitioeno": {
+        "rfcv-db": "RFCV Collections Database",
         "welcome-message": "Welcome to Vitioeno",
         "title": "A information system of shared resources for vine and wine",
         "login": {
@@ -57,5 +58,4 @@
             "international": "International"
         }
     }
-  
 }
