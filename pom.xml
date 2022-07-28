@@ -16,7 +16,7 @@
     <artifactId>inrae-vitioeno</artifactId>
     <packaging>jar</packaging>
     <name>inrae-vitioeno</name>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
 
     <properties>
         <revision>BUILD-SNAPSHOT</revision>

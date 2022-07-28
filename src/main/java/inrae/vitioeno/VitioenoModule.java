@@ -12,17 +12,17 @@ import org.opensilex.OpenSilexModule;
  */
 public class VitioenoModule extends OpenSilexModule {
 
-    // @Override
-    // public List<OntologyFileDefinition> getOntologiesFiles() throws Exception {
-    // List<OntologyFileDefinition> list =
-    // SPARQLExtension.super.getOntologiesFiles();
-    // list.add(new OntologyFileDefinition(
-    // "https://vitioeno.inrae.fr/ontology#",
-    // "ontologies/inrae-vitioeno.owl",
-    // Lang.RDFXML,
-    // "inrae-vitioeno"
-    // ));
-    // return list;
-    // }
+    @Override
+    public List<OntologyFileDefinition> getOntologiesFiles() throws Exception {
+    List<OntologyFileDefinition> list =
+    SPARQLExtension.super.getOntologiesFiles();
+    list.add(new OntologyFileDefinition(
+    "http://vitioeno.inrae.fr/vocabulary#",
+    "ontologies/inrae-vitioeno.owl",
+    Lang.RDFXML,
+    "vitioeno-vocabulary"
+    ));
+    return list;
+    }
 
 }
