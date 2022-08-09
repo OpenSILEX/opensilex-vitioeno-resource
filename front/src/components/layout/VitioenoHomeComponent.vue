@@ -2,10 +2,10 @@
     <div class="container-fluid">
       <b-row class="justify-content-md-center">
         <b-col></b-col>
-        <b-col cols="10">
+        <b-col cols="11">
           <b-img
             left
-            v-bind:src="$opensilex.getResourceURI('images/logo-vitioeno.png')"
+            v-bind:src="$opensilex.getResourceURI('images/centre-de-ressource1.png')"
             class="vitioeno-image-logo"
             alt="logo-sixtine"
             width="100"
@@ -21,7 +21,7 @@
       <br />
       <b-row>
         <b-col></b-col>
-        <b-col sm="9">
+        <b-col sm="12">
           <b-card no-body>
             <b-tabs content-class="mt-3" active>
               <b-tab :title="$t('component.twitter.international')"
@@ -40,7 +40,7 @@
                     </template>
 
                     <b-card-text>
-                      <b-col cols="8">
+                      <b-col cols="10">
                         <TwitterFeed
                           :src="
                             'https://twitter.com/' +
@@ -67,7 +67,7 @@
                       >
                     </template>
                     <b-card-text>
-                      <b-col cols="8">
+                      <b-col cols="10">
                         <TwitterFeed
                           :src="
                             'https://twitter.com/' +

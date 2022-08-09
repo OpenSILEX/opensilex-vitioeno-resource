@@ -228,3 +228,8 @@ table.asd__month-table td {
 table.b-table-selectable thead tr th:first-child {
     width: 45px;
 }
+
+
+.auth-wrapper .authentication-form .logo-centered {
+    width: 450px !important; 
+}

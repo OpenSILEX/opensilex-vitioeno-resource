@@ -50,7 +50,7 @@
           <div class="authentication-form mx-auto">
             <div class="logo-centered">
               <b-img
-                :src="$opensilex.getResourceURI('images/logo-vitioeno.png')"
+                :src="$opensilex.getResourceURI('images/centre-de-ressource1.png')"
                 fluid
                 alt="Responsive image"
               ></b-img>
@@ -153,6 +153,13 @@
               <b-img
                 center
                 :src="$opensilex.getResourceURI('images/inrae-vector-logo.png')"
+                alt="Responsive image"
+              ></b-img>
+            </div>
+             <div class="logo-centered-inrae">
+              <b-img
+                center
+                :src="$opensilex.getResourceURI('images/logo-ifv-2022.png')"
                 alt="Responsive image"
               ></b-img>
             </div>

@@ -3,13 +3,18 @@
     <b-tabs content-class="mt-3">
       <b-tab title="List">
         <b-card title="Ontologies">
-          <opensilex-TableView :fields="fields" :items="data">
+          <opensilex-TableView :fields="linksFields" :items="linksItems">
             <template v-slot:cell(name)="{ data }">
-              <opensilex-UriLink
-                :uri="data.item.link"
-                :value="data.item.name"
-                :to="data.item.link"
-              ></opensilex-UriLink>
+                   <b-link
+                    :href="data.item.link"
+                    target="_blank"
+                    >{{data}}</b-link>
+            </template>
+            <template v-slot:cell(link)="{ data }">
+                   <b-link
+                    :href="data.item.link"
+                    target="_blank"
+                    >{{item.link}}</b-link>
             </template>
           </opensilex-TableView>
         </b-card>
@@ -46,11 +51,11 @@
               </b-row>
             </b-card>
             <b-row>
-              <b-col cols="7">
+              <b-col cols="12">
                 <b-embed
                   type="iframe"
                   aspect="16by9"
-                  src="http://www.visualdataweb.de/webvowl/#iri=http://data.agroportal.lirmm.fr/ontologies/AFEO/submissions/11/download?apikey=1de0a270-29c5-4dda-b043-7c3580628cd5"
+                  src="https://service.tib.eu/webvowl/#iri=http://data.agroportal.lirmm.fr/ontologies/AFEO/submissions/11/download?apikey=1de0a270-29c5-4dda-b043-7c3580628cd5"
                   allowfullscreen
                 ></b-embed>
               </b-col>
@@ -64,7 +69,7 @@
               :items="gaoItems"
             ></opensilex-TableView>
           </b-tab>
-          <b-tab title="Other"><p>I'm the Other ontology</p></b-tab>
+          <!-- <b-tab title="Other"><p>I'm the Other ontology</p></b-tab> -->
         </b-tabs>
       </b-tab>
     </b-tabs>
@@ -84,13 +89,14 @@ export default class OntologiesView extends Vue {
   $router: any;
   $papa: any;
 
-  fields: any[] = [
-    { key: "name", label: "Name" },
-    { key: "description", label: "Description" },
-  ];
-
+    
   gaoItems = [];
   gaoFields = [];
+
+
+  linksItems = [];
+  linksFields = [];
+
 
   data: any[] = [
     {
@@ -119,6 +125,61 @@ export default class OntologiesView extends Vue {
 
   mounted() {
     this.fetchGAO();
+    this.fetchLinks();
+  }
+
+  fetchLinks() {
+    fetch(
+      "https://docs.google.com/spreadsheets/d/113kAU9fbuqEW1mMz1NLq2b0v1uvQTExDDJCxRNkeslY/gviz/tq?tqx=out:csv&gid=0"
+    )
+      .then((response) => {
+        console.debug(response);
+        if (response.status !== 200) {
+          console.debug(
+            "Looks like there was a problem. Status Code: " + response.status
+          );
+          this.linksItems = [];
+        }
+
+        // Examine the text in the response
+        response.text().then((data) => {
+          let csv = this.$papa.parse(data);
+          let csvData = csv.data; 
+          let headers = csvData.shift();
+          console.debug("fetchLinks csvData",csvData);
+          console.debug("fetchLinks headers", headers);
+         
+          let json = this.csvJSON(headers, csvData);
+          console.debug(json);
+
+          this.linksFields = headers;
+          this.linksItems = json;
+        });
+      })
+      .catch(function (err) {
+        console.debug("Fetch Error :-S", err);
+      });
+  }
+
+  csvJSON(headers, csvData) {
+    var result = [];
+ console.debug("headers",headers);
+  console.debug("csvData",csvData);
+
+    for (var i = 0; i < csvData.length; i++) {
+      var obj = {};
+      var currentline = csvData[i];
+      console.debug("currentline",currentline);
+      for (var j = 0; j < headers.length; j++) {
+        obj[headers[j]] = String(currentline[j]).replace('"', "");
+      }
+
+      result.push(obj);
+    }
+
+    //return result; //JavaScript object
+
+    return result; //JSON
   }
 
   fetchGAO() {
@@ -126,9 +187,9 @@ export default class OntologiesView extends Vue {
       "https://docs.google.com/spreadsheets/d/1uK77WFwUZCoGP0zrGVZ9RgTZvJQ2motGrbI6E6cxXts/gviz/tq?tqx=out:csv&gid=1724640354"
     )
       .then((response) => {
-        console.log(response);
+        console.debug(response);
         if (response.status !== 200) {
-          console.log(
+          console.error(
             "Looks like there was a problem. Status Code: " + response.status
           );
           this.gaoItems = [];
@@ -151,35 +212,17 @@ export default class OntologiesView extends Vue {
             csvData[j] = csvData[j].slice(0, headers.length);
           }
           let json = this.csvJSON(headers, csvData);
-          console.log(json);
+          console.debug(json);
 
           this.gaoFields = headers;
           this.gaoItems = json;
         });
       })
       .catch(function (err) {
-        console.log("Fetch Error :-S", err);
+        console.debug("Fetch Error :-S", err);
       });
   }
-
-  csvJSON(headers, csvData) {
-    var result = [];
-
-    for (var i = 1; i < csvData.length; i++) {
-      var obj = {};
-      var currentline = csvData[i];
-      console.log(currentline);
-      for (var j = 0; j < headers.length; j++) {
-        obj[headers[j]] = String(currentline[j]).replace('"', "");
-      }
-
-      result.push(obj);
-    }
-
-    //return result; //JavaScript object
-
-    return result; //JSON
-  }
+ 
 }
 </script>
 
