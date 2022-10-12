@@ -1,3 +1,5 @@
+extend: opensilex-front#phis
+
 stylesheets:
     - _mixins.scss
     - _settings.scss
