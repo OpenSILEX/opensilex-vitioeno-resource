@@ -1,52 +1,64 @@
 <template>
   <div class="container-fluid">
     <b-tabs content-class="mt-3">
-      <b-tab title="List">
+      <b-tab title="Liste">
         <b-card title="Ontologies">
-          <opensilex-TableView :fields="linksFields" :items="linksItems">
-            <template v-slot:cell(name)="{ data }">
-                   <b-link
-                    :href="data.item.link"
-                    target="_blank"
-                    >{{data}}</b-link>
-            </template>
-            <template v-slot:cell(link)="{ data }">
-                   <b-link
-                    :href="data.item.link"
-                    target="_blank"
-                    >{{item.link}}</b-link>
+          <opensilex-UriLink
+            v-if="user.isAdmin()"
+            value="Lien fichier ontologie"
+            target="_blank"
+            :uri="linksUrl"
+            :url="linksUrl"
+            >{{ "Lien fichier ontologie" }}</opensilex-UriLink
+          >
+          <opensilex-TableView
+            :fields="linksFields"
+            :items="linksItems"
+            :globalFilterField="true"
+          >
+            <template v-slot:cell(nom)="{ data }">
+              <opensilex-UriLink
+                :value="data.item.nom"
+                target="_blank"
+                :uri="data.item.lien"
+                :url="data.item.lien"
+                >{{ data.item.nom }}</opensilex-UriLink
+              >
             </template>
           </opensilex-TableView>
         </b-card>
       </b-tab>
-      <b-tab title="By category">
+      <b-tab title="Par catégorie">
         <b-tabs content-class="mt-3">
-          <b-tab title="Winemaking processs" active>
-            <b-card title="AFEO">
+          <b-tab title="Procédés de vinification" active>
+            <b-card>
               <b-row>
-                <h3>
-                  Link in Agroportal :
+                <h5>
+                  Voir dans Agroportal :
                   <b-link
                     href="http://agroportal.lirmm.fr/ontologies/AFEO?p=summary"
                     target="_blank"
                     >AFEO</b-link
                   >
-                </h3>
+                </h5>
               </b-row>
               <b-row>
                 <p>
-                  AFEO was used to guide the data integration of two diﬀerent
-                  data sources, i.e., viticulture experimental data stored in a
-                  relational database and winemaking experimental data stored in
-                  Microsoft Excel ﬁles. Two potential uses by researchers of
-                  viticulture-winemaking integrated data using AFEO have been
-                  shown. The ﬁrst one is about wine traceability and the second
-                  one is related to the inﬂuence of grape varieties, irrigation
-                  practices, and diﬀerent winemaking methods on GSH
-                  concentration in wine. Those examples show that data
-                  integration guided by an ontology network can provide
-                  researchers with the information necessary to address extended
-                  research questions by viticulture and winemaking processes.
+                  AFEO a été utilisé pour guider l'intégration de données de
+                  deux sources de données différentes, à savoir des données
+                  expérimentales de viticulture stockées dans une base de
+                  données relationnelle et des données expérimentales de
+                  vinification stockées dans des fichiers Microsoft Excel. Deux
+                  utilisations potentielles par les chercheurs de données
+                  intégrées viticulture-vinification utilisant AFEO ont été
+                  montrées. Le premier concerne la traçabilité du vin et le
+                  second est lié à l'inﬂuence des cépages, des pratiques
+                  d'irrigation et des différentes méthodes de vinification sur
+                  la concentration de GSH dans le vin. Ces exemples montrent que
+                  l'intégration des données guidée par un réseau ontologique
+                  peut fournir aux chercheurs les informations nécessaires pour
+                  répondre à des questions de recherche étendues par les
+                  processus de viticulture et de vinification.
                 </p>
               </b-row>
             </b-card>
@@ -62,8 +74,24 @@
             </b-row>
           </b-tab>
 
-          <b-tab title="Anatomy"
-            ><opensilex-TableView
+          <b-tab title="Anatomie de la vigne">
+            <h5>
+              Voir dans Agroportal :
+              <b-link
+                href="http://agroportal.lirmm.fr/ontologies/GAO?p=summary"
+                target="_blank"
+                >AFEO</b-link
+              >
+            </h5>
+            <opensilex-UriLink
+              v-if="user.isAdmin()"
+              value="Lien fichier GAO googlesheet"
+              target="_blank"
+              :uri="gaoUrl"
+              :url="gaoUrl"
+              >{{ "Lien fichier ontologie" }}</opensilex-UriLink
+            >
+            <opensilex-TableView
               :globalFilterField="true"
               :fields="gaoFields"
               :items="gaoItems"
@@ -89,14 +117,15 @@ export default class OntologiesView extends Vue {
   $router: any;
   $papa: any;
 
-    
+  get user() {
+    return this.$store.state.user;
+  }
+
   gaoItems = [];
   gaoFields = [];
 
-
   linksItems = [];
   linksFields = [];
-
 
   data: any[] = [
     {
@@ -118,10 +147,14 @@ export default class OntologiesView extends Vue {
     {
       name: "GAO",
       description: "GAO was used to guide grape vine anatomy description",
-      link:
-        "https://docs.google.com/spreadsheets/d/1uK77WFwUZCoGP0zrGVZ9RgTZvJQ2motGrbI6E6cxXts/edit#gid=1724640354",
+      link: "https://docs.google.com/spreadsheets/d/1uK77WFwUZCoGP0zrGVZ9RgTZvJQ2motGrbI6E6cxXts/edit#gid=1724640354",
     },
   ];
+
+  linksUrl: string =
+    "https://docs.google.com/spreadsheets/d/113kAU9fbuqEW1mMz1NLq2b0v1uvQTExDDJCxRNkeslY";
+  gaoUrl: string =
+    "https://docs.google.com/spreadsheets/d/1uK77WFwUZCoGP0zrGVZ9RgTZvJQ2motGrbI6E6cxXts";
 
   mounted() {
     this.fetchGAO();
@@ -129,9 +162,7 @@ export default class OntologiesView extends Vue {
   }
 
   fetchLinks() {
-    fetch(
-      "https://docs.google.com/spreadsheets/d/113kAU9fbuqEW1mMz1NLq2b0v1uvQTExDDJCxRNkeslY/gviz/tq?tqx=out:csv&gid=0"
-    )
+    fetch(this.linksUrl + "/gviz/tq?tqx=out:csv&gid=0")
       .then((response) => {
         console.debug(response);
         if (response.status !== 200) {
@@ -144,16 +175,13 @@ export default class OntologiesView extends Vue {
         // Examine the text in the response
         response.text().then((data) => {
           let csv = this.$papa.parse(data);
-          let csvData = csv.data; 
+          let csvData = csv.data;
           let headers = csvData.shift();
-          console.debug("fetchLinks csvData",csvData);
+          console.debug("fetchLinks csvData", csvData);
           console.debug("fetchLinks headers", headers);
-         
-          let json = this.csvJSON(headers, csvData);
-          console.debug(json);
 
-          this.linksFields = headers;
-          this.linksItems = json;
+          this.linksFields = this.csvJSONHeaders(headers);
+          this.linksItems = this.csvJSONCells(headers, csvData);
         });
       })
       .catch(function (err) {
@@ -161,31 +189,45 @@ export default class OntologiesView extends Vue {
       });
   }
 
-  csvJSON(headers, csvData) {
+  csvJSONHeaders(headers) {
     var result = [];
- console.debug("headers",headers);
-  console.debug("csvData",csvData);
+    console.log("headers,headers.length", headers, headers.length);
+    for (var i = 0; i < headers.length; i++) {
+      var obj = {};
+      console.debug("headers", headers[i]);
+      var currentHeader = headers[i];
+      obj = {
+        key: currentHeader.toLowerCase(),
+        label: currentHeader,
+      };
+
+      result.push(obj);
+    }
+    console.debug("json headers", result);
+
+    return result; //JSON
+  }
+
+  csvJSONCells(headers, csvData) {
+    var result = [];
 
     for (var i = 0; i < csvData.length; i++) {
       var obj = {};
       var currentline = csvData[i];
-      console.debug("currentline",currentline);
+      console.debug("currentline", currentline);
       for (var j = 0; j < headers.length; j++) {
-        obj[headers[j]] = String(currentline[j]).replace('"', "");
+        obj[headers[j].toLowerCase()] = String(currentline[j]).replace('"', "");
       }
 
       result.push(obj);
     }
-
-    //return result; //JavaScript object
+    console.debug("json cells", result);
 
     return result; //JSON
   }
 
   fetchGAO() {
-    fetch(
-      "https://docs.google.com/spreadsheets/d/1uK77WFwUZCoGP0zrGVZ9RgTZvJQ2motGrbI6E6cxXts/gviz/tq?tqx=out:csv&gid=1724640354"
-    )
+    fetch(this.gaoUrl + "/gviz/tq?tqx=out:csv&gid=1724640354")
       .then((response) => {
         console.debug(response);
         if (response.status !== 200) {
@@ -211,10 +253,9 @@ export default class OntologiesView extends Vue {
           for (var j = 0; j < csvData.length; j++) {
             csvData[j] = csvData[j].slice(0, headers.length);
           }
-          let json = this.csvJSON(headers, csvData);
-          console.debug(json);
+          let json = this.csvJSONCells(headers, csvData);
 
-          this.gaoFields = headers;
+          this.gaoFields = this.csvJSONHeaders(headers);
           this.gaoItems = json;
         });
       })
@@ -222,7 +263,6 @@ export default class OntologiesView extends Vue {
         console.debug("Fetch Error :-S", err);
       });
   }
- 
 }
 </script>
 

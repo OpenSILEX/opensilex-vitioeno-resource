@@ -118,6 +118,12 @@ export default class DefaultHomeComponent extends Vue {
         "Unité mixte de recherche en santé et agroécologie du vignoble, INRAe - BSA, ISVV ",
     },
     {
+      id: "opensilex",
+      label: "OpenSILEX",
+      description:
+        "OpenSILEX is a free software (scientific data management using #semantics), INRAe - MISTEA ",
+    },
+    {
       id: "vignevinfrance",
       label: "IFV",
       description:

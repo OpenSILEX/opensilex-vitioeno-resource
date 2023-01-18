@@ -1,7 +1,7 @@
 menu:
   - id: vitioeno-news
     label: component.menu.news.label
-    icon: ik-twitter
+    icon: ik#ik-twitter
     route:
       component: inrae-vitioeno-VitioenoHomeComponent
       path: /news
@@ -21,6 +21,7 @@ menu:
           component: inrae-vitioeno-GermplasmView
   - id: vitioeno-references
     label: component.menu.references.label
+    icon: ik#git-fork
     children:
       - id: ontologies
         label: component.menu.references.ontologies.label

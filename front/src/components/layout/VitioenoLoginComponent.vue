@@ -182,7 +182,7 @@ import HttpResponse, {
 import { FrontConfigDTO } from "../../../../../opensilex-front/front/src/lib";
 
 @Component
-export default class SunagriLoginComponent extends Vue {
+export default class VitioenoLoginComponent extends Vue {
   get form() {
     return {
       email: "",

@@ -70,7 +70,7 @@ import Vue from "vue";
 import { Menu } from "../../../../../opensilex-front/front/src/models/Menu";
 
 @Component
-export default class SunagriMenuComponent extends Vue {
+export default class VitioenoMenuComponent extends Vue {
   $route: any;
   $store: any;
   $t:any;
