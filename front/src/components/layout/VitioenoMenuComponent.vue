@@ -57,6 +57,22 @@
                 </router-link>
               </div>
             </div>
+            <div li class="nav-item">
+              <a
+                v-if="versionInfo.api_docs.url != undefined"
+                :href="versionInfo.api_docs.url"
+                target="_blank"
+                class="router-link-exact-active router-link-active"
+              >
+                <b-img
+                  fluid
+                  width="25"
+                  src="https://cdn.svgporn.com/logos/swagger.svg"
+                />
+                &nbsp;&nbsp;&nbsp;
+                <span class="ml-1">{{ $t("component.menu.web-api") }}</span>
+              </a>
+            </div>
           </nav>
         </div>
       </div>
@@ -68,12 +84,21 @@
 import { Component } from "vue-property-decorator";
 import Vue from "vue";
 import { Menu } from "../../../../../opensilex-front/front/src/models/Menu";
+// @ts-ignore
+import { versionInfoDTO } from "opensilex-core/index";
 
 @Component
 export default class VitioenoMenuComponent extends Vue {
   $route: any;
   $store: any;
   $t:any;
+  $opensilex: any;
+
+  versionInfo: versionInfoDTO;
+
+  created() {
+      this.versionInfo = this.$opensilex.versionInfo;
+  }
 
   get menu(): Array<Menu> {
     return this.$store.state.menu;

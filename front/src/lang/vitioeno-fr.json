@@ -2,7 +2,7 @@
     "vitioeno": {
         "rfcv-db": "Base de données des collections RFCV",
         "welcome-message": "Bienvenue dans Vitioeno",
-        "title": "Un système d'information de ressources partagées pour la vigne et le vin",
+        "title": "Un système d'information de ressources partagées pour l’interopérabilité des données pour la vigne et le vin",
         "login": {
             "info": "Merci de saisir vos identifiants pour vous connecter à l'application",
             "infoGuest": "Vous pouvez vous connecter en tant qu'invité",

@@ -93,13 +93,13 @@
       ref="tableRef"
       :searchMethod="searchGermplasm"
       :fields="fields"
-      :isSelectable="true"
+      :isSelectable="false"
       defaultSortBy="name"
       labelNumberOfSelectedRow="GermplasmList.selected"
       iconNumberOfSelectedRow="fa#seedling"
     >
       <template v-slot:selectableTableButtons="{ numberOfSelectedRows }">
-        <b-dropdown
+        <!-- <b-dropdown
           dropright
           class="mb-2 mr-2"
           :small="true"
@@ -118,7 +118,7 @@
           <b-dropdown-item-button @click="exportGermplasm()">{{
             $t("GermplasmList.export")
           }}</b-dropdown-item-button>
-        </b-dropdown>
+        </b-dropdown> -->
       </template>
       <template v-slot:cell(name)="{ data }">
         <opensilex-UriLink
@@ -178,6 +178,7 @@ import {
   ExperimentsService,
   SpeciesService,
   SpeciesDTO,
+  GermplasmSearchFilter 
 } from "opensilex-core/index";
 
 import HttpResponse, { OpenSilexResponse } from "opensilex-core/HttpResponse";
@@ -349,25 +350,39 @@ export default class GermplasmList extends Vue {
     );
   }
 
-  exportGermplasm() {
-    let path = "/core/germplasm/export_by_uris";
+  exportCSV(exportAll: boolean) {
+    let path = "/core/germplasm/export";
     let today = new Date();
-    let filename =
-      "export_germplasm_" +
-      today.getFullYear() +
-      String(today.getMonth() + 1).padStart(2, "0") +
-      String(today.getDate()).padStart(2, "0");
-    var exportList = [];
-    for (let select of this.tableRef.getSelected()) {
-      exportList.push(select.uri);
+    let filename = "export_germplasm_" + today.getFullYear() + String(today.getMonth() + 1).padStart(2, '0') + String(today.getDate()).padStart(2, '0');
+
+    let exportDto: GermplasmSearchFilter  = {
+        uri: this.filter.uri,
+        rdf_type: this.filter.rdf_type,
+        name: this.filter.name,
+        production_year: this.filter.production_year,
+        species: this.filter.species,
+        institute: this.filter.institute,
+        experiment: this.filter.experiment,
+        order_by: this.tableRef.getOrderBy(),
+        metadata: this.addMetadataFilter()
+    };
+
+    // export only selected URIS (+matching with filter)
+    if(! exportAll){
+      let objectURIs = [];
+      for (let select of this.tableRef.getSelected()) {
+        objectURIs.push(select.uri);
+      }
+      Object.assign(exportDto, {
+        uris: objectURIs
+      });
+      exportDto.page_size = objectURIs.length;
+    } else {
+      exportDto.page_size = this.tableRef.getTotalRow();
     }
-    this.$opensilex.downloadFilefromPostService(
-      path,
-      filename,
-      "csv",
-      { uris: exportList },
-      this.lang
-    );
+
+    this.$opensilex
+     .downloadFilefromPostService(path, filename, "csv", exportDto, this.lang);
   }
 
   loadExperiments() {
