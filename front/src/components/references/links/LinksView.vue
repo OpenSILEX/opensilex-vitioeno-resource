@@ -8,7 +8,6 @@
             :uri="data.item.link"
             :url="data.item.link"
             :value="data.item.name"
-            :to="data.item.link"
           ></opensilex-UriLink>
         </template>
       </opensilex-TableView>
