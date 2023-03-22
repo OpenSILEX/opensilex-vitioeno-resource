@@ -12,8 +12,8 @@ import org.apache.jena.riot.Lang;
 import org.opensilex.OpenSilexModule;
 import org.opensilex.core.variable.dal.MethodModel;
 import org.opensilex.security.authentication.AuthenticationService;
-import org.opensilex.security.user.dal.UserDAO;
-import org.opensilex.security.user.dal.UserModel;
+import org.opensilex.security.account.dal.AccountDAO;
+import org.opensilex.security.account.dal.AccountModel;
 import org.opensilex.sparql.exceptions.SPARQLException;
 import org.opensilex.sparql.extensions.OntologyFileDefinition;
 import org.opensilex.sparql.extensions.SPARQLExtension;
@@ -38,33 +38,5 @@ public class VitioenoModule extends OpenSilexModule implements SPARQLExtension{
         "vitioeno-vocabulary"
         ));
         return list;
-    }
-
-    @Override
-    public void install(boolean reset) throws Exception {
-        insertDefaultGuestUser();
-    }
-
-    private void insertDefaultGuestUser() throws Exception {
-        AuthenticationService authentication = getOpenSilex().getServiceInstance(AuthenticationService.DEFAULT_AUTHENTICATION_SERVICE, AuthenticationService.class);
-
-        SPARQLServiceFactory factory = getOpenSilex().getServiceInstance(SPARQLService.DEFAULT_SPARQL_SERVICE, SPARQLServiceFactory.class);
-        SPARQLService sparql = factory.provide();
-
-        UserModel user = new UserModel();
-        user.setUri(new URI("vitioeno-ressource:guest-user"));
-        user.setFirstName("guest");
-        user.setLastName("guest");
-        user.setEmail(new InternetAddress("guest@opensilex.org"));
-        user.setPasswordHash( authentication.getPasswordHash("guest"));
-        UserDAO userDAO = new UserDAO(sparql);
-       
-        try {
-            userDAO.create(new URI("vitioeno-ressource:guest-user"),new InternetAddress("guest@opensilex.org"),"guest","guest",false,authentication.getPasswordHash("guest"),"fr");
-            LOGGER.info("Insert guest user {}", user.getUri());
-        } catch (Exception e) {
-            throw new SPARQLException("Couldn't create guest user : " + e.getMessage(), e);
-        }
-    }
-    
+    } 
 }
