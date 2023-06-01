@@ -1,14 +1,14 @@
 <template>
   <div class="container-fluid">
     <b-tabs content-class="mt-3">
-      <b-tab title="Liste">
-        <b-card title="Ontologies">
+      <b-tab :title="$t('OntologiesView.list')" active>
+        <b-card :title="$t('OntologiesView.title')">
           <opensilex-UriLink
             v-if="user.isAdmin()"
             value="Lien fichier ontologie"
             target="_blank"
-            :uri="linksUrl"
-            :url="linksUrl"
+            :uri="linksOntologies"
+            :url="linksOntologies"
             >{{ "Lien fichier ontologie" }}</opensilex-UriLink
           >
           <opensilex-TableView
@@ -28,78 +28,73 @@
           </opensilex-TableView>
         </b-card>
       </b-tab>
-      <b-tab title="Par catégorie">
-        <b-tabs content-class="mt-3">
-          <b-tab title="Procédés de vinification" active>
-            <b-card>
-              <b-row>
-                <h5>
-                  Voir dans Agroportal :
-                  <b-link
-                    href="http://agroportal.lirmm.fr/ontologies/AFEO?p=summary"
-                    target="_blank"
-                    >AFEO</b-link
-                  >
-                </h5>
-              </b-row>
-              <b-row>
-                <p>
-                  AFEO a été utilisé pour guider l'intégration de données de
-                  deux sources de données différentes, à savoir des données
-                  expérimentales de viticulture stockées dans une base de
-                  données relationnelle et des données expérimentales de
-                  vinification stockées dans des fichiers Microsoft Excel. Deux
-                  utilisations potentielles par les chercheurs de données
-                  intégrées viticulture-vinification utilisant AFEO ont été
-                  montrées. Le premier concerne la traçabilité du vin et le
-                  second est lié à l'inﬂuence des cépages, des pratiques
-                  d'irrigation et des différentes méthodes de vinification sur
-                  la concentration de GSH dans le vin. Ces exemples montrent que
-                  l'intégration des données guidée par un réseau ontologique
-                  peut fournir aux chercheurs les informations nécessaires pour
-                  répondre à des questions de recherche étendues par les
-                  processus de viticulture et de vinification.
-                </p>
-              </b-row>
-            </b-card>
-            <b-row>
-              <b-col cols="12">
-                <b-embed
-                  type="iframe"
-                  aspect="16by9"
-                  src="https://service.tib.eu/webvowl/#iri=http://data.agroportal.lirmm.fr/ontologies/AFEO/submissions/11/download?apikey=1de0a270-29c5-4dda-b043-7c3580628cd5"
-                  allowfullscreen
-                ></b-embed>
-              </b-col>
-            </b-row>
-          </b-tab>
-
-          <b-tab title="Anatomie de la vigne">
+      <b-tab :title="$t('OntologiesView.wineMakinkgProcess')" >
+        <b-card>
+          <b-row>
             <h5>
               Voir dans Agroportal :
               <b-link
-                href="http://agroportal.lirmm.fr/ontologies/GAO?p=summary"
+                href="http://agroportal.lirmm.fr/ontologies/AFEO?p=summary"
                 target="_blank"
                 >AFEO</b-link
               >
             </h5>
-            <opensilex-UriLink
-              v-if="user.isAdmin()"
-              value="Lien fichier GAO googlesheet"
-              target="_blank"
-              :uri="gaoUrl"
-              :url="gaoUrl"
-              >{{ "Lien fichier ontologie" }}</opensilex-UriLink
-            >
-            <opensilex-TableView
-              :globalFilterField="true"
-              :fields="gaoFields"
-              :items="gaoItems"
-            ></opensilex-TableView>
-          </b-tab>
-          <!-- <b-tab title="Other"><p>I'm the Other ontology</p></b-tab> -->
-        </b-tabs>
+          </b-row>
+          <b-row>
+            <p>
+              AFEO a été utilisé pour guider l'intégration de données de deux
+              sources de données différentes, à savoir des données
+              expérimentales de viticulture stockées dans une base de données
+              relationnelle et des données expérimentales de vinification
+              stockées dans des fichiers Microsoft Excel. Deux utilisations
+              potentielles par les chercheurs de données intégrées
+              viticulture-vinification utilisant AFEO ont été montrées. Le
+              premier concerne la traçabilité du vin et le second est lié à
+              l'inﬂuence des cépages, des pratiques d'irrigation et des
+              différentes méthodes de vinification sur la concentration de GSH
+              dans le vin. Ces exemples montrent que l'intégration des données
+              guidée par un réseau ontologique peut fournir aux chercheurs les
+              informations nécessaires pour répondre à des questions de
+              recherche étendues par les processus de viticulture et de
+              vinification.
+            </p>
+          </b-row>
+        </b-card>
+        <b-row>
+          <b-col cols="12">
+            <b-embed
+              type="iframe"
+              aspect="16by9"
+              src="https://service.tib.eu/webvowl/#iri=http://data.agroportal.lirmm.fr/ontologies/AFEO/submissions/11/download?apikey=1de0a270-29c5-4dda-b043-7c3580628cd5"
+              allowfullscreen
+            ></b-embed>
+          </b-col>
+        </b-row>
       </b-tab>
+
+      <b-tab  :title="$t('OntologiesView.vineAnatomy')">
+        <h5>
+          Voir dans Agroportal :
+          <b-link
+            href="http://agroportal.lirmm.fr/ontologies/GAO?p=summary"
+            target="_blank"
+            >AFEO</b-link
+          >
+        </h5>
+        <opensilex-UriLink
+          v-if="user.isAdmin()"
+          value="Lien fichier GAO googlesheet"
+          target="_blank"
+          :uri="gaoUrl"
+          :url="gaoUrl"
+          >{{ "Lien fichier ontologie" }}</opensilex-UriLink
+        >
+        <opensilex-TableView
+          :globalFilterField="true"
+          :fields="gaoFields"
+          :items="gaoItems"
+        ></opensilex-TableView>
+      </b-tab> 
     </b-tabs>
   </div>
 </template>
@@ -114,8 +109,9 @@ export default class OntologiesView extends Vue {
   $opensilex: any;
   $store: any;
   $route: any;
-  $router: any;
+  $router: VueRouter;
   $papa: any;
+  $t : any;
 
   get user() {
     return this.$store.state.user;
@@ -126,6 +122,27 @@ export default class OntologiesView extends Vue {
 
   linksItems = [];
   linksFields = [];
+
+
+  get linkOntology(){ 
+    if(this.lang === 'fr'){
+      return "https://docs.google.com/spreadsheets/d/1Z4CUW5AsuvycBbRvHjSaOzNAjtInahya_VhrIsEs1Qs";
+    }else{
+      return "https://docs.google.com/spreadsheets/d/1BxQKmpbVmYBPjf_jVOEi9QFV4waeX_IsePdgYGQlnZc";
+    }
+  }
+  get lang() {
+    console.debug("Active language : " + this.$store.getters.language);
+    return this.$store.getters.language;
+  }  
+ 
+  private langUnwatcher;
+ 
+
+  beforeDestroy() {
+      this.langUnwatcher();
+  }
+ 
 
   data: any[] = [
     {
@@ -151,18 +168,25 @@ export default class OntologiesView extends Vue {
     },
   ];
 
-  linksUrl: string =
-    "https://docs.google.com/spreadsheets/d/113kAU9fbuqEW1mMz1NLq2b0v1uvQTExDDJCxRNkeslY";
+  linksOntologies: string =
+    "https://docs.google.com/spreadsheets/d/1Z4CUW5AsuvycBbRvHjSaOzNAjtInahya_VhrIsEs1Qs";
   gaoUrl: string =
     "https://docs.google.com/spreadsheets/d/1uK77WFwUZCoGP0zrGVZ9RgTZvJQ2motGrbI6E6cxXts";
 
   mounted() {
-    this.fetchGAO();
-    this.fetchLinks();
+    this.fetchGAO(); 
+    this.fetchOntologies();
+    this.langUnwatcher = this.$store.watch(
+          () => this.$store.getters.language,
+          lang => {
+            this.fetchOntologies();
+          }
+      );
+    
   }
 
-  fetchLinks() {
-    fetch(this.linksUrl + "/gviz/tq?tqx=out:csv&gid=0")
+  fetchOntologies() {
+    fetch(this.linkOntology + "/gviz/tq?tqx=out:csv&gid=0")
       .then((response) => {
         console.debug(response);
         if (response.status !== 200) {
@@ -177,8 +201,8 @@ export default class OntologiesView extends Vue {
           let csv = this.$papa.parse(data);
           let csvData = csv.data;
           let headers = csvData.shift();
-          console.debug("fetchLinks csvData", csvData);
-          console.debug("fetchLinks headers", headers);
+          console.debug("fetchOntologies csvData", csvData);
+          console.debug("fetchOntologies headers", headers);
 
           this.linksFields = this.csvJSONHeaders(headers);
           this.linksItems = this.csvJSONCells(headers, csvData);
@@ -269,3 +293,5 @@ export default class OntologiesView extends Vue {
 <style scoped lang="scss">
 </style>
  
+ 
+  

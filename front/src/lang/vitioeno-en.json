@@ -55,7 +55,23 @@
         },
         "twitter": {
             "national": "National",
-            "international": "International"
+            "international": "International",
+            "show" : "Display may take a few moments"
         }
+    },
+ 
+    "icon.component.menu.shared.label" : "ik-link",
+    "icon.component.menu.experimentalDesign.germplasm" : "ik-cloud-rain",
+    "icon.component.menu.news.label" : "ik-twitter",
+    "icon.component.menu.references.label" : "ik-book-open",
+    "icon.component.menu.applications.label" : "ik-tablet",
+   
+    "OntologiesView":{
+        "title": "Ontologies",
+        "list": "Liste",
+        "wineMakinkgProcess": "Winemaking process",
+        "vineAnatomy": "Vine anatomy "
+
     }
+
 }

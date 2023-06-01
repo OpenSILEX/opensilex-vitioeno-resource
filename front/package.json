@@ -11,6 +11,7 @@
         "check:security": "yarn audit || cd ."
     },
     "dependencies": {
+        "vue-matomo": "^4.2.0",
         "vuejs-twitter-feed": "1.0.1"
     },
     "devDependencies": {

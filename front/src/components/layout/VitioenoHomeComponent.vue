@@ -26,7 +26,7 @@
             <b-tabs content-class="mt-3" active>
               <b-tab :title="$t('component.twitter.international')"
                 ><b-tabs pills card vertical>
-                  <span style="font-style:italic">L'affichage peut prendre quelques instants ....</span>
+                  <span style="font-style:italic">{{$t('component.twitter.show')}}</span>
                   <!-- Render Tabs, supply a unique `key` to each tab -->
                   <b-tab
                     v-for="twitterLink in internationalTwitterLinksIdLabel"
@@ -56,7 +56,7 @@
               <b-tab :title="$t('component.twitter.national')">
                 
                 <b-tabs pills card vertical>
-                  <span style="font-style:italic">L'affichage peut prendre quelques instants ....</span>
+                  <span style="font-style:italic">{{$t('component.twitter.show')}}</span>
                   <!-- Render Tabs, supply a unique `key` to each tab -->
                   <b-tab
                     v-for="twitterLink in nationalTwitterLinksIdLabel"
