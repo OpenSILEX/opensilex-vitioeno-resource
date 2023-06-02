@@ -1,8 +1,6 @@
 /// <reference path="../../../opensilex-security/front/types/opensilex-security.d.ts" />
 /// <reference path="../../../opensilex-core/front/types/opensilex-core.d.ts" />
-import VitioenoLoginComponent from "./components/layout/VitioenoLoginComponent.vue";
-import VitioenoFooterComponent from "./components/layout/VitioenoFooterComponent.vue";
-import VitioenoMenuComponent from "./components/layout/VitioenoMenuComponent.vue";
+import VitioenoLoginComponent from "./components/layout/VitioenoLoginComponent.vue"; 
 import VitioenoHeaderComponent from "./components/layout/VitioenoHeaderComponent.vue";
 import VitioenoHomeComponent from "./components/layout/VitioenoHomeComponent.vue";
 
@@ -114,9 +112,7 @@ export default {
   },
   components: {
     "inrae-vitioeno-VitioenoHomeComponent": VitioenoHomeComponent,
-    "inrae-vitioeno-VitioenoLoginComponent": VitioenoLoginComponent,
-    "inrae-vitioeno-VitioenoFooterComponent": VitioenoFooterComponent,
-    "inrae-vitioeno-VitioenoMenuComponent": VitioenoMenuComponent,
+    "inrae-vitioeno-VitioenoLoginComponent": VitioenoLoginComponent, 
     "inrae-vitioeno-VitioenoHeaderComponent": VitioenoHeaderComponent,
     "inrae-vitioeno-GermplasmView": GermplasmView,
     "inrae-vitioeno-GermplasmList": GermplasmList,

@@ -35,14 +35,17 @@
                 "label": "Ressources partagées"
             },
             "applications": {
-                "label": "Applications"
+                "label": "Applications",
+                "description": "Applications utiles pour l'acquisition ou l'exploitation de données"
             },
             "news": {
-                "label": "News"
+                "label": "News",
+                "description": "Comptes twitter d'intérêt à propos de la connaissance et les technologies de l'information pour la vigne et le vin"
             },
             "references": {
                 "label": "Réferences",
                 "ontologies": {
+                    "description": "Définition et représentation de concepts liées à la connaissance",
                     "label": "Ontologies"
                 },
                 "documents": {
@@ -71,6 +74,7 @@
         "title": "Ontologies",
         "list": "Liste",
         "wineMakinkgProcess": "Winemaking process",
-        "vineAnatomy": "Anatomie de la vigne" 
+        "vineAnatomy": "Anatomie de la vigne",
+        "agroportalShow": "Voir dans Agroportal"
     } 
 }

@@ -5,6 +5,8 @@ menu:
       icon: ik#ik-twitter
       component: inrae-vitioeno-VitioenoHomeComponent
       path: /news
+      title: component.menu.news.label 
+      description: component.menu.news.description 
   - id: vitioeno-shared
     label: component.menu.shared.label
     children:
@@ -13,10 +15,16 @@ menu:
         route:
           path: /variables
           component: opensilex-VariablesView
+          icon: fa#vials
+          title: VariableView.title
+          description: VariableView.description
       - id: germplasm_vitioeno
-        label: component.menu.experimentalDesign.germplasm 
+        label: component.menu.experimentalDesign.germplasm
+        icon: fa#seedling 
         route:
-          icon: ik-cloud-rain
+          icon: fa#seedling
+          title: GermplasmView.title
+          description: GermplasmView.description
           path: /germplasm
           component: inrae-vitioeno-GermplasmView
   - id: vitioeno-references
@@ -25,26 +33,35 @@ menu:
       - id: ontologies
         label: component.menu.references.ontologies.label
         route:
-          icon: ik#ik-dribbble
+          icon: ik#ik-link
           path: /ontologies
           component: inrae-vitioeno-OntologiesView
+          title: component.menu.references.ontologies.label
+          description: component.menu.references.ontologies.description
       - id: documents
         label: Documents
         route:
           path: /documents
           component: opensilex-DocumentView
+          icon: ik#ik-file-text
+          title: DocumentView.title
+          description: DocumentView.description
       - id: links
         label: component.menu.references.links.label
         route:
           icon: ik#ik-award
           component: inrae-vitioeno-LinksView
           path: /links
+          title:  component.menu.references.links.label
+          description:  component.menu.references.links.description
   - id: vitioeno-apps
     label: component.menu.applications.label
     route:
       icon: ik#ik-tablet
       path: /dataAnalysis/apps
       component: opensilex-data-analysis-ApplicationView
+      title:  component.menu.applications.label
+      description:  component.menu.applications.description
   - id: vitioeno-configuration
     label: component.menu.configuration
     children: 
@@ -53,27 +70,19 @@ menu:
         route:
           path: /profiles
           component: opensilex-ProfileView
-          credentials:
+          credentials: 
             - is-admin
-      # - id: scientificObjectTypes
-      #   label: component.menu.scientificObjectTypes
-      #   route:
-      #     path: /scientific-object-types
-      #     component: opensilex-ScientificObjectTypes
-      #     credentials:
-      #     - is-admin
-      # - id: facilitiesTypes
-      #   label: component.menu.facilitiesTypes
-      #   route:
-      #     path: /facilities-types
-      #     component: opensilex-InfrastructureFacilitiesTypes
-      #     credentials:
-      #       - is-admin
+          icon: ik#ik-settings
+          title: component.menu.security.profiles
+          description: component.profile.description
       - id: system
         label: component.menu.tools.system
         route:
           path: /system
           component: opensilex-SystemView 
+          icon: ik#ik-layers
+          title: SystemView.title
+          description: SystemView.title-description
   - id: user_groups_vitioeno
     label: component.menu.users-groups.label
     children:
@@ -84,6 +93,9 @@ menu:
           component: opensilex-UserView
           credentials:
             - user-modification
+          icon: ik#ik-user
+          title: UserView.title
+          description: UserView.description
       - id: groups
         label: component.menu.security.groups
         route:
@@ -91,6 +103,9 @@ menu:
           component: opensilex-GroupView
           credentials:
             - group-modification
+          icon: ik#ik-users
+          title: component.menu.security.groups
+          description: component.group.description
 
 routes:      
   - path: /germplasm/details/:uri

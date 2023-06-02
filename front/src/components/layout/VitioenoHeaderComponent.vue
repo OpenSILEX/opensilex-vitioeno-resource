@@ -1,25 +1,26 @@
 <template>
   <div class="header-top" header-theme="light">
-    <div class="app-logo" style="left:0px;background-color:#fff;padding-left:0px">
-      <router-link to="/">
-      <img
+    <div class="app-logo">
+      <div class="header-brand" to="/">
+        <div class="logo-img">
+          <img
             v-bind:src="$opensilex.getResourceURI('images/logo-vitioeno-text-new.png')"
-            class="header-brand-img"
-            alt="lavalite"
-          /> 
-      </router-link>
+            class="header-brand-img" alt="logo-svg" width="150px"
+          />
+        </div> 
+      </div>
     </div>
-    <!------------------------------------------------------->
+<!------------------------------------------------------->
 
     <div class="container-fluid boxed-layout">
       <h5 v-if="iconvalue" class="header-title">
-        <opensilex-Icon :icon.sync="iconvalue" class="title-icon" />
+        <opensilex-Icon :icon.sync="iconvalue" class="title-icon"/>
         <slot name="title">&nbsp;{{ $t(titlevalue) }}</slot>
       </h5>
-      <span v-else> <br /> </span>
-      <span class="title-description">
-        <slot name="description">{{ $t(descriptionevalue) }}</slot>
-      </span>
+      <span v-else> <br> </span>
+        <span class="title-description">
+          <slot name="description" >{{ $t(descriptionevalue) }}</slot>
+        </span>
 
       <div class="d-flex justify-content-end">
         <div class="top-menu d-flex align-items-center">
@@ -28,75 +29,75 @@
             For development purposes only
            -->
           <div
-            v-if="versionLabel"
-            class="version-label-box"
-            v-bind:class="[versionLabelClass]"
+              v-if="versionLabel"
+              class="version-label-box"
+              v-bind:class="[versionLabelClass]"
           >
             {{ versionLabel }}
           </div>
 
-          <!---------- Burger menu start---------->
+<!---------- Burger menu start---------->
 
-          <button
-            class="hamburger headerburger"
-            type="button"
-            v-on:click="HeaderBurgerToggle = !HeaderBurgerToggle"
-          >
-            <span class="hamburger-box">
-              <span class="hamburger-inner"></span>
-            </span>
-          </button>
+      <button
+        class="hamburger headerburger"
+        type="button"
+        v-on:click="HeaderBurgerToggle = !HeaderBurgerToggle"
+      >
+        <span class="hamburger-box">
+          <span class="hamburger-inner"></span>
+        </span>
+      </button>
 
-          <Transition>
-            <div v-show="HeaderBurgerToggle" class="burgerMenuContainer">
-              <br />
-              <div>
-                <opensilex-HelpButton
-                  class="burgerMenuHelp"
-                  @click="$opensilex.getGuideFile()"
-                  label="component.header.user-guide"
-                ></opensilex-HelpButton>
-              </div>
-              <div>
-                <div>
-                  <b-dropdown
-                    id="langDropdown"
-                    :title="`language - ${this.language}`"
-                    variant="link"
-                    right
-                  >
-                    <template v-slot:button-content>
-                      <i class="icon ik ik-globe"></i>
-                    </template>
+    <Transition>
+      <div v-show="HeaderBurgerToggle"
+        class="burgerMenuContainer"><br>
+        <div>
+          <opensilex-HelpButton
+            class="burgerMenuHelp"
+            @click="$opensilex.getGuideFile()"
+            label="component.header.user-guide"
+          ></opensilex-HelpButton>
+        </div>
+        <div>
+          <div>
+            <b-dropdown
+              id="langDropdown"
+              :title="`language - ${this.language}`"
+              variant="link"
+              right
+            >
+              <template v-slot:button-content>
+                <i class="icon ik ik-globe"></i>
+              </template>
 
-                    <b-dropdown-item
-                      v-for="item in languages"
-                      :key="`language-${item}`"
-                      href="#"
-                      @click.prevent="setLanguage(item)"
-                      >{{ $t("component.header.language." + item) }}
-                    </b-dropdown-item>
-                  </b-dropdown>
-                </div>
-                <b-dropdown
-                  v-if="user.isLoggedIn()"
-                  id="userDropdown"
-                  :title="user.getEmail()"
-                  variant="link"
-                  right
-                >
-                  <template v-slot:button-content class="userIcon">
-                    <i class="icon ik ik-user"></i>
-                  </template>
-                  <b-dropdown-item href="#" @click.prevent="logout">
-                    <i class="ik ik-log-out dropdown-icon"></i>
-                    {{ $t("component.header.user.logout") }}
-                  </b-dropdown-item>
-                </b-dropdown>
-              </div>
-            </div>
-          </Transition>
-          <!---------- Burger menu end ---------->
+              <b-dropdown-item
+                v-for="item in languages"
+                :key="`language-${item}`"
+                href="#"
+                @click.prevent="setLanguage(item)"
+                >{{ $t("component.header.language." + item) }}
+              </b-dropdown-item>
+            </b-dropdown>
+          </div>
+            <b-dropdown
+              v-if="user.isLoggedIn()"
+              id="userDropdown"
+              :title="user.getEmail()"
+              variant="link"
+              right
+            >
+              <template v-slot:button-content class="userIcon">
+                <i class="icon ik ik-user"></i>
+              </template>
+              <b-dropdown-item href="#" @click.prevent="logout">
+                <i class="ik ik-log-out dropdown-icon"></i>
+                {{ $t("component.header.user.logout") }}
+              </b-dropdown-item>
+            </b-dropdown>
+        </div>
+      </div>
+    </Transition>
+<!---------- Burger menu end ---------->
 
           <!--help button-->
           <opensilex-HelpButton
@@ -106,9 +107,10 @@
           ></opensilex-HelpButton>
 
           <span class="headerMenuIcons">
+
             <!--language button -->
             <b-dropdown
-              id="langDropdown"
+              id="langDropdown" 
               :title="`language - ${this.language}`"
               variant="link"
               right
@@ -150,10 +152,8 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Watch } from "vue-property-decorator";
-import Vue from "vue";
-import { User } from "../../../../../opensilex-front/front/src/models/User";
-import { Menu } from "../../../../../opensilex-front/front/src/models/Menu";
+import { Component} from "vue-property-decorator";
+import Vue from "vue"; 
 
 @Component
 export default class DefaultHeaderComponent extends Vue {
@@ -177,11 +177,11 @@ export default class DefaultHeaderComponent extends Vue {
    * Return the section path icon
    */
   get iconvalue() {
-    const pathicon =
-      this.$store.state.openSilexRouter.sectionAttributes[this.$route.path];
+    const pathicon = this.$store.state.openSilexRouter.sectionAttributes[this.$route.path];
     if (!pathicon) {
-      return "";
-    } else {
+      return ""
+    }
+    else {
       return pathicon.icon;
     }
   }
@@ -190,11 +190,11 @@ export default class DefaultHeaderComponent extends Vue {
    * Return the section path title
    */
   get titlevalue() {
-    let pathtitle =
-      this.$store.state.openSilexRouter.sectionAttributes[this.$route.path];
+    let pathtitle = this.$store.state.openSilexRouter.sectionAttributes[this.$route.path];
     if (!pathtitle) {
-      return undefined;
-    } else {
+      return undefined
+    }
+    else {
       return pathtitle.title;
     }
   }
@@ -203,11 +203,11 @@ export default class DefaultHeaderComponent extends Vue {
    * Return the section path description
    */
   get descriptionevalue() {
-    let pathdescription =
-      this.$store.state.openSilexRouter.sectionAttributes[this.$route.path];
+    let pathdescription = this.$store.state.openSilexRouter.sectionAttributes[this.$route.path];
     if (!pathdescription) {
-      return undefined;
-    } else {
+      return undefined
+    }
+    else {
       return pathdescription.description;
     }
   }
@@ -234,10 +234,8 @@ export default class DefaultHeaderComponent extends Vue {
       return undefined;
     }
 
-    return this.$t(
-      "component.header.version-label." +
-        this.$opensilex.getConfig().versionLabel.toLowerCase()
-    ).toString();
+    return this.$t("component.header.version-label." + this.$opensilex.getConfig().versionLabel.toLowerCase())
+        .toString();
   }
 
   /**
@@ -259,13 +257,13 @@ export default class DefaultHeaderComponent extends Vue {
     this.$store.commit("lang", lang);
   }
 
-  /**
+    /**
    * Hide the header burger at start
    */
-  data() {
+  data(){
     return {
-      HeaderBurgerToggle: false,
-    };
+      HeaderBurgerToggle : false,
+    }
   }
 
   /**
@@ -305,6 +303,7 @@ export default class DefaultHeaderComponent extends Vue {
 </script>
 
 <style scoped lang="scss">
+
 .header-top {
   height: 65px;
 }
@@ -313,13 +312,12 @@ export default class DefaultHeaderComponent extends Vue {
   text-align: left;
   position: absolute;
   width: 180px;
-  height: 60px;
+  height:60px;
   top: 0;
   left: 60px;
   background-color: rgb(0, 163, 141);
   padding-top: 6px;
-  padding-bottom: 6px;
-  padding-left: 35px;
+  padding-bottom: 6px; 
 }
 .app-logo > a > img {
   height: 50px;
@@ -333,8 +331,8 @@ export default class DefaultHeaderComponent extends Vue {
 }
 
 .header-brand .text {
-  margin-left: 16px;
-  color: #fff;
+    margin-left: 16px;
+    color: #fff;
 }
 
 .title-icon {
@@ -350,18 +348,17 @@ export default class DefaultHeaderComponent extends Vue {
   justify-content: center;
   align-items: center;
   box-shadow: 0 2px 12px -3px rgba(0, 0, 0, 0.5);
-  background-color: #00a38d;
+  background-color: #00a38d; 
 }
 
-.header-title {
+.header-title{
   margin-bottom: 0px;
 }
-.header-title,
-.title-description {
-  word-wrap: break-word;
+.header-title, .title-description {
+  word-wrap: break-word
 }
 #menu-container {
-  top: 60px !important;
+  top: 60px!important;
 }
 
 .version-label-box {
@@ -408,7 +405,7 @@ export default class DefaultHeaderComponent extends Vue {
 .headerburger {
   position: fixed;
   top: 0;
-  right: 5px;
+  right:5px;
   z-index: 2000;
 }
 /* Burger Icon Container*/
@@ -418,9 +415,7 @@ export default class DefaultHeaderComponent extends Vue {
   left: 5px;
 }
 /* Burger Icon*/
-.hamburger-inner,
-.hamburger-inner:before,
-.hamburger-inner:after {
+.hamburger-inner, .hamburger-inner:before, .hamburger-inner:after{
   width: 20px;
   height: 3px;
   background-color: #00a38d;
@@ -458,20 +453,20 @@ export default class DefaultHeaderComponent extends Vue {
 }
 
 .helpButton {
-  color: #00a38d;
-  border-color: #00a38d;
-  background-color: #ffffff;
-  padding-bottom: 5px;
+    color: #00A38D;
+    border-color: #00A38D;
+    background-color: #FFFFFF;
+    padding-bottom: 5px
 }
-.helpButton:hover {
-  background-color: #f0f1f5;
-  border-color: #00a38d;
-  color: #00a38d;
+.helpButton:hover{
+    background-color: #F0F1F5;
+    border-color: #00A38D;
+    color: #00A38D;
 }
 
 @media only screen and (min-width: 1380px) {
   .top-menu {
-    margin-right: 35px;
+    margin-right:35px;
     transition: 1s;
   }
   .headerburger {
@@ -480,9 +475,8 @@ export default class DefaultHeaderComponent extends Vue {
   .burgerMenuContainer {
     display: none;
   }
-  .languageIcon,
-  .userIcon {
-    margin: -2px 0 0 4px;
+  .languageIcon, .userIcon{
+    margin: -2px 0 0 4px
   }
 }
 @media (min-width: 1151px) and (max-width: 1379px) {
@@ -491,7 +485,7 @@ export default class DefaultHeaderComponent extends Vue {
     transition: 1s;
   }
   .top-menu {
-    margin-right: 20px;
+    margin-right:20px;
     transition: 1s;
   }
   .headerburger {
@@ -500,13 +494,12 @@ export default class DefaultHeaderComponent extends Vue {
   .burgerMenuContainer {
     display: none;
   }
-  .languageIcon,
-  .userIcon {
-    margin: -2px 0 0 4px;
+  .languageIcon, .userIcon{
+    margin: -2px 0 0 4px
   }
 }
 @media (min-width: 950px) and (max-width: 1150px) {
-  .top-menu {
+  .top-menu{
     margin-right: 110px;
   }
   .headerburger {
@@ -517,7 +510,7 @@ export default class DefaultHeaderComponent extends Vue {
   }
 }
 @media (min-width: 800px) and (max-width: 949px) {
-  .top-menu {
+  .top-menu{
     margin-right: 120px;
     transition: 1s;
   }
@@ -527,8 +520,8 @@ export default class DefaultHeaderComponent extends Vue {
   .burgerMenuContainer {
     display: none;
   }
-  .title-description {
-    width: 50%;
+    .title-description{
+    width:50%;
     display: block;
     line-height: 1.2;
     overflow: hidden;
@@ -536,7 +529,7 @@ export default class DefaultHeaderComponent extends Vue {
   }
 }
 @media (min-width: 676px) and (max-width: 799px) {
-  .top-menu {
+  .top-menu{
     margin-right: 150px;
     transition: 1s;
   }
@@ -546,8 +539,8 @@ export default class DefaultHeaderComponent extends Vue {
   .burgerMenuContainer {
     display: none;
   }
-  .title-description {
-    width: 50%;
+    .title-description{
+    width:50%;
     display: block;
     line-height: 1.2;
     overflow: hidden;
@@ -555,7 +548,7 @@ export default class DefaultHeaderComponent extends Vue {
   }
 }
 @media (min-width: 250px) and (max-width: 1150px) {
-  .topbarBtnHelp {
+  .topbarBtnHelp { 
     height: 25px;
     width: 25px;
     font-size: 85%;
@@ -569,25 +562,27 @@ export default class DefaultHeaderComponent extends Vue {
     margin-left: 45px;
   }
   .header-brand-img {
-    width: 100%;
+    width: 35px;
     height: 35px;
     transition: 1s;
     margin-top: 8px;
+    margin-left: 40px;
   }
+
 }
 @media (min-width: 950px) and (max-width: 1150px) {
-  .top-menu {
+  .top-menu{
     margin-right: 110px;
   }
 }
 @media (min-width: 800px) and (max-width: 949px) {
-  .top-menu {
+  .top-menu{
     margin-right: 120px;
     transition: 1s;
   }
 }
 @media (min-width: 676px) and (max-width: 799px) {
-  .top-menu {
+  .top-menu{
     margin-right: 150px;
     transition: 1s;
   }
@@ -596,11 +591,11 @@ export default class DefaultHeaderComponent extends Vue {
   .app-logo {
     width: 150px;
   }
-  .top-menu {
+  .top-menu{
     margin-right: 170px;
     transition: 1s;
   }
-  .title-icon {
+  .title-icon{
     display: none;
   }
   .container-fluid {
@@ -614,9 +609,8 @@ export default class DefaultHeaderComponent extends Vue {
   .header-brand-img {
     margin-left: 0px;
   }
-  .header-title,
-  .title-description {
-    margin-left: 0px;
+  .header-title, .title-description {
+    margin-left: -30px;
   }
   .header-title {
     font-size: 1.1em;
@@ -630,9 +624,11 @@ export default class DefaultHeaderComponent extends Vue {
     width: 50%;
   }
 
-  .headerMenuIcons,
-  .topbarBtnHelp {
+  .headerMenuIcons, .topbarBtnHelp {
     display: none;
   }
+  .wrapper .header-brand .logo-img{
+ width: 150px !important;
+}
 }
 </style>

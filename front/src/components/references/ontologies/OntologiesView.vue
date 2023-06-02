@@ -32,7 +32,7 @@
         <b-card>
           <b-row>
             <h5>
-              Voir dans Agroportal :
+              {{ $t("OntologiesView.agroportalShow") }} :
               <b-link
                 href="http://agroportal.lirmm.fr/ontologies/AFEO?p=summary"
                 target="_blank"
@@ -74,11 +74,11 @@
 
       <b-tab  :title="$t('OntologiesView.vineAnatomy')">
         <h5>
-          Voir dans Agroportal :
+          {{ $t("OntologiesView.agroportalShow") }} :
           <b-link
             href="http://agroportal.lirmm.fr/ontologies/GAO?p=summary"
             target="_blank"
-            >AFEO</b-link
+            >GAO</b-link
           >
         </h5>
         <opensilex-UriLink

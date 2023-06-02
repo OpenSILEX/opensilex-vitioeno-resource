@@ -32,20 +32,25 @@
                 "label": "Shared ressources"
             },
             "applications": {
-                "label": "Applications"
+                "label": "Applications",
+                "description": "Useful applications for data acquisition and processing"
             },
             "news": {
-                "label": "News"
+                "label": "News",
+                "description": "Useful twitter account about knowlege and IT for vine and wine"
             },
             "references": {
                 "label": "References",
+               
                 "ontologies": {
+                    "description": "Definition and representation of knowledge concepts",
                     "label": "Ontologies"
                 },
                 "documents": {
                     "label": "Documents"
                 },
                 "links": {
+                    "description": "Useful links and portals for data management",
                     "label": "Links"
                 }
             },
@@ -64,13 +69,13 @@
     "icon.component.menu.experimentalDesign.germplasm" : "ik-cloud-rain",
     "icon.component.menu.news.label" : "ik-twitter",
     "icon.component.menu.references.label" : "ik-book-open",
-    "icon.component.menu.applications.label" : "ik-tablet",
-   
+    "icon.component.menu.applications.label" : "ik-tablet", 
     "OntologiesView":{
         "title": "Ontologies",
         "list": "Liste",
         "wineMakinkgProcess": "Winemaking process",
-        "vineAnatomy": "Vine anatomy "
+        "vineAnatomy": "Vine anatomy",
+        "agroportalShow": "Show in Agroportal"
 
     }
 

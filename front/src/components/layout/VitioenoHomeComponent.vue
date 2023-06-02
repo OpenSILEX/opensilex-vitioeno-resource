@@ -26,7 +26,7 @@
             <b-tabs content-class="mt-3" active>
               <b-tab :title="$t('component.twitter.international')"
                 ><b-tabs pills card vertical>
-                  <span style="font-style:italic">{{$t('component.twitter.show')}}</span>
+                  <b-spinner type="border" small></b-spinner> <span style="font-style:italic">{{$t('component.twitter.show')}}</span>
                   <!-- Render Tabs, supply a unique `key` to each tab -->
                   <b-tab
                     v-for="twitterLink in internationalTwitterLinksIdLabel"
@@ -41,7 +41,7 @@
                     </template>
 
                     <b-card-text>
-                      <b-col cols="10">
+                      <b-col cols="8">
                         <TwitterFeed
                           :src="
                             'https://twitter.com/' +
@@ -56,7 +56,7 @@
               <b-tab :title="$t('component.twitter.national')">
                 
                 <b-tabs pills card vertical>
-                  <span style="font-style:italic">{{$t('component.twitter.show')}}</span>
+                  <b-spinner type="border" small></b-spinner> <span style="font-style:italic">{{$t('component.twitter.show')}}</span>
                   <!-- Render Tabs, supply a unique `key` to each tab -->
                   <b-tab
                     v-for="twitterLink in nationalTwitterLinksIdLabel"
@@ -70,7 +70,7 @@
                       >
                     </template>
                     <b-card-text>
-                      <b-col cols="10">
+                      <b-col cols="8">
                         <TwitterFeed
                           :src="
                             'https://twitter.com/' +

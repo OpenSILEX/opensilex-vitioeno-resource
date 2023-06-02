@@ -1,6 +1,6 @@
 {
     "name": "inrae-vitioeno",
-    "version": "0.2.0",
+    "version": "2.0.0",
     "private": true,
     "scripts": {
         "serve": "vue-cli-service build --target lib --formats umd-min src/index.ts --mode development --watch",
