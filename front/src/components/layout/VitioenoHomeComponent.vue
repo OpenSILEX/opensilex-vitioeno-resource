@@ -61,6 +61,7 @@
                   <b-tab
                     v-for="twitterLink in nationalTwitterLinksIdLabel"
                     :key="'dyn-tab-' + twitterLink.id"
+                    lazy
                   >
                     <template v-slot:title>
                       <span
