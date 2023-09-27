@@ -4,6 +4,7 @@
       icon="fa#seedling"
       :title="germplasm.name"
       description="GermplasmDetails.title"
+      class="detail-element-header"
     ></opensilex-PageHeader>
 
     <opensilex-PageActions :tabs=true :returnButton="true">
@@ -17,12 +18,24 @@
       :active="isAnnotationTab()"
       :to="{ path: '/germplasm/annotations/' + encodeURIComponent(uri) }"
       >{{ $t("Annotation.list-title") }}
+        <span
+          v-if="!annotationsCountIsLoading && annotations > 0"
+          class="tabWithElements"
+        >
+          {{$opensilex.$numberFormatter.formateResponse(annotations)}}
+        </span>
       </b-nav-item>
 
       <b-nav-item
       :active="isDocumentTab()"
       :to="{path: '/germplasm/documents/' + encodeURIComponent(uri)}"
       >{{ $t('component.project.documents') }}
+        <span
+          v-if="!documentsCountIsLoading && documents > 0"
+          class="tabWithElements"
+        >
+          {{$opensilex.$numberFormatter.formateResponse(documents)}}
+        </span>
       </b-nav-item>
 
     </opensilex-PageActions>
@@ -30,14 +43,14 @@
     <opensilex-PageContent>
       <b-row v-if="isDetailsTab()">
         <b-col>
-          <opensilex-Card label="component.common.description" icon="ik#ik-clipboard">
+          <opensilex-Card label="component.common.informations" icon="ik#ik-clipboard">
             <template v-slot:rightHeader>              
                 <opensilex-EditButton
-                  v-if="!germplasm.rdf_type.endsWith('Species') && user.hasCredential(credentials.CREDENTIAL_GERMPLASM_DELETE_ID)"
+                  v-if="user.hasCredential(credentials.CREDENTIAL_GERMPLASM_MODIFICATION_ID)"
                   @click="updateGermplasm"
                 ></opensilex-EditButton>
                 <opensilex-DeleteButton
-                  v-if="user.hasCredential(credentials.CREDENTIAL_GERMPLASM_DELETE_ID)"
+                  v-if="!germplasm.rdf_type.endsWith('Species') && user.hasCredential(credentials.CREDENTIAL_GERMPLASM_DELETE_ID)"
                   @click="deleteGermplasm"
                 ></opensilex-DeleteButton>
             </template>
@@ -126,15 +139,14 @@
             </template>
           </opensilex-Card>
         </b-col>
-        <b-col>
-        </b-col>
+       
       </b-row>
 
       <opensilex-DocumentTabList
         v-else-if="isDocumentTab()"
         ref="documentTabList"
         :uri="uri"        
-        :modificationCredentialId="credentials.CREDENTIAL_GERMPLASM_MODIFICATION_ID"
+        :modificationCredentialId="credentials.CREDENTIAL_DOCUMENT_MODIFICATION_ID"
       ></opensilex-DocumentTabList>
 
       <opensilex-AnnotationList
@@ -143,8 +155,8 @@
       :target="uri"
       :displayTargetColumn="false"
       :enableActions="true"
-      :modificationCredentialId="credentials.CREDENTIAL_GERMPLASM_MODIFICATION_ID"
-      :deleteCredentialId="credentials.CREDENTIAL_GERMPLASM_DELETE_ID"
+      :modificationCredentialId="credentials.CREDENTIAL_ANNOTATION_MODIFICATION_ID"
+      :deleteCredentialId="credentials.CREDENTIAL_ANNOTATION_DELETE_ID"
       ></opensilex-AnnotationList>
 
     </opensilex-PageContent>
@@ -165,16 +177,20 @@
 <script lang="ts">
 import { Component, Prop, Ref } from "vue-property-decorator";
 import Vue from "vue";
+import OpenSilexVuePlugin from "../../../../../opensilex-front/front/src/models/OpenSilexVuePlugin";
 // @ts-ignore
 import { GermplasmGetSingleDTO, GermplasmUpdateDTO, GermplasmService } from "opensilex-core/index";
-import HttpResponse, { OpenSilexResponse } from "opensilex-core/HttpResponse"
+import HttpResponse, { OpenSilexResponse } from "opensilex-core/HttpResponse";
 import AnnotationList from "../../../../../opensilex-front/front/src/components/annotations/list/AnnotationList.vue";
 import DocumentTabList from "../../../../../opensilex-front/front/src/components/documents/DocumentTabList.vue";
+import GermplasmForm from "./GermplasmForm.vue";
 
+import {AnnotationsService} from "opensilex-core/api/annotations.service";
+import {DocumentsService} from "opensilex-core/api/documents.service";
 
 @Component
 export default class GermplasmDetails extends Vue {
-  $opensilex: any;
+  $opensilex: OpenSilexVuePlugin;
   $route: any;
   $store: any;
   $router: any;
@@ -185,6 +201,16 @@ export default class GermplasmDetails extends Vue {
   uri: string = null;
   addInfo = [];
   experimentName: any = "";
+  germplasmGroupName = "";
+
+  $AnnotationsService: AnnotationsService
+  $DocumentsService: DocumentsService
+
+  annotations: number;
+  documents: number;
+
+  annotationsCountIsLoading: boolean = true;
+  documentsCountIsLoading: boolean = true;
 
   @Ref("modalRef") readonly modalRef!: any;
   @Ref("annotationList") readonly annotationList!: AnnotationList;
@@ -245,9 +271,13 @@ export default class GermplasmDetails extends Vue {
   };
 
   created() {
-    this.service = this.$opensilex.getService("opensilex.GermplasmService");
+    this.service = this.$opensilex.getService<GermplasmService>("opensilex.GermplasmService");
     this.uri = decodeURIComponent(this.$route.params.uri);
     this.loadGermplasm();
+    this.$AnnotationsService = this.$opensilex.getService<AnnotationsService>("opensilex.AnnotationsService");
+    this.$DocumentsService = this.$opensilex.getService<DocumentsService>("opensilex.DocumentsService");
+    this.searchAnnotations();
+    this.searchDocuments();
   }
 
   loadGermplasm() {
@@ -288,6 +318,16 @@ export default class GermplasmDetails extends Vue {
     );
   }
 
+  loadGermplasmGroups(options) {
+    return this.service.searchGermplasmGroups(
+        undefined,
+        [this.uri],
+        options.orderBy,
+        options.currentPage,
+        options.pageSize
+    );
+  }
+
   attributeFields = [
     {
       key: "attribute",
@@ -314,7 +354,10 @@ export default class GermplasmDetails extends Vue {
 
   @Ref("germplasmForm") readonly germplasmForm!: any;
   updateGermplasm() {
-    this.germplasmForm.getFormRef().getAttributes(this.germplasm);
+
+    let form: any = this.germplasmForm.getFormRef();
+    form.readAttributes(this.germplasm.metadata);
+
     let updateDTO: GermplasmUpdateDTO = {
       uri: this.germplasm.uri,
       name: this.germplasm.name,
@@ -352,6 +395,36 @@ export default class GermplasmDetails extends Vue {
       .catch(this.$opensilex.errorHandler);
   }
   
+  searchAnnotations() {
+    return this.$AnnotationsService
+    .countAnnotations(
+      this.uri,
+      undefined,
+      undefined
+    ).then((http: HttpResponse<OpenSilexResponse<number>>) => {
+      if(http && http.response){
+        this.annotations = http.response.result as number;
+        this.annotationsCountIsLoading = false;
+        return this.annotations
+      }
+    }).catch(this.$opensilex.errorHandler);
+  }
+
+  searchDocuments(){
+    return this.$DocumentsService
+      .countDocuments(
+        this.uri,
+        undefined,
+        undefined
+      ).then((http: HttpResponse<OpenSilexResponse<number>>) => {
+        if(http && http.response){
+          this.documents = http.response.result as number;
+          this.documentsCountIsLoading = false;
+          return this.documents
+        }
+      }
+    ).catch(this.$opensilex.errorHandler);
+  }
 }
 </script>
 
@@ -365,7 +438,7 @@ en:
     title: Germplasm
     description: Detailed Information
     info: Germplasm Information
-    experiment: Associated experiments
+    experiment: Related experiments
     document: Associated documents
     uri: URI
     name: Name
@@ -390,7 +463,7 @@ fr:
     title: Ressource génétique
     description: Information détaillées
     info: Informations générales
-    experiment: Expérimentations associées
+    experiment: Expérimentations connexes
     document: Documents associées
     uri: URI 
     name: Nom 

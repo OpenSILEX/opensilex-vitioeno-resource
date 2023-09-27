@@ -1,4 +1,4 @@
-extend: opensilex-front#phis
+extend: opensilex-front#opensilex
 stylesheets:
     - _mixins.scss
     - _settings.scss

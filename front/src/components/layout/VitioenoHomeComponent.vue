@@ -22,6 +22,7 @@
       <b-row>
         <b-col></b-col>
         <b-col sm="12">
+          
           <b-card no-body>
             <b-tabs content-class="mt-3" active>
               <b-tab :title="$t('component.twitter.international')"

@@ -1,26 +1,29 @@
 <template>
   <div class="container-fluid">
     <opensilex-PageActions
-    v-if="user.hasCredential(credentials.CREDENTIAL_GERMPLASM_MODIFICATION_ID)">
-      <template v-slot>
-        <opensilex-HelpButton
-          @click="helpModal.show()"
-          label="component.common.help-button"
-        ></opensilex-HelpButton> 
-        <opensilex-CreateButton
-          @click="goToGermplasmCreate"
-          label="GermplasmView.add"
-        ></opensilex-CreateButton> 
-      </template>
-    </opensilex-PageActions>
+      v-if="
+      user.hasCredential(
+      credentials.CREDENTIAL_GERMPLASM_MODIFICATION_ID)
+    ">
+      <opensilex-HelpButton
+        @click="helpModal.show()"
+        label="component.common.help-button"
+        class="helpButton"
+      ></opensilex-HelpButton> 
+      <opensilex-CreateButton
+        @click="goToGermplasmCreate"
+        label="GermplasmView.add"
+        class="createButton"
+      ></opensilex-CreateButton> 
+  </opensilex-PageActions>
 
     <opensilex-PageContent>
       <template v-slot>
-        <inrae-vitioeno-GermplasmList
+        <opensilex-GermplasmList
           ref="germplasmList"
           @onEdit="editGermplasm"
           @onDelete="deleteGermplasm"
-        ></inrae-vitioeno-GermplasmList>
+        ></opensilex-GermplasmList>
       </template>
     </opensilex-PageContent>
 
@@ -35,8 +38,8 @@
       @onCreate="germplasmList.refresh()"
       @onUpdate="germplasmList.refresh()"
     ></opensilex-ModalForm>
-    <b-modal ref="helpModal" size="xl" hide-header ok-only>
-      <opensilex-GermplasmHelp></opensilex-GermplasmHelp>
+    <b-modal ref="helpModal" size="xl" hide-header hide-footer>
+      <opensilex-GermplasmHelp @hideBtnIsClicked="hide()"></opensilex-GermplasmHelp>
     </b-modal>
   </div>
 </template>
@@ -45,14 +48,11 @@
 import { Component, Ref } from "vue-property-decorator";
 import Vue from "vue";
 import HttpResponse, { OpenSilexResponse } from "opensilex-core/HttpResponse";
-
-import { 
-  GermplasmService, 
-  GermplasmCreationDTO, 
-  GermplasmUpdateDTO, 
-  GermplasmGetSingleDTO, 
-  } from "opensilex-core/index" 
+// @ts-ignore
+import { GermplasmService, GermplasmCreationDTO, GermplasmUpdateDTO, GermplasmGetSingleDTO } from "opensilex-core/index"
 import VueRouter from "vue-router";
+// @ts-ignore
+import GermplasmForm from "../../../../../opensilex-front/front/src/components/GermplasmForm.vue";
 
 @Component
 export default class GermplasmView extends Vue {
@@ -60,8 +60,8 @@ export default class GermplasmView extends Vue {
   $store: any;
   $router: VueRouter;
   service: GermplasmService;
-  $i18n : any;
-  
+  $i18n: any;
+
   get user() {
     return this.$store.state.user;
   }
@@ -87,42 +87,14 @@ export default class GermplasmView extends Vue {
     this.$router.push({ path: '/germplasm/create' });
   }  
 
-
-  callCreateGermplasmService(form: GermplasmCreationDTO, done) {
-    done(
-      this.service
-        .createGermplasm(false,form)
-        .then((http: HttpResponse<OpenSilexResponse<any>>) => {
-          let uri = http.response.result;
-          console.debug("germplasm created", uri);
-          this.germplasmList.refresh();
-        })
-    );
-  }
-
-  callUpdateGermplasmService(form: GermplasmUpdateDTO, done) {
-    console.debug(form);
-    done(
-      this.service
-        .updateGermplasm(form)
-        .then((http: HttpResponse<OpenSilexResponse<any>>) => {
-          let uri = http.response.result;
-          this.$router.push({
-            path: "/germplasm/" + encodeURIComponent(uri),
-          });
-
-        })
-        .catch(this.$opensilex.errorHandler)
-    );
-  }
-
-
   editGermplasm(uri: string) {
     console.debug("editGermplasm " + uri);
     this.service
       .getGermplasm(uri)
       .then((http: HttpResponse<OpenSilexResponse<GermplasmGetSingleDTO>>) => {
-        this.germplasmForm.getFormRef().getAttributes(http.response.result);
+        let form: any = this.germplasmForm.getFormRef();
+        form.readAttributes(http.response.result.metadata);
+
         this.germplasmForm.showEditForm(http.response.result);
         
       })
@@ -146,11 +118,30 @@ export default class GermplasmView extends Vue {
       .catch(this.$opensilex.errorHandler);
   }
 
-
+  hide() {
+    this.helpModal.hide();
+  }
 }
 </script>
 
 <style scoped lang="scss">
+.createButton, .helpButton {
+  margin-bottom: 10px;
+  margin-right: 5px;
+  margin-top: 5px;
+}
+
+.helpButton {
+  margin-left: -5px;
+  color: #00A28C;
+  font-size: 1.2em;
+  border: none
+}
+
+.helpButton:hover {
+  background-color: #00A28C;
+  color: #f1f1f1
+}
 </style>
 
 <i18n>
@@ -162,6 +153,7 @@ en:
     add: Add germplasm
     update: Update Germplasm
     delete: Delete Germplasm
+    groupGermplasm: Germplasm Group
 fr:
   GermplasmView:
     title: Ressources Génétiques 
@@ -169,5 +161,6 @@ fr:
     add: Ajouter des ressources génétiques
     update: éditer germplasm
     delete: supprimer germplasm
+    groupGermplasm: Groupe de Ressources Génétiques
 </i18n>
 

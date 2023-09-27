@@ -17,12 +17,12 @@
                 },
                 "copyright": {
                     "1": "",
-                    "2": "Vitioeno - Système d'Information ressources en vitivinicole",
-                    "3": "Version 1 du 01-01-2022"
+                    "2": "Vitioeno - Système d'Information de ressources numériques vitivinicole",
+                    "3": "Version 2 du 01-09-2023"
                 }
             },
             "footer": {
-                "copyright": "Copyright © 2020 - 2022 INRAE Tous Droits Réservés. Vitioeno {version} version du {date}"
+                "copyright": "Copyright © 2020 - 2023 INRAE Tous Droits Réservés. Vitioeno {version} version du {date}"
             }
         }
     },

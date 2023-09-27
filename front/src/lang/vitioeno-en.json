@@ -17,12 +17,12 @@
                 },
                 "copyright": {
                     "1": "",
-                    "2": "Vitioeno - Information System for vine and wine ressources",
-                    "3": "Release 1 from 2022/01/01"
+                    "2": "Vitioeno - Information System for vine and wine digital ressources",
+                    "3": "Release 2 from 2023/09/25"
                 }
             },
             "footer": {
-                "copyright": "Copyright © 2020 - 2022 INRAE All Rights Reserved. Vitioeno {version} released on {date}"
+                "copyright": "Copyright © 2020 - 2023 INRAE All Rights Reserved. Vitioeno {version} released on {date}"
             }
         }
     },
