@@ -29,7 +29,9 @@
           {{ $t("vitioeno.component.login.copyright.2") }}
           <br />
           <br />
-          {{ $t("vitioeno.component.login.copyright.3") }}
+            <em>
+            {{ $t("vitioeno.component.login.copyright.3") }}
+          </em>
           <br />
         </p>
       </div>

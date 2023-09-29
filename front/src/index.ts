@@ -10,7 +10,9 @@ import GermplasmList from "./components/germplasm/GermplasmList.vue";
 
 import LinksView from "./components/references/links/LinksView.vue";
 import OntologiesView from "./components/references/ontologies/OntologiesView.vue"; 
- 
+
+import AboutView from "./components/about/AboutView.vue"; 
+
 import VueMatomo from 'vue-matomo'
 export default {
   install(Vue, options) { 
@@ -119,6 +121,7 @@ export default {
     "opensilex-GermplasmDetails": GermplasmDetails,
     "inrae-vitioeno-LinksView": LinksView,
     "inrae-vitioeno-OntologiesView": OntologiesView,
+    "inrae-vitioeno-AboutView": AboutView,
   },
   lang: {
     fr: require("./lang/vitioeno-fr.json"),

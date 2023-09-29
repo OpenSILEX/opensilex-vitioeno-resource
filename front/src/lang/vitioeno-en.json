@@ -16,9 +16,9 @@
                     "loginAsGuest": "Connect as guest"
                 },
                 "copyright": {
-                    "1": "",
-                    "2": "Vitioeno - Information System for vine and wine digital ressources",
-                    "3": "Release 2 from 2023/09/25"
+                    "1": "Vitioeno - Information System for vine and wine digital ressources",
+                    "2": "Release 2 from 2023/09/25",
+                    "3": "This website uses cookies to improve your experience. By continuing to use this site, you agree to our use of cookies."
                 }
             },
             "footer": {
@@ -40,7 +40,7 @@
                 "description": "Useful twitter account about knowlege and IT for vine and wine"
             },
             "references": {
-                "label": "References",
+                "label": "Web sites et Portals",
                
                 "ontologies": {
                     "description": "Definition and representation of knowledge concepts",
@@ -50,12 +50,23 @@
                     "label": "Documents"
                 },
                 "links": {
-                    "description": "Useful links and portals for data management",
-                    "label": "Links"
+                    "information" : {
+                        "description": "Useful links and portals for data management",
+                        "label": "Information"  
+                    },
+                    "data" : {
+                        "description": "Useful links and portals for data management",
+                        "label": "Data"  
+                    }
+                    
                 }
             },
             "users-groups": {
                 "label": "Users-Groups"
+            },
+            "about": {
+                "label" : "About",
+                "description": "Informations about this digital ressources center" 
             }
         },
         "twitter": {
