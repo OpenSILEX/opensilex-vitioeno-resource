@@ -30,16 +30,13 @@
         "home": {
             "wineNews": "Quelques tweets sur l'actualité de la vine et du vin"
         },
-        "menu": {
-            "shared": {
-                "label": "Ressources partagées"
-            },
+        "menu": { 
             "applications": {
                 "label": "Applications",
                 "description": "Applications utiles pour l'acquisition ou l'exploitation de données"
             },
             "news": {
-                "label": "News",
+                "label": "Actualités",
                 "description": "Comptes twitter d'intérêt à propos de la connaissance et les technologies de l'information pour la vigne et le vin"
             },
             "references": {
@@ -52,7 +49,11 @@
                     "label": "Documents"
                 },
                 "links": {
-                    "label": "Sites web et portails"
+                    "label" : "Liens pour la communauté", 
+                    "data" : {
+                        "description": "Liens et portails utiles pour la gestion des données",
+                        "label": "Données"  
+                    }
                 }
             },
             "users-groups": {

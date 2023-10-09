@@ -27,10 +27,7 @@
         }
     },
     "component": {
-        "menu": {
-            "shared": {
-                "label": "Shared ressources"
-            },
+        "menu": { 
             "applications": {
                 "label": "Applications",
                 "description": "Useful applications for data acquisition and processing"
@@ -40,7 +37,7 @@
                 "description": "Useful twitter account about knowlege and IT for vine and wine"
             },
             "references": {
-                "label": "Web sites et Portals",
+                "label": "References",
                
                 "ontologies": {
                     "description": "Definition and representation of knowledge concepts",
@@ -50,13 +47,10 @@
                     "label": "Documents"
                 },
                 "links": {
-                    "information" : {
-                        "description": "Useful links and portals for data management",
-                        "label": "Information"  
-                    },
+                    "label" : "Community links",
                     "data" : {
-                        "description": "Useful links and portals for data management",
-                        "label": "Data"  
+                        "description": "Other Useful links and portals",
+                        "label": "Information"  
                     }
                     
                 }

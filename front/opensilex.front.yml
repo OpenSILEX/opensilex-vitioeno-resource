@@ -7,8 +7,8 @@ menu:
       path: /news
       title: component.menu.news.label 
       description: component.menu.news.description 
-  - id: vitioeno-shared
-    label: component.menu.shared.label
+  - id: vitioeno-references
+    label: component.menu.references.label
     children:
       - id: variables_vitioeno
         label: component.menu.variables
@@ -43,25 +43,14 @@ menu:
           icon: ik#ik-file-text
           title: DocumentView.title
           description: DocumentView.description
-  - id: vitioeno-references
-    label: component.menu.references.label
-    children: 
-      - id: data_links
-        label: component.menu.references.links.data.label
-        route:
-          icon: ik#ik-award
-          component: inrae-vitioeno-LinksView
-          path: /links/data
-          title:  component.menu.references.links.data.label
-          description:  component.menu.references.links.data.description
-      - id: information_links
-        label: component.menu.references.links.information.label
-        route:
-          icon: ik#ik-award
-          component: inrae-vitioeno-LinksView
-          path: /links/information
-          title:  component.menu.references.links.information.label
-          description:  component.menu.references.links.information.description
+  - id: vitioeno-links
+    label: component.menu.references.links.label
+    route:
+      icon: ik#ik-award
+      component: inrae-vitioeno-LinksView
+      path: /links/data
+      title:  component.menu.references.links.data.label
+      description:  component.menu.references.links.data.description
   - id: vitioeno-apps
     label: component.menu.applications.label
     route:
@@ -91,13 +80,13 @@ menu:
           icon: ik#ik-layers
           title: SystemView.title
           description: SystemView.title-description
-  - id : about_view
-    label : component.menu.about.label
-    route:
-        path: /about
-        component: inrae-vitioeno-AboutView  
-        title: AboutView.title
-        description: AboutView.description
+  # - id : about_view
+  #   label : component.menu.about.label
+  #   route:
+  #       path: /about
+  #       component: inrae-vitioeno-AboutView  
+  #       title: AboutView.title
+  #       description: AboutView.description
 routes:      
   - path: /germplasm/details/:uri
     component: opensilex-GermplasmDetails

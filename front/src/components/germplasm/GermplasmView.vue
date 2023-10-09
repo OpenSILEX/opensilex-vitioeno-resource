@@ -19,11 +19,11 @@
 
     <opensilex-PageContent>
       <template v-slot>
-        <opensilex-GermplasmList
+        <inrae-vitioeno-GermplasmList
           ref="germplasmList"
           @onEdit="editGermplasm"
           @onDelete="deleteGermplasm"
-        ></opensilex-GermplasmList>
+        ></inrae-vitioeno-GermplasmList>
       </template>
     </opensilex-PageContent>
 

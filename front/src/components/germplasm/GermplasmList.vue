@@ -93,7 +93,7 @@
                           </div>
 
                           <!-- Experiments -->
-                          <div>
+                          <!-- <div>
                               <opensilex-FilterField>
                                   <opensilex-ExperimentSelector
                                       label="GermplasmList.filter.experiment"
@@ -102,7 +102,7 @@
                                       @handlingEnterKey="refresh()"
                                   ></opensilex-ExperimentSelector>
                               </opensilex-FilterField>
-                          </div>
+                          </div> -->
 
                         <!-- Germplasm Group -->
                         <div>
@@ -167,11 +167,11 @@
               :searchMethod="searchGermplasm"
               :fields="fields"
               :isSelectable="true"
+              :defaultSortBy="false"
               @refreshed="onRefreshed"
               @select="$emit('select', $event)"
               @unselect="$emit('unselect', $event)"
               @selectall="$emit('selectall', $event)"
-              defaultSortBy="name"
               labelNumberOfSelectedRow="GermplasmList.selected"
               iconNumberOfSelectedRow="fa#seedling"
           >
@@ -406,12 +406,10 @@ setInitiallySelectedItems(initiallySelectedItems:any){
           {
               key: "name",
               label: "GermplasmList.name",
-              sortable: false
-          },
+        },
           {
               key: "rdf_type_name",
-              label: "GermplasmList.rdfType",
-              sortable: true
+              label: "GermplasmList.rdfType"
           },
           {
               key: "species_name",
@@ -442,6 +440,12 @@ refresh() {
   }
 
 searchGermplasm(options) {
+    console.log(options);
+    // let order_by_modified = undefined;
+    // // prevent orderby
+    // if(options.orderBy[0] !== "name=asc"){
+    //     order_by_modified = options.orderBy[0];
+    // }
   // this.updateExportFilters();
   return this.service.searchGermplasm(
     this.filter.uri,
@@ -456,6 +460,7 @@ searchGermplasm(options) {
     this.filter.institute,
     this.filter.experiment,
     this.addMetadataFilter(),
+    // order_by_modified,
     options.orderBy,
     options.currentPage,
     options.pageSize
