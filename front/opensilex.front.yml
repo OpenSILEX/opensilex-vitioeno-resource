@@ -10,7 +10,7 @@ menu:
   - id: vitioeno-references
     label: component.menu.references.label
     children:
-      - id: variables_vitioeno
+      - id: vitioeno-variables
         label: component.menu.variables
         route:
           path: /variables
@@ -18,7 +18,7 @@ menu:
           icon: fa#vials
           title: VariableView.title
           description: VariableView.description
-      - id: germplasm_vitioeno
+      - id: vitioeno-germplasm
         label: component.menu.experimentalDesign.germplasm
         icon: fa#seedling 
         route:
@@ -35,22 +35,14 @@ menu:
           component: inrae-vitioeno-OntologiesView
           title: component.menu.references.ontologies.label
           description: component.menu.references.ontologies.description
-      - id: documents
-        label: Documents
-        route:
-          path: /documents
-          component: opensilex-DocumentView
-          icon: ik#ik-file-text
-          title: DocumentView.title
-          description: DocumentView.description
-  - id: vitioeno-links
-    label: component.menu.references.links.label
+  - id: vitioeno-documents
+    label: Documents
     route:
-      icon: ik#ik-award
-      component: inrae-vitioeno-LinksView
-      path: /links/data
-      title:  component.menu.references.links.data.label
-      description:  component.menu.references.links.data.description
+      path: /documents
+      component: opensilex-DocumentView
+      icon: ik#ik-file-text
+      title: DocumentView.title
+      description: DocumentView.description
   - id: vitioeno-apps
     label: component.menu.applications.label
     route:
@@ -59,6 +51,14 @@ menu:
       component: opensilex-data-analysis-ApplicationView
       title:  component.menu.applications.label
       description:  component.menu.applications.description
+  - id: vitioeno-links
+    label: component.menu.references.links.label
+    route:
+      icon: ik#ik-award
+      component: inrae-vitioeno-LinksView
+      path: /links/data
+      title:  component.menu.references.links.data.label
+      description:  component.menu.references.links.data.description
   - id: vitioeno-configuration
     label: component.menu.configuration
     children: 
