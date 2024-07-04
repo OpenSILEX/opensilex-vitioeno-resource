@@ -2,7 +2,7 @@
     "vitioeno": {
         "rfcv-db": "Base de données des collections RFCV",
         "welcome-message": "Bienvenue dans Vitioeno",
-        "title": "Un système d'information de ressources partagées pour l’interopérabilité des données pour la vigne et le vin",
+        "title": "un système d'information de ressources partagées pour l’interopérabilité des données pour la vigne et le vin",
         "login": {
             "info": "Merci de saisir vos identifiants pour vous connecter à l'application",
             "infoGuest": "Vous pouvez vous connecter en tant qu'invité",
@@ -28,7 +28,18 @@
     },
     "component": {
         "home": {
-            "wineNews": "Quelques tweets sur l'actualité de la vine et du vin"
+            "wineNews": "Quelques tweets sur l'actualité de la vine et du vin",
+            "applications": "Applications pour la gestion et l'intégration de données",
+            "applicationsText": "Applications",
+            "germplasm": "Accès humain et API aux ressources génétiques nationales via la base de données RFCV française",
+            "germplasmText": "Ressources génétiques",
+            "ontologies": "Ontologies utiles pour le domaine du vin et de la vigne",
+            "ontologiesText": "Ontologies",
+            "document": "Protocoles et ensembles de données utiles pour la gestion des expériences sur le vin et la vigne",
+            "documentText": "Documents",
+            "community": "Liens avec d'autres initiatives intéressantes pour la gestion des données",
+            "communityText": "Communauté" 
+
         },
         "menu": { 
             "applications": {
@@ -82,4 +93,5 @@
         "vineAnatomy": "Anatomie de la vigne",
         "agroportalShow": "Voir dans Agroportal"
     } 
+    
 }

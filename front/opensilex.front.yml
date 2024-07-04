@@ -1,12 +1,12 @@
 menu:
-  - id: vitioeno-news
-    label: component.menu.news.label 
-    route:
-      icon: ik#ik-twitter
-      component: inrae-vitioeno-VitioenoHomeComponent
-      path: /news
-      title: component.menu.news.label 
-      description: component.menu.news.description 
+  # - id: vitioeno-news
+  #   label: component.menu.news.label 
+  #   route:
+  #     icon: ik#ik-twitter
+  #     component: inrae-vitioeno-VitioenoHomeComponent
+  #     path: /news
+  #     title: component.menu.news.label 
+  #     description: component.menu.news.description 
   - id: vitioeno-references
     label: component.menu.references.label
     children:
@@ -26,7 +26,7 @@ menu:
           title: GermplasmView.title
           description: GermplasmView.description
           path: /germplasm
-          component: inrae-vitioeno-GermplasmView
+          component: inrae-vitioeno-GermplasmGlobalView
       - id: ontologies
         label: component.menu.references.ontologies.label
         route:

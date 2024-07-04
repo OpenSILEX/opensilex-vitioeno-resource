@@ -2,7 +2,7 @@
     "vitioeno": {
         "rfcv-db": "RFCV Collections Database",
         "welcome-message": "Welcome to Vitioeno",
-        "title": "A information system on data interoperability resources for vine and wine",
+        "title": "an information system on data interoperability resources for vine and wine",
         "login": {
             "info": "Please enter your identifiers to login",
             "infoGuest": "You can connect as guest",
@@ -27,6 +27,18 @@
         }
     },
     "component": {
+        "home":{
+            "applications": "Applications  for data management and integration",
+            "applicationsText": "Applications",
+            "germplasm": "Human and API access to national genetic ressources by on RFCV French Database",
+            "germplasmText":"Genetics ressources",
+            "ontologies": "Useful ontologies for wine and vine domain",
+            "ontologiesText": "Ontologies",
+            "document": "Useful protocol datasets for wine and vine experiment management",
+            "documentText": "Documents",
+            "community": "Links with other interesting initiatives for data management",
+            "communityText": "Documents"
+        },
         "menu": { 
             "applications": {
                 "label": "Applications",
@@ -83,5 +95,4 @@
         "agroportalShow": "Show in Agroportal"
 
     }
-
 }

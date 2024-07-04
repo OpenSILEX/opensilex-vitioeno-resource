@@ -1,95 +1,67 @@
-<template> 
-    <div class="container-fluid">
-      <b-row class="justify-content-md-center">
-        <b-col></b-col>
-        <b-col cols="11">
-          <b-img
-            left
-            v-bind:src="$opensilex.getResourceURI('images/centre-de-ressource1.png')"
-            class="vitioeno-image-logo"
-            alt="logo-sixtine"
-            width="100"
-          ></b-img>
-          <h3>
-            {{ $t("vitioeno.welcome-message") }}
-            <br />
-            {{ $t("vitioeno.title") }}
-          </h3>
-        </b-col>
-        <b-col></b-col>
-      </b-row>
-      <br />
-      <b-row>
-        <b-col></b-col>
-        <b-col sm="12">
-          
-          <b-card no-body>
-            <b-tabs content-class="mt-3" active>
-              <b-tab :title="$t('component.twitter.international')"
-                ><b-tabs pills card vertical>
-                  <b-spinner type="border" small></b-spinner> <span style="font-style:italic">{{$t('component.twitter.show')}}</span>
-                  <!-- Render Tabs, supply a unique `key` to each tab -->
-                  <b-tab
-                    v-for="twitterLink in internationalTwitterLinksIdLabel"
-                    :key="'dyn-tab-' + twitterLink.id"
-                  >
-                    <template v-slot:title>
-                      <span
-                        v-b-tooltip.hover.left.v-info
-                        :title="twitterLink.description"
-                        >{{ twitterLink.label }}</span
-                      >
-                    </template>
-
-                    <b-card-text>
-                      <b-col cols="8">
-                        <TwitterFeed
-                          :src="
-                            'https://twitter.com/' +
-                            twitterLink.id +
-                            '?ref_src=twsrc%5Etfw'
-                          "
-                        ></TwitterFeed>
-                      </b-col>
-                    </b-card-text>
-                  </b-tab> </b-tabs
-              ></b-tab>
-              <b-tab :title="$t('component.twitter.national')">
-                
-                <b-tabs pills card vertical>
-                  <b-spinner type="border" small></b-spinner> <span style="font-style:italic">{{$t('component.twitter.show')}}</span>
-                  <!-- Render Tabs, supply a unique `key` to each tab -->
-                  <b-tab
-                    v-for="twitterLink in nationalTwitterLinksIdLabel"
-                    :key="'dyn-tab-' + twitterLink.id"
-                    lazy
-                  >
-                    <template v-slot:title>
-                      <span
-                        v-b-tooltip.hover.left.v-info
-                        :title="twitterLink.description"
-                        >{{ twitterLink.label }}</span
-                      >
-                    </template>
-                    <b-card-text>
-                      <b-col cols="8">
-                        <TwitterFeed
-                          :src="
-                            'https://twitter.com/' +
-                            twitterLink.id +
-                            '?ref_src=twsrc%5Etfw'
-                          "
-                        ></TwitterFeed>
-                      </b-col>
-                    </b-card-text>
-                  </b-tab> </b-tabs
-              ></b-tab>
-            </b-tabs>
-          </b-card>
-        </b-col>
-        <b-col></b-col>
-      </b-row>
-    </div> 
+<template>
+  <div class="container-fluid">
+    <b-row class="justify-content-md-center">
+      <b-col></b-col>
+      <b-col cols="11">
+        <b-img left v-bind:src="$opensilex.getResourceURI('images/centre-de-ressource1.png')"
+          class="vitioeno-image-logo" alt="logo-sixtine" width="100"></b-img>
+        <h3>
+          {{ $t("vitioeno.welcome-message") }}, {{ $t("vitioeno.title") }}
+        </h3>
+      </b-col>
+      <b-col></b-col>
+    </b-row>
+    <br />
+    <b-row>
+      <b-col sm="1"></b-col>
+      <b-col sm="11">
+        <b-card-group deck>
+          <a href="/dataAnalysis/apps">
+            <b-card :title="$t('component.home.applicationsText')"
+              v-bind:img-src="$opensilex.getResourceURI('images/apps.png')" img-alt="Image" img-top tag="article"
+              style="max-width: 20rem;" class="mb-2">
+              <b-card-text>
+                {{ $t('component.home.applications') }}
+              </b-card-text>
+            </b-card> </a>
+         
+          <a href="/germplasm">
+            <b-card :title="$t('component.home.germplasmText')"
+              v-bind:img-src="$opensilex.getResourceURI('images/genetic2.jpg')" img-alt="Image" img-top tag="article"
+              style="max-width: 20rem;" class="mb-2">
+              <b-card-text>
+                {{ $t('component.home.germplasm') }}
+              </b-card-text>
+            </b-card> </a>
+          <a href="/documents">
+            <b-card :title="$t('component.home.documentText')"
+              v-bind:img-src="$opensilex.getResourceURI('images/books.jpg')" img-alt="Image" img-top tag="article"
+              style="max-width: 20rem;" class="mb-2">
+              <b-card-text>
+                {{ $t('component.home.document') }}
+              </b-card-text>
+            </b-card> </a>
+            <a href="/ontologies">
+            <b-card :title="$t('component.home.ontologiesText')"
+              v-bind:img-src="$opensilex.getResourceURI('images/ontologies.webp')" img-alt="Image" img-top tag="article"
+              style="max-width: 20rem;max-height: 20rem;" class="mb-2">
+              <b-card-text>
+                {{ $t('component.home.ontologies') }}
+              </b-card-text>
+            </b-card> </a>
+            <a href="/links/data">
+            <b-card :title="$t('component.home.communityText')"
+              v-bind:img-src="$opensilex.getResourceURI('images/centre-de-ressource1.png')" img-alt="Image" img-top tag="article"
+              style="max-width: 20rem;" class="mb-2">
+              <b-card-text>
+                {{ $t('component.home.community') }}
+              </b-card-text>
+            </b-card> </a>
+        </b-card-group>
+      </b-col>
+      <b-col></b-col>
+    </b-row>
+  </div>
 </template>
 
 <script lang="ts">
@@ -102,6 +74,7 @@ Vue.use(TwitterFeed);
 export default class DefaultHomeComponent extends Vue {
   $t: any;
   $opensilex: any;
+  $i18n: any;
 
   nationalTwitterLinksIdLabel: any[] = [
     {
@@ -182,7 +155,6 @@ export default class DefaultHomeComponent extends Vue {
 </script>
 
 <style scoped lang="scss">
-
 vitioeno-image-logo {
   max-width: 50%;
 }

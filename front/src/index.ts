@@ -7,6 +7,8 @@ import VitioenoHomeComponent from "./components/layout/VitioenoHomeComponent.vue
 import GermplasmDetails from "./components/germplasm/GermplasmDetails.vue";
 import GermplasmView from "./components/germplasm/GermplasmView.vue";
 import GermplasmList from "./components/germplasm/GermplasmList.vue";
+import GermplasmGlobalView from "./components/germplasm/GermplasmGlobalView.vue";
+
 
 import LinksView from "./components/references/links/LinksView.vue";
 import OntologiesView from "./components/references/ontologies/OntologiesView.vue"; 
@@ -118,6 +120,7 @@ export default {
     "inrae-vitioeno-VitioenoHeaderComponent": VitioenoHeaderComponent,
     "inrae-vitioeno-GermplasmView": GermplasmView,
     "inrae-vitioeno-GermplasmList": GermplasmList,
+    "inrae-vitioeno-GermplasmGlobalView" : GermplasmGlobalView,
     "opensilex-GermplasmDetails": GermplasmDetails,
     "inrae-vitioeno-LinksView": LinksView,
     "inrae-vitioeno-OntologiesView": OntologiesView,
