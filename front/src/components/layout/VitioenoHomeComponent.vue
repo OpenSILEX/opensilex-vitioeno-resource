@@ -16,7 +16,7 @@
       <b-col sm="1"></b-col>
       <b-col sm="11">
         <b-card-group deck>
-          <a href="/dataAnalysis/apps">
+          <a href="dataAnalysis/apps">
             <b-card :title="$t('component.home.applicationsText')"
               v-bind:img-src="$opensilex.getResourceURI('images/apps.png')" img-alt="Image" img-top tag="article"
               style="max-width: 20rem;" class="mb-2">
@@ -25,7 +25,7 @@
               </b-card-text>
             </b-card> </a>
          
-          <a href="/germplasm">
+          <a href="germplasm">
             <b-card :title="$t('component.home.germplasmText')"
               v-bind:img-src="$opensilex.getResourceURI('images/genetic2.jpg')" img-alt="Image" img-top tag="article"
               style="max-width: 20rem;" class="mb-2">
@@ -33,7 +33,7 @@
                 {{ $t('component.home.germplasm') }}
               </b-card-text>
             </b-card> </a>
-          <a href="/documents">
+          <a href="documents">
             <b-card :title="$t('component.home.documentText')"
               v-bind:img-src="$opensilex.getResourceURI('images/books.jpg')" img-alt="Image" img-top tag="article"
               style="max-width: 20rem;" class="mb-2">
@@ -41,7 +41,7 @@
                 {{ $t('component.home.document') }}
               </b-card-text>
             </b-card> </a>
-            <a href="/ontologies">
+            <a href="ontologies">
             <b-card :title="$t('component.home.ontologiesText')"
               v-bind:img-src="$opensilex.getResourceURI('images/ontologies.webp')" img-alt="Image" img-top tag="article"
               style="max-width: 20rem;max-height: 20rem;" class="mb-2">
@@ -49,7 +49,7 @@
                 {{ $t('component.home.ontologies') }}
               </b-card-text>
             </b-card> </a>
-            <a href="/links/data">
+            <a href="links/data">
             <b-card :title="$t('component.home.communityText')"
               v-bind:img-src="$opensilex.getResourceURI('images/centre-de-ressource1.png')" img-alt="Image" img-top tag="article"
               style="max-width: 20rem;" class="mb-2">

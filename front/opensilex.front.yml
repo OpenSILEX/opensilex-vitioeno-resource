@@ -1,12 +1,20 @@
 menu:
-  # - id: vitioeno-news
-  #   label: component.menu.news.label 
-  #   route:
-  #     icon: ik#ik-twitter
-  #     component: inrae-vitioeno-VitioenoHomeComponent
-  #     path: /news
-  #     title: component.menu.news.label 
-  #     description: component.menu.news.description 
+  - id: vitioeno-apps
+    label: component.menu.applications.label
+    route:
+      icon: ik#ik-tablet
+      path: /dataAnalysis/apps
+      component: opensilex-data-analysis-ApplicationView
+      title:  component.menu.applications.label
+      description:  component.menu.applications.description
+  - id: vitioeno-documents
+    label: Documents
+    route:
+      path: /documents
+      component: opensilex-DocumentView
+      icon: ik#ik-file-text
+      title: DocumentView.title
+      description: DocumentView.description
   - id: vitioeno-references
     label: component.menu.references.label
     children:
@@ -35,22 +43,6 @@ menu:
           component: inrae-vitioeno-OntologiesView
           title: component.menu.references.ontologies.label
           description: component.menu.references.ontologies.description
-  - id: vitioeno-documents
-    label: Documents
-    route:
-      path: /documents
-      component: opensilex-DocumentView
-      icon: ik#ik-file-text
-      title: DocumentView.title
-      description: DocumentView.description
-  - id: vitioeno-apps
-    label: component.menu.applications.label
-    route:
-      icon: ik#ik-tablet
-      path: /dataAnalysis/apps
-      component: opensilex-data-analysis-ApplicationView
-      title:  component.menu.applications.label
-      description:  component.menu.applications.description
   - id: vitioeno-links
     label: component.menu.references.links.label
     route:
@@ -59,9 +51,58 @@ menu:
       path: /links/data
       title:  component.menu.references.links.data.label
       description:  component.menu.references.links.data.description
+  - id: vitioeno-vocabulary
+    label: component.menu.vocabulary
+    children:
+      - id: factorCategoryVocabulary
+        label: component.menu.factorCategoryTypes
+        route:
+          path: /factor-category-types
+          component: opensilex-FactorCategoryTypes 
+          icon: ik#ik-settings
+          title: FactorCategoryTypes.typeTitle
+          description: FactorCategoryTypes.typeDescription
   - id: vitioeno-configuration
-    label: component.menu.configuration
-    children: 
+    label: component.menu.configuration 
+    children:
+      - id: system
+        label: component.menu.tools.system
+        route:
+          path: /system
+          component: opensilex-SystemView 
+          icon: ik#ik-layers
+          title: SystemView.title
+          description: SystemView.title-description
+      - id: vitioeno-profiles
+        label: component.menu.security.profiles
+        route:
+          path: /profiles
+          component: opensilex-ProfileView
+          credentials: 
+            - is-admin
+          icon: ik#ik-settings
+          title: component.menu.security.profiles
+          description: component.profile.description 
+      - id: vitioeno-accounts
+        label: component.menu.security.accounts
+        route:
+          path: /accounts
+          component: opensilex-AccountView
+          credentials: 
+            - is-admin
+          icon: ik#ik-user
+          title: AccountView.title
+          description: AccountView.description
+      - id: groups
+        label: component.menu.security.groups
+        route:
+          path: /groups
+          component: opensilex-GroupView
+          credentials:
+            - is-admin
+          icon: ik#ik-users
+          title: component.menu.security.groups
+          description: component.group.description
       - id: profiles
         label: component.menu.security.profiles
         route:
@@ -72,21 +113,7 @@ menu:
           icon: ik#ik-settings
           title: component.menu.security.profiles
           description: component.profile.description
-      - id: system
-        label: component.menu.tools.system
-        route:
-          path: /system
-          component: opensilex-SystemView 
-          icon: ik#ik-layers
-          title: SystemView.title
-          description: SystemView.title-description
-  # - id : about_view
-  #   label : component.menu.about.label
-  #   route:
-  #       path: /about
-  #       component: inrae-vitioeno-AboutView  
-  #       title: AboutView.title
-  #       description: AboutView.description
+  
 routes:      
   - path: /germplasm/details/:uri
     component: opensilex-GermplasmDetails
