@@ -37,7 +37,9 @@
             "document": "Useful protocol datasets for wine and vine experiment management",
             "documentText": "Documents",
             "community": "Links with other interesting initiatives for data management",
-            "communityText": "Community links"
+            "communityText": "Community links",
+            "variables": "Variables to study vine and wine",
+            "variablesText": "Variables"
         },
         "menu": { 
             "applications": {
