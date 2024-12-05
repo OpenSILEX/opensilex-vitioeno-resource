@@ -38,8 +38,9 @@
             "document": "Protocoles et ensembles de données utiles pour la gestion des expériences sur le vin et la vigne",
             "documentText": "Documents",
             "community": "Liens avec d'autres initiatives intéressantes pour la gestion des données",
-            "communityText": "liens communautaires" 
-
+            "communityText": "liens communautaires",
+            "variables": "Variables utilisées pour étudier la vigne et le vin",
+            "variablesText": "Variables"
         },
         "menu": { 
             "applications": {

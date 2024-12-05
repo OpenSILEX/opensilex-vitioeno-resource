@@ -24,7 +24,14 @@
                 {{ $t('component.home.applications') }}
               </b-card-text>
             </b-card> </a>
-         
+            <a href="variables">
+            <b-card :title="$t('component.home.variablesText')"
+              v-bind:img-src="$opensilex.getResourceURI('images/variables.png')" img-alt="Image" img-top tag="article"
+              style="max-width: 20rem;" class="mb-2">
+              <b-card-text>
+                {{ $t('component.home.variables') }}
+              </b-card-text>
+            </b-card> </a>
           <a href="germplasm">
             <b-card :title="$t('component.home.germplasmText')"
               v-bind:img-src="$opensilex.getResourceURI('images/genetic2.jpg')" img-alt="Image" img-top tag="article"
@@ -56,7 +63,8 @@
               <b-card-text>
                 {{ $t('component.home.community') }}
               </b-card-text>
-            </b-card> </a>
+            </b-card> </a> 
+            
         </b-card-group>
       </b-col>
       <b-col></b-col>
